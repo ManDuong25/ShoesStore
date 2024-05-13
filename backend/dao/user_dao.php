@@ -7,6 +7,7 @@ use backend\interfaces\DAOInterface;
 use InvalidArgumentException;
 use backend\models\UserModel;
 use backend\services\DatabaseConnection;
+use Symfony\Component\VarDumper\VarDumper;
 
 class UserDAO implements DAOInterface
 {
@@ -41,14 +42,14 @@ class UserDAO implements DAOInterface
         $phone = $rs['phone'];
         $gender = $rs['gender'];
         $image = $rs['image'];
-        $roleId = $rs['role_id'];
+        $maNhomQuyen = $rs['maNhomQuyen'];
         $address = $rs['address'];
         $status = strtoupper($rs['status']);
         $forgotToken = $rs['forgotToken'];
         $activeToken = $rs['activeToken'];
         $create_at = $rs['create_at'];
         $update_at = $rs['update_at'];
-        return new UserModel($id, $username, $password, $email, $name, $phone, $gender, $image, $roleId, $status, $address, $forgotToken, $activeToken, $create_at, $update_at);
+        return new UserModel($id, $username, $password, $email, $name, $phone, $gender, $image, $maNhomQuyen, $status, $address, $forgotToken, $activeToken, $create_at, $update_at);
     }
 
     public function getAll(): array
@@ -77,18 +78,25 @@ class UserDAO implements DAOInterface
 
     public function insert($user): int
     {
-        $insertSql = "INSERT INTO users (username, password, email, name, phone, gender, image, role_id, address, status, forgotToken, activeToken, create_at, update_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $insertSql = "INSERT INTO users (username, password, email, name, phone, gender, image, maNhomQuyen, address, status, forgotToken, activeToken, create_at, update_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        if ($user->getGender() === "male") {
+            $genderValue = "0";
+        } elseif ($user->getGender() === "female") {
+            $genderValue = "1";
+        } else {
+            $genderValue = "0";
+        }
         $args = [
             $user->getUsername(),
             $user->getPassword(),
             $user->getEmail(),
             $user->getName(),
             $user->getPhone(),
-            $user->getGender(),
+            (int)$genderValue,
             $user->getImage(),
-            $user->getRoleId(),
+            $user->getMaNhomQuyen(),
             $user->getAddress(),
-            strtoupper($user->getStatus()),
+            strtolower($user->getStatus()),
             $user->getForgotToken(),
             $user->getActiveToken(),
             $user->getCreateAt(),
@@ -99,7 +107,7 @@ class UserDAO implements DAOInterface
 
     public function update($user): int
     {
-        $updateSql = "UPDATE users SET username = ?, password = ?, email = ?, name = ?, phone = ?, gender = ?, image = ?, role_id = ?, address = ?, status = ?, forgotToken = ?, activeToken = ?, create_at = ?, update_at = ? WHERE id = ?";
+        $updateSql = "UPDATE users SET username = ?, password = ?, email = ?, name = ?, phone = ?, gender = ?, image = ?, maNhomQuyen = ?, address = ?, status = ?, forgotToken = ?, activeToken = ?, create_at = ?, update_at = ? WHERE id = ?";
         $args = [
             $user->getUsername(),
             $user->getPassword(),
@@ -108,7 +116,7 @@ class UserDAO implements DAOInterface
             $user->getPhone(),
             $user->getGender(),
             $user->getImage(),
-            $user->getRoleId(),
+            $user->getMaNhomQuyen(),
             $user->getAddress(),
             strtoupper($user->getStatus()),
             $user->getForgotToken(),
@@ -133,7 +141,7 @@ class UserDAO implements DAOInterface
         }
         $query = "";
         if ($columnNames === null || count($columnNames) === 0) {
-            $query = "SELECT * FROM users WHERE id LIKE ? OR username LIKE ? OR email LIKE ? OR name LIKE ? OR phone LIKE ? OR gender LIKE ? OR role_id LIKE ? OR address LIKE ? OR status LIKE ?";
+            $query = "SELECT * FROM users WHERE id LIKE ? OR username LIKE ? OR email LIKE ? OR name LIKE ? OR phone LIKE ? OR gender LIKE ? OR maNhomQuyen LIKE ? OR address LIKE ? OR status LIKE ?";
             $args = array_fill(0, 9, "%" . $condition . "%");
         } else if (count($columnNames) === 1) {
             $column = $columnNames[0];
@@ -150,5 +158,53 @@ class UserDAO implements DAOInterface
             array_push($userList, $userModel);
         }
         return $userList;
+    }
+
+
+
+    public function countAllModels()
+    {
+        $query = "SELECT COUNT(*) AS total FROM users;";
+        $rs = DatabaseConnection::executeQuery($query);
+        $row = $rs->fetch_assoc();
+        return $row['total'];
+    }
+
+    public function paginationTech($from, $limit)
+    {
+        $userItemsList = [];
+        $query = "SELECT * FROM users LIMIT ?, ?;";
+        $args = [
+            $from + 1,
+            $limit
+        ];
+        $rs = DatabaseConnection::executeQuery($query, ...$args);
+        while ($row = $rs->fetch_assoc()) {
+            $userItemModel = $this->createUserModel($row);
+            array_push($userItemsList, $userItemModel);
+        }
+        return $userItemsList;
+    }
+
+    public function filterByEmail($from, $limit, $email): array
+    {
+        $userList = [];
+        $query = "SELECT * FROM users WHERE email LIKE ? LIMIT ?, ?";
+        $args = ["%" . $email . "%", $from, $limit];
+        $rs = DatabaseConnection::executeQuery($query, ...$args);
+        while ($row = $rs->fetch_assoc()) {
+            $userModel = $this->createUserModel($row);
+            array_push($userList, $userModel);
+        }
+        return $userList;
+    }
+
+    public function countFilterByEmail($email): int
+    {
+        $query = "SELECT COUNT(*) AS total FROM users WHERE email LIKE ?";
+        $args = ["%" . $email . "%"];
+        $rs = DatabaseConnection::executeQuery($query, ...$args);
+        $row = $rs->fetch_assoc();
+        return (int)$row['total'];
     }
 }

@@ -10,7 +10,7 @@ class DatabaseConnection
     private static $instance;
     private static $host = "localhost";
     private static $port = "3306";
-    private static $dbname = "shoesstore";
+    private static $dbname = "quanlicuahanggiay";
     private static $user = "root";
     private static $password = "";
 

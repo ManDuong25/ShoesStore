@@ -13,7 +13,7 @@ if (!isAllowToDashBoard()) {
     die('Access denied');
 }
 
-if (!checkPermission(2)) {
+if (!checkPermission("Q4", "CN1")) {
     die('Access denied');
 }
 
@@ -41,11 +41,13 @@ use backend\bus\CategoriesBUS;
                         <?= $title ?>
                     </h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
+                        <?php if (checkPermission("Q4", "CN4")) {?>
                         <button type="button" class="btn btn-sm btn-success align-middle" data-bs-toggle="modal"
                             data-bs-target="#addModal" id="addCategory" class="addBtn">
                             <span data-feather="plus"></span>
                             Add
                         </button>
+                        <?php } ?>
                     </div>
                 </div>
 
@@ -68,11 +70,13 @@ use backend\bus\CategoriesBUS;
                                     <?= count(ProductBUS::getInstance()->searchModel($categories->getId(), ['category_id'])); ?>
                                 </td>
                                 <td class='col-2 categoryAction'>
+                                    <?php if (checkPermission("Q4", "CN2")) {?>
                                     <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                         data-bs-target="#editModal<?= $categories->getId() ?>">
                                         <span data-feather="tool"></span>
                                         Update
                                     </button>
+                                    <?php } ?>
                                     <?php if (count(ProductBUS::getInstance()->searchModel($categories->getId(), ['category_id'])) > 0) { ?>
                                         <button class="btn btn-sm btn-secondary" id='deleteCategoryBtnId'
                                             name='deleteCategoryBtnName' disabled style="display: none;">
@@ -80,11 +84,13 @@ use backend\bus\CategoriesBUS;
                                             Delete
                                         </button>
                                     <?php } else { ?>
+                                        <?php if (checkPermission("Q4", "CN3")) {?>
                                         <button class="btn btn-sm btn-danger" id='deleteCategoryBtnId'
                                             name='deleteCategoryBtnName'>
                                             <span data-feather="trash-2"></span>
                                             Delete
                                         </button>
+                                        <?php } ?>
                                     <?php } ?>
                                 </td>
                             </tr>

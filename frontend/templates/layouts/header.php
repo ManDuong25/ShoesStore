@@ -54,7 +54,7 @@ if (!defined('_CODE')) {
         </ul>
 
         <?php
-        if (!isLogin() || ($userModel->getRoleId() == RolesEnums::CUSTOMER)) {
+        if (!isLogin() || ($userModel->getMaNhomQuyen() == "NQ4")) {
             echo '<div class="cart header__content__item">
         <a href="?module=cartsection&action=cart">
             <i class="fa-sharp fa-solid fa-cart-shopping cart__icon"></i>
@@ -70,7 +70,7 @@ if (!defined('_CODE')) {
                     <img class="user__image" src="<?php echo _WEB_HOST_TEMPLATE ?>/images/avt.png" alt="">
                     <i class="fa-solid fa-angle-down user__dropdown"></i>
                     <ul class="user__dropdown__menu hide">
-                        <?php if ($userModel->getRoleId() == RolesEnums::CUSTOMER) { ?>
+                        <?php if ($userModel->getMaNhomQuyen() == "NQ4") { ?>
                             <li class="user__dropdown__menu__item">
                                 <a href="?module=account&action=profilesetting">Profile Setting</a>
                             </li>

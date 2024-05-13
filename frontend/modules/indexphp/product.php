@@ -204,8 +204,8 @@ $products = ProductBUS::getInstance()->getAllModels();
                                 ($filterPriceFrom == "") &&
                                 ($filterPriceTo == "")
                             ) {
-                                $totalQuantity = ProductBUS::getInstance()->countAllModels();
-                                $listSP = ProductBUS::getInstance()->paginationTech($beginGet, $limit);
+                                $totalQuantity = ProductBUS::getInstance()->countAllModelsUser();
+                                $listSP = ProductBUS::getInstance()->paginationTechUser($beginGet, $limit);
                                 $listSPArray = array_map(function ($product) {
                                     return $product->toArray();
                                 }, $listSP);
@@ -214,8 +214,8 @@ $products = ProductBUS::getInstance()->getAllModels();
                                 echo json_encode(['listProducts' => $listSPArray, 'thisPage' => $thisPage, 'limit' => $limit, 'totalQuantity' => $totalQuantity, 'beginGet' => $beginGet]);
                                 exit;
                             } else {
-                                $listSP = ProductBUS::getInstance()->multiFilter($beginGet, $limit, $filterName, $filterCategory, $filterGender, $filterPriceFrom, $filterPriceTo);
-                                $totalQuantity = ProductBUS::getInstance()->countFilteredProducts($filterName, $filterCategory, $filterGender, $filterPriceFrom, $filterPriceTo);
+                                $listSP = ProductBUS::getInstance()->multiFilterUser($beginGet, $limit, $filterName, $filterCategory, $filterGender, $filterPriceFrom, $filterPriceTo);
+                                $totalQuantity = ProductBUS::getInstance()->countFilteredProductsUser($filterName, $filterCategory, $filterGender, $filterPriceFrom, $filterPriceTo);
                                 $totalQuantity = isset($totalQuantity) ? $totalQuantity : 0;
                                 $listSPArray = array_map(function ($product) {
                                     return $product->toArray();

@@ -1,4 +1,5 @@
 <?php
+
 use backend\bus\PaymentMethodsBUS;
 use backend\bus\ProductBUS;
 use backend\bus\CartsBUS;
@@ -68,23 +69,19 @@ foreach ($cartListFromUser as $cartModel) {
             <h4>Customer Info</h4>
             <div class="col-4">
                 <label for="inputName" class="form-label">Name</label>
-                <input type="text" class="form-control form-control-sm" id="inputNameId" name="inputName"
-                    value="<?php echo $userModel->getName(); ?>">
+                <input type="text" class="form-control form-control-sm" id="inputNameId" name="inputName" value="<?php echo $userModel->getName(); ?>">
             </div>
             <div class="col-3">
                 <label for="inputText" class="form-label">Phone Number</label>
-                <input type="text" class="form-control form-control-sm" id="inputPhoneNumberId" name="inputPhoneNumber"
-                    value="<?php echo $userModel->getPhone(); ?>">
+                <input type="text" class="form-control form-control-sm" id="inputPhoneNumberId" name="inputPhoneNumber" value="<?php echo $userModel->getPhone(); ?>">
             </div>
             <div class="col-5">
                 <label for="inputText" class="form-label">Discount</label>
-                <input type="text" name="discount-code" class="form-control form-control-sm" id="inputDiscountId"
-                    name="inputDiscount">
+                <input type="text" name="discount-code" class="form-control form-control-sm" id="inputDiscountId" name="inputDiscount">
             </div>
             <div class="col-6">
                 <label for="inputAddress" class="form-label">Address</label>
-                <input type="text" class="form-control form-control-sm" id="inputAddressId" name="inputAddress"
-                    placeholder="1234 Main St" name="inputAddress" value="<?php echo $userModel->getAddress(); ?>">
+                <input type="text" class="form-control form-control-sm" id="inputAddressId" name="inputAddress" placeholder="1234 Main St" name="inputAddress" value="<?php echo $userModel->getAddress(); ?>">
             </div>
             <div class="col-2">
                 <label for="inputPayment" class="form-label">Payment Method</label>
@@ -143,8 +140,7 @@ foreach ($cartListFromUser as $cartModel) {
     </div>
     <form action="?module=cartsection&action=cart" method="POST">
         <div class="btn-group ">
-            <input type="button" id="btnBack" value="Back"
-                onclick="window.location.href='?module=cartsection&action=cart'">
+            <input type="button" id="btnBack" value="Back" onclick="window.location.href='?module=cartsection&action=cart'">
             <p id="totalPrice">Final price: <?php echo $totalPriceOfCart ?></p>
             <input type="submit" name="submitButton" id="order-confirm-submit" value="Submit">
         </div>
@@ -157,6 +153,57 @@ foreach ($cartListFromUser as $cartModel) {
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             $currentDate = date('Y-m-d');
             $currentTime = date('Y-m-d H:i:s');
+
+            $orderModel = new OrdersModel(null, null, null, null, null, null, null, null);
+
+
+            $customerName = $_POST['inputName'];
+            $customerPhone = $_POST['inputPhoneNumber'];
+            $customerAddress = $_POST['inputAddress'];
+
+            if (empty($customerName) || empty($customerPhone) || empty($customerAddress) || trim($customerName) == "" || trim($customerPhone) == "" || trim($customerAddress) == "") {
+                echo '<script>';
+                echo 'alert("Please write all the information!")';
+                echo '</script>';
+                echo '<script>';
+                echo 'window.location.href = "?module=cartsection&action=order"';
+                echo '</script>';
+                die();
+            }
+
+            if (validation::isValidPhoneNumber($customerPhone) == false) {
+                echo '<script>';
+                echo 'alert("Invalid phone number!")';
+                echo '</script>';
+                echo '<script>';
+                echo 'window.location.href = "?module=cartsection&action=order"';
+                echo '</script>';
+                die();
+            }
+
+            if (validation::isValidName($customerName) == false) {
+                echo '<script>';
+                echo 'alert("Invalid name!")';
+                echo '</script>';
+                echo '<script>';
+                echo 'window.location.href = "?module=cartsection&action=order"';
+                echo '</script>';
+                die();
+            }
+
+            if (validation::isValidAddress($customerAddress) == false) {
+                echo '<script>';
+                echo 'alert("Invalid address!")';
+                echo '</script>';
+                echo '<script>';
+                echo 'window.location.href = "?module=cartsection&action=order"';
+                echo '</script>';
+                die();
+            }
+
+            $orderModel->setCustomerName($customerName);
+            $orderModel->setCustomerPhone($customerPhone);
+            $orderModel->setCustomerAddress($customerAddress);
 
             //Check for discount:
             if (isset($_POST['discount-code'])) {
@@ -217,58 +264,9 @@ foreach ($cartListFromUser as $cartModel) {
             }
 
             //Create the order:
-            $orderModel = new OrdersModel(null, null, null, null, null, null, null, null);
             $orderModel->setUserId($userModel->getId());
             $orderModel->setOrderDate($currentTime);
             $orderModel->setTotalAmount($totalPriceOfCart);
-
-            $customerName = $_POST['inputName'];
-            $customerPhone = $_POST['inputPhoneNumber'];
-            $customerAddress = $_POST['inputAddress'];
-
-            if (empty($customerName) || empty($customerPhone) || empty($customerAddress) || trim($customerName) == "" || trim($customerPhone) == "" || trim($customerAddress) == "") {
-                echo '<script>';
-                echo 'alert("Please write all the information!")';
-                echo '</script>';
-                echo '<script>';
-                echo 'window.location.href = "?module=cartsection&action=order"';
-                echo '</script>';
-                die();
-            }
-
-            if (validation::isValidPhoneNumber($customerPhone) == false) {
-                echo '<script>';
-                echo 'alert("Invalid phone number!")';
-                echo '</script>';
-                echo '<script>';
-                echo 'window.location.href = "?module=cartsection&action=order"';
-                echo '</script>';
-                die();
-            }
-
-            if (validation::isValidName($customerName) == false) {
-                echo '<script>';
-                echo 'alert("Invalid name!")';
-                echo '</script>';
-                echo '<script>';
-                echo 'window.location.href = "?module=cartsection&action=order"';
-                echo '</script>';
-                die();
-            }
-
-            if (validation::isValidAddress($customerAddress) == false) {
-                echo '<script>';
-                echo 'alert("Invalid address!")';
-                echo '</script>';
-                echo '<script>';
-                echo 'window.location.href = "?module=cartsection&action=order"';
-                echo '</script>';
-                die();
-            }
-
-            $orderModel->setCustomerName($customerName);
-            $orderModel->setCustomerPhone($customerPhone);
-            $orderModel->setCustomerAddress($customerAddress);
             $orderModel->setStatus(OrderStatusEnums::PENDING);
             OrdersBUS::getInstance()->addModel($orderModel);
             OrdersBUS::getInstance()->refreshData();

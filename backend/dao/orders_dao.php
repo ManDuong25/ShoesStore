@@ -180,7 +180,7 @@ class OrdersDAO implements DAOInterface
         JOIN
             orders o ON u.id = o.user_id
         WHERE
-            o.order_date BETWEEN ? AND ?
+            o.order_date >= ? AND o.order_date <= ?
         GROUP BY
             u.id, u.name
         ORDER BY

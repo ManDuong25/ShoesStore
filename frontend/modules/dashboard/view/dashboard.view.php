@@ -307,7 +307,10 @@ function displayThongKeKH($thongKe, $index)
                         if (isPost()) {
                             $filterAll = filter();
                             if (isset($filterAll['userId'])) {
-                                $orderList = OrdersBUS::getInstance()->getOrdersByUserId($filterAll['userId']);
+                                $dateFrom = $filterAll['dateFrom'];
+                                $dateTo = $filterAll['dateTo'];
+
+                                $orderList = OrdersBUS::getInstance()->getOrdersByUserIdInDateRange($filterAll['userId'], $dateFrom, $dateTo);
                                 $orderListArray = array_map(function ($order) {
                                     return $order->toArray();
                                 }, $orderList);
@@ -497,13 +500,12 @@ function displayThongKeKH($thongKe, $index)
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    body: 'userId=' + userId,
+                    body: 'userId=' + userId + '&dateFrom=' + dateFrom + '&dateTo=' + dateTo
                 })
                 .then(function(response) {
                     return response.json();
                 })
                 .then(function(data) {
-                    console.log(data);
                     var orderTableBody = document.querySelector('.showOrderOfUser');
                     orderTableBody.innerHTML = htmlOrderList(data.orderList);
                     addSeeDetailOrderButtonClickEvent();

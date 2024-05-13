@@ -1,11 +1,13 @@
 <?php
+
 use backend\bus\PaymentMethodsBUS;
 use backend\bus\PaymentsBUS;
 use backend\bus\ProductBUS;
 use backend\bus\UserBUS;
-use backend\enums\RolesEnums;
 use backend\bus\OrderItemsBUS;
 use backend\bus\OrdersBUS;
+use backend\services\session;
+use backend\bus\TokenLoginBUS;
 
 global $id;
 $orderId = $_GET['customerOrderId'];
@@ -14,7 +16,12 @@ requireLogin();
 $order = OrdersBUS::getInstance()->getModelById($orderId);
 $userModel = UserBUS::getInstance()->getModelById($order->getUserId());
 
-if ($order->getUserId() != $userModel->getId() && $userModel->getRoleId() == RolesEnums::CUSTOMER) {
+$tokenLoginTemp = session::getInstance()->getSession('tokenLogin');
+$userIdTemp = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginTemp)->getUserId();
+$userLoginRightNow = UserBUS::getInstance()->getModelById($userIdTemp);
+
+
+if ($order->getUserId() != $userLoginRightNow->getId() && $userModel->getMaNhomQuyen() == "NQ4") {
     // The order doesn't belong to the user, return a 403 Forbidden status code
     http_response_code(403);
     echo 'You do not have permission to view this order.';
@@ -22,10 +29,7 @@ if ($order->getUserId() != $userModel->getId() && $userModel->getRoleId() == Rol
 } else {
     // Admin, manager, employee can view all orders:
     if (
-        $userModel->getRoleId() != RolesEnums::CUSTOMER &&
-        ($userModel->getRoleId() == RolesEnums::ADMIN ||
-            $userModel->getRoleId() == RolesEnums::MANAGER ||
-            $userModel->getRoleId() == RolesEnums::EMPLOYEE)
+        $userModel->getMaNhomQuyen() != "NQ4"
     ) {
         $orderId = $_GET['orderId'];
         $order = OrdersBUS::getInstance()->getModelById($orderId);
@@ -35,7 +39,7 @@ if ($order->getUserId() != $userModel->getId() && $userModel->getRoleId() == Rol
 $paymentMethod = PaymentsBUS::getInstance()->getModelByOrderId($order->getId());
 $methodId = PaymentMethodsBUS::getInstance()->getModelById($paymentMethod->getMethodId())->getMethodName();
 $orderItemsListBasedOnOrderFromUser = OrderItemsBUS::getInstance()->getOrderItemsListByOrderId($orderId);
-include (__DIR__ . '/../inc/head.php');
+include(__DIR__ . '/../inc/head.php');
 ?>
 
 <div id="header">
@@ -54,10 +58,8 @@ include (__DIR__ . '/../inc/head.php');
                 <div class="col-lg-10 col-xl-8">
                     <div class="card" style="border-radius: 10px;">
                         <div class="card-header px-2 py-3 d-flex justify-content-between align-items-center">
-                            <h6 class="text-muted mb-0">Order from: <span
-                                    style="color: #a8729a;"><?php echo $userModel->getName() ?></span>!</h6>
-                            <h6 class="text-muted mb-0">Back to <a href="?module=dashboard&view=order.view"
-                                    style="color: #a8729a;">Customer Order List</a></h6>
+                            <h6 class="text-muted mb-0">Order from: <span style="color: #a8729a;"><?php echo $userModel->getName() ?></span>!</h6>
+                            <h6 class="text-muted mb-0">Back to <a href="?module=dashboard&view=order.view" style="color: #a8729a;">Customer Order List</a></h6>
                         </div>
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -159,12 +161,12 @@ include (__DIR__ . '/../inc/head.php');
                             <div class="d-flex justify-content-between pt-2">
                                 <p class="fw-bold mb-0">Order Details</p>
                                 <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> $<?php
-                                $totalPrice = 0;
-                                foreach ($orderItemsListBasedOnOrderFromUser as $orderItem) {
-                                    $totalPrice += $orderItem->getPrice();
-                                }
-                                echo $totalPrice;
-                                ?></p>
+                                                                                                    $totalPrice = 0;
+                                                                                                    foreach ($orderItemsListBasedOnOrderFromUser as $orderItem) {
+                                                                                                        $totalPrice += $orderItem->getPrice();
+                                                                                                    }
+                                                                                                    echo $totalPrice;
+                                                                                                    ?></p>
                             </div>
 
                             <div class="d-flex justify-content-between pt-2">
@@ -182,8 +184,7 @@ include (__DIR__ . '/../inc/head.php');
                             </div>
 
                         </div>
-                        <div class="card-footer border-0 px-2 py-3"
-                            style="background-color: #a8729a; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                        <div class="card-footer border-0 px-2 py-3" style="background-color: #a8729a; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
                             <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">
                                 Total paid: <span class="h4 mb-0 ms-2">$<?php echo $order->getTotalAmount() ?></span>
                             </h5>

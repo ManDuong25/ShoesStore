@@ -1,5 +1,6 @@
 <?php
 
+use backend\bus\ChiTietQuyenBUS;
 use backend\bus\RolePermissionBUS;
 use backend\enums\StatusEnums;
 
@@ -171,24 +172,30 @@ function isAllowToDashBoard()
     $tokenLogin = session::getInstance()->getSession('tokenLogin');
     $userId = TokenLoginBUS::getInstance()->getModelByToken($tokenLogin)->getUserId();
     $userModel = UserBUS::getInstance()->getModelById($userId);
-    $roleId = $userModel->getRoleId();
+    $roleId = $userModel->getMaNhomQuyen();
 
-    if ($roleId == 4) {
+    if ($roleId == 'NQ4') {
         return false;
     } else {
         return true;
     }
 }
 
-function checkPermission($permissionId)
+function checkPermission($maQuyen, $maChucNang)
 {
     if (isLogin()) {
         $tokenLogin = session::getInstance()->getSession('tokenLogin');
         $userId = TokenLoginBUS::getInstance()->getModelByToken($tokenLogin)->getUserId();
         $userModel = UserBUS::getInstance()->getModelById($userId);
-        $rolesPermission = RolePermissionBUS::getInstance()->getModelByRoleId($userModel->getRoleId());
-        foreach ($rolesPermission as $rolePermission) {
-            if ($rolePermission->getPermissionId() == $permissionId) {
+        $maNhomQuyen = $userModel->getMaNhomQuyen();
+        $chiTietQuyenList = ChiTietQuyenBUS::getInstance()->getAllModels();
+
+        // echo '<pre>';
+        // print_r($chiTietQuyenList);
+        // echo '</pre>';
+
+        foreach ($chiTietQuyenList as $chiTietquyen) {
+            if ($chiTietquyen->getMaQuyen() == $maQuyen && $chiTietquyen->getMaChucNang() == $maChucNang && $chiTietquyen->getMaNhomQuyen() == $maNhomQuyen) {
                 return true;
             }
         }

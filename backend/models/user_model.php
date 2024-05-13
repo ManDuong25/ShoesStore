@@ -1,5 +1,7 @@
 <?php
+
 namespace backend\models;
+
 class UserModel
 {
     private $id;
@@ -10,7 +12,7 @@ class UserModel
     private $phone;
     private $gender;
     private $image;
-    private $roleId;
+    private $maNhomQuyen;
     private $status;
     private $address;
     private $forgotToken;
@@ -18,7 +20,7 @@ class UserModel
     private $create_at;
     private $update_at;
 
-    public function __construct($id, $username, $password, $email, $name, $phone, $gender, $image, $roleId, $status, $address, $forgotToken, $activeToken, $create_at, $update_at)
+    public function __construct($id, $username, $password, $email, $name, $phone, $gender, $image, $maNhomQuyen, $status, $address, $forgotToken, $activeToken, $create_at, $update_at)
     {
         $this->id = $id;
         $this->username = $username;
@@ -28,7 +30,7 @@ class UserModel
         $this->phone = $phone;
         $this->gender = $gender;
         $this->image = $image;
-        $this->roleId = $roleId;
+        $this->maNhomQuyen = $maNhomQuyen;
         $this->status = $status;
         $this->address = $address;
         $this->forgotToken = $forgotToken;
@@ -117,14 +119,14 @@ class UserModel
         $this->image = $image;
     }
 
-    public function getRoleId()
+    public function getMaNhomQuyen()
     {
-        return $this->roleId;
+        return $this->maNhomQuyen;
     }
 
-    public function setRoleId($roleId)
+    public function setMaNhomQuyen($maNhomQuyen)
     {
-        $this->roleId = $roleId;
+        $this->maNhomQuyen = $maNhomQuyen;
     }
 
     public function getStatus()
@@ -147,35 +149,64 @@ class UserModel
         $this->address = $address;
     }
 
-    public function getForgotToken() {
+    public function getForgotToken()
+    {
         return $this->forgotToken;
     }
 
-    public function setForgotToken($forgotToken) {
+    public function setForgotToken($forgotToken)
+    {
         $this->forgotToken = $forgotToken;
     }
 
-    public function getActiveToken() {
+    public function getActiveToken()
+    {
         return $this->activeToken;
     }
 
-    public function setActiveToken($activeToken) {
+    public function setActiveToken($activeToken)
+    {
         $this->activeToken = $activeToken;
     }
 
-    public function getCreateAt() {
+    public function getCreateAt()
+    {
         return $this->create_at;
     }
 
-    public function setCreateAt($create_at) {
+    public function setCreateAt($create_at)
+    {
         $this->create_at = $create_at;
     }
 
-    public function getUpdateAt() {
+    public function getUpdateAt()
+    {
         return $this->update_at;
     }
 
-    public function setUpdateAt($update_at) {
+    public function setUpdateAt($update_at)
+    {
         $this->update_at = $update_at;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'username' => $this->username,
+            'password' => $this->password,
+            'email' => $this->email,
+            'name' => $this->name,
+            'phone' => $this->phone,
+            'gender' => $this->gender,
+            'image' => $this->image,
+            'maNhomQuyen' => $this->maNhomQuyen,
+            'status' => $this->status,
+            'address' => $this->address,
+            'forgotToken' => $this->forgotToken,
+            'activeToken' => $this->activeToken,
+            'create_at' => $this->create_at,
+            'update_at' => $this->update_at,
+        ];
     }
 }

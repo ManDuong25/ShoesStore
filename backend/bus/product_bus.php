@@ -210,4 +210,21 @@ class ProductBUS implements BUSInterface
     public function countFilteredProducts($filterName, $filterCategory, $filterGender, $filterPriceFrom, $filterPriceTo) {
         return ProductDAO::getInstance()->countFilteredProducts($filterName, $filterCategory, $filterGender, $filterPriceFrom, $filterPriceTo);
     }
+
+
+    public function paginationTechUser($from, $limit) {
+        return ProductDAO::getInstance()->paginationTechUser($from, $limit);
+    }
+
+    public function countAllModelsUser() {
+        return ProductDAO::getInstance()->countAllModelsUser();
+    }
+
+    public function multiFilterUser($from, $limit, $filterName, $filterCategory, $filterGender, $filterPriceFrom, $filterPriceTo) {
+        return ProductDAO::getInstance()->multiFilterUser($from, $limit, $filterName, $filterCategory, $filterGender, $filterPriceFrom, $filterPriceTo);
+    }
+
+    public function countFilteredProductsUser($filterName, $filterCategory, $filterGender, $filterPriceFrom, $filterPriceTo) {
+        return ProductDAO::getInstance()->countFilteredProductsUser($filterName, $filterCategory, $filterGender, $filterPriceFrom, $filterPriceTo);
+    }
 }

@@ -18,7 +18,7 @@ if (!isAllowToDashBoard()) {
     die('Access denied');
 }
 
-if (!checkPermission(1)) {
+if (!checkPermission("Q3", "CN1")) {
     die('Access denied');
 }
 
@@ -45,13 +45,14 @@ $productList = ProductBUS::getInstance()->getAllModels();
                     <h1 class="h2">
                         <?= $title ?>
                     </h1>
-
+                    <?php if (checkPermission("Q3", "CN4")) {?>
                     <div class="btn-toolbar mb-2 mb-0">
                         <button type="button" class="btn btn-sm btn-success align-middle" data-bs-toggle="modal" data-bs-target="#addModal" id="addProduct" class="addBtn">
                             <span data-feather="plus"></span>
                             Add
                         </button>
                     </div>
+                    <?php }?>
                 </div>
 
                 <div class="search-group input-group py-2">
@@ -252,6 +253,7 @@ $productList = ProductBUS::getInstance()->getAllModels();
                 <?php include(__DIR__ . '/../inc/app/app.php'); ?>
                 <script src="https://kit.fontawesome.com/2a9b643027.js" crossorigin="anonymous"></script>
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script src="<?php echo _WEB_HOST_TEMPLATE ?>/js/dashboard/add_product.js"></script>
 
 
                 <script>
@@ -306,15 +308,22 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                     <td class='text-center'>${product.price}</td>
                                     <td class='text-center'>
                                         <div>
+                                            <?php if (checkPermission("Q3", "CN2")) {?>
                                             <a href='http://localhost/ShoesStore/frontend/index.php?module=dashboard&view=product.update&id=${product.id}' class='btn btn-sm btn-warning'>
                                                 <span data-feather='tool'>Sửa</span>
                                             </a>
+                                            <?php } ?>
+                                            <?php if (checkPermission("Q3", "CN3")) {?>
                                             <button class='btn btn-sm btn-danger' id='completelyDeleteProduct' name='completelyDeleteProduct'>
                                                 <span data-feather='trash-2'>Xoá</span>
                                             </button>
+                                            <?php }?>
+
+                                            <?php if (checkPermission("Q3", "CN2")) {?>
                                             <button class='btn btn-sm btn-danger' id='deleteProductButton' name='deleteProductButton'>
                                                 <span data-feather='eye-off'>Ẩn</span>
                                             </button>
+                                            <?php } ?>
                                         </div>
                                     </td>
                                     <td class="product_status" class='text-center'>${product.status}</td>
@@ -468,6 +477,8 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                 });
                             });
                         }
+
+
                     });
                 </script>
 </body>

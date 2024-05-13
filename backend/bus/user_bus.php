@@ -96,12 +96,16 @@ class UserBUS implements BUSInterface
 
     public function updateModel($userModel): int
     {
-        $this->validateModel($userModel);
-        $result = UserDAO::getInstance()->update($userModel);
-        if ($result) {
-            $index = array_search($userModel, $this->userList);
-            $this->userList[$index] = $userModel;
-            $this->refreshData();
+        $isValid = $this->validateModel($userModel);
+        if ($isValid) {
+            $result = UserDAO::getInstance()->update($userModel);
+            if ($result) {
+                $index = array_search($userModel, $this->userList);
+                $this->userList[$index] = $userModel;
+                $this->refreshData();
+            }
+        } else {
+            $result = 0;
         }
         return $result;
     }
@@ -139,6 +143,11 @@ class UserBUS implements BUSInterface
         if ($userModel->getEmail() == null || trim($userModel->getEmail()) == "") {
             $errors['email']['required'] = "Email is required";
         }
+
+        if ($this->isEmailUsed($userModel->getEmail())) {
+            $errors['email']['existed'] = "Email is existed";
+        }
+
 
         if ($userModel->getName() == null || trim($userModel->getName()) == "") {
             $errors['fullname']['required'] = "Name is required";
@@ -181,8 +190,8 @@ class UserBUS implements BUSInterface
         }
 
         // Validate role
-        $roleId = $userModel->getRoleId();
-        if ($roleId === null) {
+        $maNhomQuyen = $userModel->getMaNhomQuyen();
+        if ($maNhomQuyen === null) {
             $errors[] = "Role is required";
         }
 
@@ -232,6 +241,7 @@ class UserBUS implements BUSInterface
 
     public function isEmailTaken($email, $userIdToSkip)
     {
+        $this->userList = UserDAO::getInstance()->getAll();
         for ($i = 0; $i < count($this->userList); $i++) {
             if ($this->userList[$i]->getEmail() == $email && $this->userList[$i]->getId() != $userIdToSkip) {
                 return true;
@@ -239,12 +249,56 @@ class UserBUS implements BUSInterface
         }
     }
 
+    public function isEmailUsed($email)
+    {
+        $this->userList = UserDAO::getInstance()->getAll();
+        for ($i = 0; $i < count($this->userList); $i++) {
+            if ($this->userList[$i]->getEmail() == $email) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function isPhoneUsed($phone)
+    {
+        $this->userList = UserDAO::getInstance()->getAll();
+        for ($i = 0; $i < count($this->userList); $i++) {
+            if ($this->userList[$i]->getPhone() == $phone) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function isPhoneTaken($phone, $userIdToSkip)
     {
+        $this->userList = UserDAO::getInstance()->getAll();
         for ($i = 0; $i < count($this->userList); $i++) {
             if ($this->userList[$i]->getPhone() == $phone && $this->userList[$i]->getId() != $userIdToSkip) {
                 return true;
             }
         }
+    }
+
+
+    public function countAllModels()
+    {
+        return UserDAO::getInstance()->countAllModels();
+    }
+
+    public function paginationTech($from, $limit)
+    {
+        return UserDAO::getInstance()->paginationTech($from, $limit);
+    }
+
+    public function filterByEmail($from, $limit, $email)
+    {
+        return UserDAO::getInstance()->filterByEmail($from, $limit, $email);
+    }
+
+    public function countFilterByEmail($email)
+    {
+        return UserDAO::getInstance()->countFilterByEmail($email);
     }
 }

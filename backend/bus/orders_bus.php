@@ -215,4 +215,40 @@ class OrdersBUS implements BUSInterface
         return [];
     }
 
+
+    public function getOrdersByUserIdInDateRange($userId, $ngayTu = null, $ngayDen = null)
+    {
+        $this->ordersList = OrdersDAO::getInstance()->getAll();
+        $ordersByUserIdInDateRange = array();
+
+        if (!empty($ngayTu)) {
+            $ngayTu = date('Y-m-d', strtotime($ngayTu));
+        }
+        if (!empty($ngayDen)) {
+            $ngayDen = date('Y-m-d', strtotime($ngayDen));
+        }
+
+        if (empty($ngayTu) && empty($ngayDen)) {
+            return $ordersByUserIdInDateRange = $this->getOrdersByUserId($userId);
+        } else if (!empty($ngayTu) && !empty($ngayDen)) {
+            foreach ($this->ordersList as $orders) {
+                if ($orders->getUserId() == $userId && $orders->getOrderDate() >= $ngayTu && $orders->getOrderDate() <= $ngayDen) {
+                    array_push($ordersByUserIdInDateRange, $orders);
+                }
+            }
+        } else if (empty($ngayTu) && !empty($ngayDen)) {
+            foreach ($this->ordersList as $orders) {
+                if ($orders->getUserId() == $userId && $orders->getOrderDate() <= $ngayDen) {
+                    array_push($ordersByUserIdInDateRange, $orders);
+                }
+            }
+        } else if (!empty($ngayTu) && empty($ngayDen)) {
+            foreach ($this->ordersList as $orders) {
+                if ($orders->getUserId() == $userId && $orders->getOrderDate() >= $ngayTu) {
+                    array_push($ordersByUserIdInDateRange, $orders);
+                }
+            }
+        }
+        return $ordersByUserIdInDateRange;
+    }
 }

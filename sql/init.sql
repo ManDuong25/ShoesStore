@@ -1,17 +1,8 @@
--- Active: 1708420841815@@127.0.0.1@3306@shoesstore
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Mar 05, 2024 at 03:52 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
-DROP DATABASE if EXISTS shoesstore;
+DROP DATABASE if EXISTS quanlicuahanggiay;
 
-CREATE DATABASE IF NOT EXISTS shoesstore;
+CREATE DATABASE IF NOT EXISTS quanlicuahanggiay;
 
-USE shoesstore;
+USE quanlicuahanggiay;
 
 SET
   SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -34,7 +25,7 @@ SET
 ;
 
 --
--- Database: `shoesstore`
+-- Database: `quanlicuahanggiay`
 --
 -- --------------------------------------------------------
 --
@@ -171,32 +162,8 @@ CREATE TABLE `products` (
   `image` longtext NOT NULL,
   `gender` int(11) NOT NULL DEFAULT 0,
   `status` enum('active', 'inactive') NOT NULL DEFAULT 'active'
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = UTF8MB4_GENERAL_CI;
 
--- --------------------------------------------------------
--- --------------------------------------------------------
---
--- Table structure for table `roles`
---
-CREATE TABLE `roles` (
-  `id` int(11) NOT NULL,
-  `name` enum('admin', 'manager', 'employee', 'customer') NOT NULL DEFAULT 'customer'
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
-
--- --------------------------------------------------------
---
--- Table structure for table `roles_permissions`
---
-CREATE TABLE `roles_permissions` (
-  `id` int(11) NOT NULL,
-  `permission_id` int(11) NOT NULL,
-  `role_id` int(11) DEFAULT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
-
--- --------------------------------------------------------
---
--- Table structure for table `sizes`
---
 CREATE TABLE `sizes` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL
@@ -211,12 +178,9 @@ CREATE TABLE `size_items` (
   `product_id` int(11) DEFAULT NULL,
   `size_id` int(11) DEFAULT NULL,
   `quantity` int(11) NOT NULL DEFAULT 0
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = UTF8MB4_GENERAL_CI;
 
--- --------------------------------------------------------
---
--- Table structure for table `users`
---
+
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
@@ -226,28 +190,12 @@ CREATE TABLE `users` (
   `phone` varchar(10) DEFAULT NULL,
   `gender` tinyint(4) NOT NULL DEFAULT 0,
   `image` longtext DEFAULT NULL,
-  `role_id` int(11) DEFAULT NULL,
+  `maNhomQuyen` varchar(50) DEFAULT NULL,
   `status` enum('active', 'inactive', 'banned') NOT NULL DEFAULT 'active',
   `address` varchar(255) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
--- --------------------------------------------------------
---
--- Table structure for table `users_permissions`
---
-CREATE TABLE `users_permissions` (
-  `id` int(11) NOT NULL,
-  `permission_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `status` enum('active', 'inactive') NOT NULL DEFAULT 'inactive'
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
---
--- Indexes for dumped tables
---
---
--- Indexes for table `carts`
---
 ALTER TABLE
   `carts`
 ADD
@@ -342,48 +290,15 @@ ALTER TABLE
   `payment_methods`
 ADD
   PRIMARY KEY (`id`);
-
---
--- Indexes for table `permissions`
---
-ALTER TABLE
-  `permissions`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `products`
---
+  
 ALTER TABLE
   `products`
 ADD
   PRIMARY KEY (`id`),
 ADD
   KEY `category_id` (`category_id`);
-
---
--- Indexes for table `roles`
---
-ALTER TABLE
-  `roles`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `roles_permissions`
---
-ALTER TABLE
-  `roles_permissions`
-ADD
-  PRIMARY KEY (`id`),
-ADD
-  KEY `permission_id` (`permission_id`, `role_id`),
-ADD
-  KEY `role_id` (`role_id`);
-
---
--- Indexes for table `sizes`
---
+  
+  
 ALTER TABLE
   `sizes`
 ADD
@@ -400,37 +315,59 @@ ADD
   KEY `product_id` (`product_id`, `size_id`),
 ADD
   KEY `size_id` (`size_id`);
+  
+CREATE TABLE IF NOT EXISTS chucnang (
+    maChucNang VARCHAR(50) NOT NULL,
+    tenChucNang VARCHAR(255),
+    PRIMARY KEY (maChucNang)
+);
 
---
--- Indexes for table `users`
---
+-- Tạo bảng nhomquyen
+CREATE TABLE IF NOT EXISTS nhomquyen (
+    maNhomQuyen VARCHAR(50) NOT NULL,
+    tenNhomQuyen VARCHAR(255),
+    trangThai BIT NOT NULL DEFAULT 1,
+    PRIMARY KEY (maNhomQuyen)
+);
+
+-- Tạo bảng quyen
+CREATE TABLE IF NOT EXISTS quyen (
+    maQuyen VARCHAR(50) NOT NULL,
+    tenQuyen VARCHAR(255),
+    PRIMARY KEY (maQuyen)
+);
+
+-- Tạo bảng chitietquyen
+CREATE TABLE IF NOT EXISTS chitietquyen (
+    maNhomQuyen VARCHAR(50) NOT NULL,
+    maChucNang VARCHAR(50) NOT NULL,
+    maQuyen VARCHAR(50) NOT NULL,
+    PRIMARY KEY (maNhomQuyen, maChucNang, maQuyen)
+);
+
+
+-- Thêm ràng buộc khóa ngoại cho bảng chitietquyen
+ALTER TABLE chitietquyen
+ADD CONSTRAINT fk_chitietquyen_nhomquyen FOREIGN KEY (maNhomQuyen) REFERENCES nhomquyen(maNhomQuyen) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE chitietquyen
+ADD CONSTRAINT fk_chitietquyen_chucnang FOREIGN KEY (maChucNang) REFERENCES chucnang(maChucNang) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE chitietquyen
+ADD CONSTRAINT fk_chitietquyen_quyen FOREIGN KEY (maQuyen) REFERENCES quyen(maQuyen) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+ALTER TABLE `users`
+ADD CONSTRAINT fk_users_nhomquyen FOREIGN KEY (maNhomQuyen) REFERENCES nhomquyen(maNhomQuyen) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
 ALTER TABLE
   `users`
 ADD
   PRIMARY KEY (`id`),
 ADD
-  UNIQUE KEY `email` (`email`),
-ADD
-  KEY `role_id` (`role_id`);
-
---
--- Indexes for table `users_permissions`
---
-ALTER TABLE
-  `users_permissions`
-ADD
-  PRIMARY KEY (`id`),
-ADD
-  KEY `permission_id` (`permission_id`, `user_id`),
-ADD
-  KEY `user_id` (`user_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
---
--- AUTO_INCREMENT for table `carts`
---
+  UNIQUE KEY `email` (`email`);
+  
+  
 ALTER TABLE
   `carts`
 MODIFY
@@ -500,41 +437,11 @@ ALTER TABLE
 MODIFY
   `id` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT for table `permissions`
---
-ALTER TABLE
-  `permissions`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `products`
---
 ALTER TABLE
   `products`
 MODIFY
   `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `roles`
---
-ALTER TABLE
-  `roles`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `roles_permissions`
---
-ALTER TABLE
-  `roles_permissions`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `sizes`
---
+  
 ALTER TABLE
   `sizes`
 MODIFY
@@ -556,20 +463,6 @@ ALTER TABLE
 MODIFY
   `id` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT for table `users_permissions`
---
-ALTER TABLE
-  `users_permissions`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
---
--- Constraints for table `carts`
---
 ALTER TABLE
   `carts`
 ADD
@@ -636,44 +529,14 @@ ALTER TABLE
   `products`
 ADD
   CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
-
---
--- Constraints for table `users`
---
-ALTER TABLE
-  `users`
-ADD
-  CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
-
---
--- Constraints for table `roles_permissions`
---
-ALTER TABLE
-  `roles_permissions`
-ADD
-  CONSTRAINT `roles_permissions_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`),
-ADD
-  CONSTRAINT `roles_permissions_ibfk_2` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`);
-
---
--- Constraints for table `size_items`
---
+  
 ALTER TABLE
   `size_items`
 ADD
   CONSTRAINT `size_items_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
 ADD
   CONSTRAINT `size_items_ibfk_2` FOREIGN KEY (`size_id`) REFERENCES `sizes` (`id`);
-
---
--- Constraints for table `users_permissions`
---
-ALTER TABLE
-  `users_permissions`
-ADD
-  CONSTRAINT `users_permissions_ibfk_1` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`),
-ADD
-  CONSTRAINT `users_permissions_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  
 
 COMMIT;
 

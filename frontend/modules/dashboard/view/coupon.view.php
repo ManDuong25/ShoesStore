@@ -1,5 +1,6 @@
 <?php
 ob_start();
+
 use backend\bus\CouponsBUS;
 use backend\models\CouponsModel;
 
@@ -13,8 +14,12 @@ if (!isAllowToDashBoard()) {
     die('Access denied');
 }
 
-include (__DIR__ . '/../inc/head.php');
-include (__DIR__ . '/../inc/app/app.php');
+if (!checkPermission("Q6", "CN1")) {
+    die('Access denied');
+}
+
+include(__DIR__ . '/../inc/head.php');
+include(__DIR__ . '/../inc/app/app.php');
 
 function showCouponList($coupon)
 {
@@ -26,14 +31,19 @@ function showCouponList($coupon)
     echo "<td class='col-2'>" . $coupon->getExpired() . "</td>";
     echo "<td class='col-1'>" . $coupon->getDescription() . "</td>";
     echo "<td class='col-2 couponAction'>";
-    echo "<button class='btn btn-sm btn-warning' data-bs-toggle='modal' data-bs-target='#editModal" . $coupon->getId() . "'>";
-    echo "<span data-feather='tool'></span>";
-    echo "Update";
-    echo "</button>";
-    echo "<button class='btn btn-sm btn-danger' id='deleteCouponBtnId' name='deleteCouponBtnName'>";
-    echo "<span data-feather='trash-2'></span>";
-    echo "Delete";
-    echo "</button>";
+    if (checkPermission("Q6", "CN2")) {
+        echo "<button class='btn btn-sm btn-warning' data-bs-toggle='modal' data-bs-target='#editModal" . $coupon->getId() . "'>";
+        echo "<span data-feather='tool'></span>";
+        echo "Update";
+        echo "</button>";
+    }
+
+    if (checkPermission("Q6", "CN3")) {
+        echo "<button class='btn btn-sm btn-danger' id='deleteCouponBtnId' name='deleteCouponBtnName'>";
+        echo "<span data-feather='trash-2'></span>";
+        echo "Delete";
+        echo "</button>";
+    }
     echo "</td>";
     echo "</tr>";
     //Add modal:
@@ -80,40 +90,36 @@ function showCouponList($coupon)
 
 <body>
     <!-- HEADER -->
-    <?php include (__DIR__ . '/../inc/header.php'); ?>
+    <?php include(__DIR__ . '/../inc/header.php'); ?>
 
     <div class="container-fluid">
         <div class="row">
 
             <!-- SIDEBAR MENU -->
-            <?php include (__DIR__ . '/../inc/sidebar.php'); ?>
+            <?php include(__DIR__ . '/../inc/sidebar.php'); ?>
 
             <!-- MAIN -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">
                         <?= $title ?>
                     </h1>
                     <form method="POST" class="search-group input-group">
-                        <input type="text" id="couponSearchBarId" name="couponSearchBar"
-                            class="searchInput form-control" placeholder="Search...">
-                        <input type="date" id="startDate" name="startDate" class="form-control" style="width: 120px;"
-                            placeholder="Start Date">
-                        <input type="date" id="endDate" name="endDate" class="form-control" style="width: 120px;"
-                            placeholder="End Date">
-                        <button type="submit" class="btn btn-sm btn-primary align-middle padx-0 pady-0" id="searchBtnId"
-                            name="searchBtnName">
+                        <input type="text" id="couponSearchBarId" name="couponSearchBar" class="searchInput form-control" placeholder="Search...">
+                        <input type="date" id="startDate" name="startDate" class="form-control" style="width: 120px;" placeholder="Start Date">
+                        <input type="date" id="endDate" name="endDate" class="form-control" style="width: 120px;" placeholder="End Date">
+                        <button type="submit" class="btn btn-sm btn-primary align-middle padx-0 pady-0" id="searchBtnId" name="searchBtnName">
                             <span data-feather="search"></span>
                         </button>
                     </form>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <button type="button" class="btn btn-sm btn-success align-middle" data-bs-toggle="modal"
-                            data-bs-target="#addModal" id="addCouponId" name="addCouponName" class="addBtn">
+                </div>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <?php if (checkPermission("Q6", "CN4")) { ?>
+                        <button type="button" class="btn btn-sm btn-success align-middle" data-bs-toggle="modal" data-bs-target="#addModal" id="addCouponId" name="addCouponName" class="addBtn">
                             <span data-feather="plus"></span>
                             Add
                         </button>
-                    </div>
+                    <?php } ?>
                 </div>
 
                 <table class="table align-middle table-borderless table-hover text-start">
@@ -216,8 +222,7 @@ function showCouponList($coupon)
             </main>
 
             <!-- Add modal -->
-            <div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%">
+            <div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -232,28 +237,23 @@ function showCouponList($coupon)
                                 </div>
                                 <div class="col-md-3">
                                     <label for="inputPassword" class="form-label">Quantity</label>
-                                    <input type="number" name="inputCouponQuantity" id="inputCouponQuantityId"
-                                        class="form-control">
+                                    <input type="number" name="inputCouponQuantity" id="inputCouponQuantityId" class="form-control">
                                 </div>
                                 <div class="col-5">
                                     <label for="inputEmail" class="form-label">Discount(%)</label>
-                                    <input type="number" class="form-control" name="inputDiscountQuantityId"
-                                        id="inputCouponDiscount">
+                                    <input type="number" class="form-control" name="inputDiscountQuantityId" id="inputCouponDiscount">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="inputDescription" class="form-label">Description</label>
-                                    <textarea class="form-control" id="couponDescriptionId" name="description" row="1"
-                                        cols="40"></textarea>
+                                    <textarea class="form-control" id="couponDescriptionId" name="description" row="1" cols="40"></textarea>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="inputExpired" class="form-label">Expired Date</label>
                                     <input type="date" class="form-control" id="inputCouponExpiredId">
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-primary" id="saveButton"
-                                        name="saveBtnName">Save</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-primary" id="saveButton" name="saveBtnName">Save</button>
                                 </div>
                             </form>
                         </div>
@@ -333,7 +333,7 @@ function showCouponList($coupon)
                     }
                 }
                 ?>
-                <?php include (__DIR__ . '/../inc/app/app.php'); ?>
+                <?php include(__DIR__ . '/../inc/app/app.php'); ?>
                 <script src="https://kit.fontawesome.com/2a9b643027.js" crossorigin="anonymous"></script>
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                 <script src="<?php echo _WEB_HOST_TEMPLATE ?>/js/dashboard/add_coupon.js"></script>

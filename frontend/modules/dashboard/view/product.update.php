@@ -13,7 +13,7 @@ if (!isAllowToDashBoard()) {
 }
 
 
-if (!checkPermission(1)) {
+if (!checkPermission("Q3", "CN1") || !checkPermission("Q3", "CN2")) {
     die('Access denied');
 }
 

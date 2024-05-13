@@ -15,7 +15,7 @@ if (!isset($title)) {
     <title>Dashboard</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="<?php _WEB_HOST . '/../vendor/twbs/bootstrap/dist/css/bootstrap.min.css' ?>" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;

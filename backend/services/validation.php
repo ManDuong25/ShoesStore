@@ -32,21 +32,21 @@ class validation
 
     public static function isValidPassword($password)
     {
-        if (!preg_match('/[A-Z]/', $password)) {
-            return "Password must contain at least one uppercase letter";
-        }
+        // if (!preg_match('/[A-Z]/', $password)) {
+        //     return "Password must contain at least one uppercase letter";
+        // }
 
-        if (!preg_match('/[a-z]/', $password)) {
-            return "Password must contain at least one lowercase letter";
-        }
+        // if (!preg_match('/[a-z]/', $password)) {
+        //     return "Password must contain at least one lowercase letter";
+        // }
 
-        if (!preg_match('/\d/', $password)) {
-            return "Password must contain at least one digit";
-        }
+        // if (!preg_match('/\d/', $password)) {
+        //     return "Password must contain at least one digit";
+        // }
 
-        if (!preg_match('/[!@#$%^&*()\-_=+{};:,<.>]/', $password)) {
-            return "Password must contain at least one special character";
-        }
+        // if (!preg_match('/[!@#$%^&*()\-_=+{};:,<.>]/', $password)) {
+        //     return "Password must contain at least one special character";
+        // }
 
         return true;
     }

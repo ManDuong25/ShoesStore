@@ -1,7 +1,9 @@
 <?php
 ob_start();
-use backend\bus\RolePermissionBUS;
-use backend\models\RolePermissionsModel;
+
+use backend\bus\NhomQuyenBUS;
+use backend\bus\ChucNangBUS;
+use backend\bus\QuyenBUS;
 
 $title = 'Roles Setup';
 if (!defined('_CODE')) {
@@ -12,44 +14,59 @@ if (!isAllowToDashBoard()) {
     die('Access denied');
 }
 
-if (!checkPermission(6)) {
+if (!checkPermission("Q9", "CN1")) {
     die('Access denied');
 }
 
-include (__DIR__ . '/../inc/head.php');
+include(__DIR__ . '/../inc/head.php');
 
+$chucNangList = ChucNangBUS::getInstance()->getAllModels();
+$quyenList = QuyenBUS::getInstance()->getAllModels();
 
-use backend\bus\PermissionBUS;
-use backend\bus\RoleBUS;
-
-$permissionList = PermissionBUS::getInstance()->getAllModels();
-$roleList = RoleBUS::getInstance()->getAllModels();
+if (isPost()) {
+    $filterAll = filter();
+    if (isset($filterAll['roleId']) && isset($filterAll['hide'])) {
+        $roleId = $filterAll['roleId'];
+        $result = NhomQuyenBUS::getInstance()->deleteModel($roleId);
+        if ($result) {
+            ob_end_clean();
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'success', 'message' => 'Xoá nhóm quyền thành công!']);
+            exit;
+        } else {
+            ob_end_clean();
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'success', 'message' => 'Lỗi hệ thống, vui lòng thử lại sau!']);
+            exit;
+        }
+    }
+}
 ?>
 
 
 <body>
     <!-- HEADER -->
-    <?php include (__DIR__ . '/../inc/header.php'); ?>
+    <?php include(__DIR__ . '/../inc/header.php'); ?>
 
     <div class="container-fluid">
         <div class="row">
 
             <!-- SIDEBAR MENU -->
-            <?php include (__DIR__ . '/../inc/sidebar.php'); ?>
+            <?php include(__DIR__ . '/../inc/sidebar.php'); ?>
 
             <!-- MAIN -->
             <main class="col-9 ms-sm-auto col-lg-10 px-4">
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="d-flex justify-content-between flex-wrap flex-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">
                         <?= $title ?>
                     </h1>
                     <div class="btn-toolbar mb-2 mb-0">
-                        <!-- <button type="button" class="btn btn-sm btn-success align-middle" data-bs-toggle="modal"
-                            data-bs-target="#addRoleModal" id="addProduct" class="addBtn">
+                    </div>
+                    <div class="btn-toolbar mb-2 mb-0">
+                        <button type="button" class="btn btn-sm btn-success align-middle" id="addNhomQuyenBtn" class="addBtn">
                             <span data-feather="plus"></span>
                             Add
-                        </button> -->
+                        </button>
                     </div>
                 </div>
 
@@ -58,143 +75,136 @@ $roleList = RoleBUS::getInstance()->getAllModels();
                         <tr class="align-middle">
                             <th>Role ID</th>
                             <th>Role Name</th>
-                            <th>Permission</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php foreach ($roleList as $role) { ?>
-                            <tr>
-                                <td class='col-2'><?= $role->getId() ?></td>
-                                <td class='col-3'><?= $role->getName() ?></td>
-                                <td class='col-3'>
-                                    <?php
-                                    $permissions = RolePermissionBUS::getInstance()->searchModel($role->getId(), ['role_id']);
-                                    if ($permissions != null) {
-                                        foreach ($permissions as $permission) {
-                                            echo PermissionBUS::getInstance()->getModelById($permission->getPermissionId())->getName() . "<br>";
-                                        }
-                                    } else {
-                                        echo "No permission";
-                                    }
-                                    ?>
-                                </td>
-                                <td class='col-1'>
-                                    <?php if ($role->getName() !== 'customer' && $role->getName() !== 'admin') { ?>
-                                        <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                            data-bs-target="#editRoleModal_<?= $role->getId() ?>">
-                                            <span data-feather="tool"></span>
-                                            Update
-                                        </button>
-                                    <?php } ?>
-                                </td>
-                            </tr>
-                            <!-- Edit Permission Modal -->
-                            <div class="modal fade" id="editRoleModal_<?= $role->getId() ?>" tabindex="-1"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Role Permission</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <form action="">
-                                            <div class="modal-body">
-                                                <label for="inputName" class="form-label">Role Name</label>
-                                                <input type="text" id="inputName_<?= $role->getId() ?>" name="inputName"
-                                                    class="form-control" value="<?php echo $role->getName() ?>" readonly>
-                                                <label for="inputPermission" class="form-label">Permissions</label>
-                                                <div class="form-control">
-                                                    <?php foreach ($permissionList as $permission): ?>
-                                                        <input class="form-check-input mx-1 col-1" type="checkbox"
-                                                            value="<?= $permission->getId() ?>"
-                                                            id="<?= $permission->getId() ?>">
-                                                        <label class="form-check-label col-5" for="<?= $permission->getId() ?>">
-                                                            <?= $permission->getName() ?>
-                                                        </label>
-                                                    <?php endforeach; ?>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" id="updateBtnId"
-                                                    name="updateBtnName">Update</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Edit Role Modal -->
-                        <?php } ?>
+                    <tbody id="areaRole">
+                        <?php
+                        if (isPost()) {
+                            $filterAll = filter();
+                            if (isset($filterAll['loadData'])) {
+                                $roleList = NhomQuyenBUS::getInstance()->getAllModels();
+                                $roleListArray = array_map(function ($role) {
+                                    return $role->toArray();
+                                }, $roleList);
+                                ob_end_clean();
+                                header('Content-Type: application/json');
+                                echo json_encode(['listRoles' => $roleListArray]);
+                                exit;
+                            }
+                        }
+                        ?>
                     </tbody>
                 </table>
             </main>
-
-            <!-- Add Role Modal -->
-            <!-- <div class="modal fade" id="addRoleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Add Role</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form action="">
-                            <div class="modal-body">
-                                <label for="inputName" class="form-label">Role Name</label>
-                                <input type="text" id="inputName" name="inputName" class="form-control">
-                                <label for="inputPermission" class="form-label">Permissions</label>
-                                <div id="inputPermission" class="form-control">
-                                    <?php foreach ($permissionList as $permission): ?>
-                                        <input class="form-check-input mx-1 col-1" type="checkbox"
-                                            value="<?= $permission->getId() ?>" id="<?= $permission->getId() ?>">
-                                        <label class="form-check-label col-5" for="<?= $permission->getId() ?>">
-                                            <?= $permission->getName() ?>
-                                        </label>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div> -->
         </div>
-        <?php
-        //Handle update role permission:
-        if (isset($_POST['updateBtnName'])) {
-            error_log("Update role permission");
+    </div>
 
-            $roleId = $_POST['id'];
-            $roleName = $_POST['name'];
-            $permissions = isset($_POST['permissions']) ? array_unique($_POST['permissions']) : null;
+    <?php include(__DIR__ . '/../inc/app/app.php'); ?>
+    <script src="https://kit.fontawesome.com/2a9b643027.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-            // Delete all existing permissions for the role
-            RolePermissionBUS::getInstance()->deleteModelByRoleId($roleId);
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let areaRole = document.getElementById('areaRole');
+            let addNhomQuyenBtn = document.getElementById('addNhomQuyenBtn');
 
-            if (!is_null($permissions)) {
-                foreach ($permissions as $permission) {
-                    // Add each permission
-                    $rolePermission = new RolePermissionsModel(null, null, null);
-                    $rolePermission->setRoleId($roleId);
-                    $rolePermission->setPermissionId($permission);
-                    RolePermissionBUS::getInstance()->addModel($rolePermission);
-                }
+
+            let roleId = "";
+
+            function loadData() {
+                fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=role.view', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: 'loadData=' + true
+                    })
+                    .then(function(response) {
+                        return response.json();
+                    })
+                    .then(function(data) {
+                        areaRole.innerHTML = toHTMLNhomQuyen(data.listRoles);
+                        addEventToUpdateBtns();
+                        addEventToHideBtns();
+                    });
             }
-            RolePermissionBUS::getInstance()->refreshData();
-            ob_end_clean();
-            return jsonResponse('success', 'Update role permission successfully');
-        }
-        ?>
-        <?php include (__DIR__ . '/../inc/app/app.php'); ?>
-        <script src="https://kit.fontawesome.com/2a9b643027.js" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="<?php echo _WEB_HOST_TEMPLATE ?>/js/dashboard/update_roles_permissions.js"></script>
+
+            loadData();
+
+
+            function toHTMLNhomQuyen(list) {
+                let html = "";
+                list.forEach(function(item) {
+                    html += `
+                        <tr>
+                            <td class='maNhomQuyenCol col-2'>${item.maNhomQuyen}</td>
+                            <td class='col-3'>${item.tenNhomQuyen}</td>
+                            <td class='col-3'>${item.trangThai == 1 ? 'active' : 'inActive'}</td>
+                            <td class='col-1'>
+                                <?php if (checkPermission("Q9", "CN2")) {?>
+                                <button class="updateRoleBtn btn btn-sm btn-warning">
+                                    <span data-feather="tool">Update</span>
+                                </button>
+                                <?php } ?>
+
+                                <?php if (checkPermission("Q9", "CN3")) {?>
+                                <button class="hideRoleBtn btn btn-sm btn-danger">
+                                    <span data-feather="delete">Delete</span>
+                                </button>
+                                <?php } ?>
+                            </td>
+                        </tr>
+                        `
+                });
+                return html;
+            }
+
+            addNhomQuyenBtn.addEventListener('click', function() {
+                roleId = '';
+                window.location.href = 'http://localhost/ShoesStore/frontend/?module=dashboard&view=add_role.view&roleId=' + roleId;
+            })
+
+            function addEventToUpdateBtns() {
+                let updateRoleBtns = document.querySelectorAll('.updateRoleBtn');
+                updateRoleBtns.forEach(function(updateRoleBtn) {
+                    updateRoleBtn.addEventListener('click', function() {
+                        let row = updateRoleBtn.closest('tr');
+                        let roleIdCol = row.querySelector('.maNhomQuyenCol');
+                        roleId = roleIdCol.innerHTML;
+                        window.location.href = 'http://localhost/ShoesStore/frontend/?module=dashboard&view=add_role.view&roleId=' + roleId;
+                    });
+                })
+            }
+
+            function addEventToHideBtns() {
+                let hideRoleBtns = document.querySelectorAll('.hideRoleBtn');
+                hideRoleBtns.forEach(function(hideRoleBtn) {
+                    hideRoleBtn.addEventListener('click', function() {
+                        let row = hideRoleBtn.closest('tr');
+                        let roleIdCol = row.querySelector('.maNhomQuyenCol');
+                        roleId = roleIdCol.innerHTML;
+                        fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=role.view', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                body: 'roleId=' + roleId + '&hide=' + true
+                            })
+                            .then(function(response) {
+                                return response.json();
+                            })
+                            .then(function(data) {
+                                alert(data.message);
+                                loadData();
+                            });
+                    });
+                })
+            }
+
+        });
+    </script>
 </body>
 
 </html>

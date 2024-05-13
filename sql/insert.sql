@@ -930,42 +930,108 @@ VALUES
     (50, 43, 10),
     (50, 44, 10);
 
-INSERT INTO
-    roles (id, name)
-VALUES
-    ('1', 'admin'),
-    ('2', 'manager'),
-    ('3', 'employee'),
-    ('4', 'customer');
+INSERT INTO chucnang (maChucNang, tenChucNang)
+VALUES 
+    ('CN1', 'Xem'),
+    ('CN2', 'Sửa'),
+    ('CN3', 'Xoá'),
+    ('CN4', 'Tạo');
 
-INSERT INTO
-    `permissions`(id, name)
+INSERT INTO quyen (maQuyen, tenQuyen)
+VALUES 
+    ('Q1', 'Thống kê doanh thu'),
+    ('Q2', 'Quản lí đơn hàng'),
+    ('Q3', 'Quản lí sản phẩm'),
+    ('Q4', 'Quản lí danh mục'),
+    ('Q5', 'Quản lí kích cỡ'),
+    ('Q6', 'Quản lí mã giảm giá'),
+    ('Q7', 'Quản lí kho hàng'),
+	 ('Q8', 'Quản lí tài khoản'),
+	 ('Q9', 'Quản lí phân quyền');
+	 
+INSERT INTO nhomquyen (maNhomQuyen, tenNhomQuyen, trangThai)
+VALUES 
+   ('NQ1', 'Admin', 1),
+	('NQ2', 'Manager', 1),
+	('NQ3', 'Employee', 1),
+	('NQ4', 'Customer', 1);
+	
+INSERT INTO chitietquyen(maNhomQuyen, maChucNang, maQuyen)
 VALUES
-    (1, 'Product Management'),
-    (2, 'Inventory Management'),
-    (3, 'Invoice Management'),
-    (4, 'Account Management'),
-    (5, 'Sales Statistics'),
-    (6, 'Permission Management');
-
-INSERT INTO
-    `roles_permissions`(`role_id`, `permission_id`)
-VALUES
-    (1, 1),
-    (1, 2),
-    (1, 3),
-    (1, 4),
-    (1, 5),
-    (1, 6),
-    (2, 1),
-    (2, 2),
-    (2, 3),
-    (2, 4),
-    (2, 5),
-    (3, 1),
-    (3, 3),
-    (3, 5);
-
+    -- Admin có full quyền và chức năng
+    ('NQ1', 'CN1', 'Q1'),
+    ('NQ1', 'CN2', 'Q1'),
+    ('NQ1', 'CN3', 'Q1'),
+    ('NQ1', 'CN4', 'Q1'),
+    ('NQ1', 'CN1', 'Q2'),
+    ('NQ1', 'CN2', 'Q2'),
+    ('NQ1', 'CN3', 'Q2'),
+    ('NQ1', 'CN4', 'Q2'),
+    ('NQ1', 'CN1', 'Q3'),
+    ('NQ1', 'CN2', 'Q3'),
+    ('NQ1', 'CN3', 'Q3'),
+    ('NQ1', 'CN4', 'Q3'),
+    ('NQ1', 'CN1', 'Q4'),
+    ('NQ1', 'CN2', 'Q4'),
+    ('NQ1', 'CN3', 'Q4'),
+    ('NQ1', 'CN4', 'Q4'),
+    ('NQ1', 'CN1', 'Q5'),
+    ('NQ1', 'CN2', 'Q5'),
+    ('NQ1', 'CN3', 'Q5'),
+    ('NQ1', 'CN4', 'Q5'),
+    ('NQ1', 'CN1', 'Q6'),
+    ('NQ1', 'CN2', 'Q6'),
+    ('NQ1', 'CN3', 'Q6'),
+    ('NQ1', 'CN4', 'Q6'),
+    ('NQ1', 'CN1', 'Q7'),
+    ('NQ1', 'CN2', 'Q7'),
+    ('NQ1', 'CN3', 'Q7'),
+    ('NQ1', 'CN4', 'Q7'),
+    ('NQ1', 'CN1', 'Q8'),
+    ('NQ1', 'CN2', 'Q8'),
+    ('NQ1', 'CN3', 'Q8'),
+    ('NQ1', 'CN4', 'Q8'),
+    ('NQ1', 'CN1', 'Q9'),
+    ('NQ1', 'CN2', 'Q9'),
+    ('NQ1', 'CN3', 'Q9'),
+    ('NQ1', 'CN4', 'Q9'),
+    
+    ('NQ2', 'CN1', 'Q1'),
+    ('NQ2', 'CN2', 'Q1'),
+    ('NQ2', 'CN3', 'Q1'),
+    ('NQ2', 'CN4', 'Q1'),
+    ('NQ2', 'CN1', 'Q2'),
+    ('NQ2', 'CN2', 'Q2'),
+    ('NQ2', 'CN3', 'Q2'),
+    ('NQ2', 'CN4', 'Q2'),
+    ('NQ2', 'CN1', 'Q3'),
+    ('NQ2', 'CN2', 'Q3'),
+    ('NQ2', 'CN3', 'Q3'),
+    ('NQ2', 'CN4', 'Q3'),
+    ('NQ2', 'CN1', 'Q4'),
+    ('NQ2', 'CN2', 'Q4'),
+    ('NQ2', 'CN3', 'Q4'),
+    ('NQ2', 'CN4', 'Q4'),
+    ('NQ2', 'CN1', 'Q5'),
+    ('NQ2', 'CN2', 'Q5'),
+    ('NQ2', 'CN3', 'Q5'),
+    ('NQ2', 'CN4', 'Q5'),
+    ('NQ2', 'CN1', 'Q6'),
+    ('NQ2', 'CN2', 'Q6'),
+    ('NQ2', 'CN3', 'Q6'),
+    ('NQ2', 'CN4', 'Q6'),
+    ('NQ2', 'CN1', 'Q7'),
+    ('NQ2', 'CN2', 'Q7'),
+    ('NQ2', 'CN3', 'Q7'),
+    ('NQ2', 'CN4', 'Q7'),
+    
+    ('NQ3', 'CN1', 'Q2'),
+    ('NQ3', 'CN2', 'Q2'),
+    ('NQ3', 'CN4', 'Q2'),
+    ('NQ3', 'CN1', 'Q3'),
+    ('NQ3', 'CN2', 'Q3'),
+    ('NQ3', 'CN4', 'Q3');
+    
 INSERT INTO
     `payment_methods`(`method_name`)
 VALUES
@@ -976,6 +1042,7 @@ VALUES
  Default pass: 1234567890 
  Encoded pass: $2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO
  */
+ 
 INSERT INTO
     users (
         id,
@@ -986,7 +1053,7 @@ INSERT INTO
         phone,
         gender,
         image,
-        role_id,
+        maNhomQuyen,
         status,
         address
     )
@@ -999,8 +1066,8 @@ VALUES
         'Admin',
         '1234567890',
         'M',
-        'image1.jpg',
-        1,
+        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
+        'NQ1',
         'active',
         '123 Admin St'
     ),
@@ -1012,8 +1079,8 @@ VALUES
         'Manager',
         '1234567891',
         'F',
-        'image2.jpg',
-        2,
+        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
+        'NQ2',
         'active',
         '456 Manager St'
     ),
@@ -1025,8 +1092,8 @@ VALUES
         'Employee 1',
         '1234567892',
         'M',
-        'image3.jpg',
-        3,
+        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
+        'NQ3',
         'active',
         '789 Employee St'
     ),
@@ -1038,8 +1105,8 @@ VALUES
         'Employee 2',
         '1234567893',
         'F',
-        'image4.jpg',
-        3,
+        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
+        'NQ3',
         'active',
         '012 Employee St'
     ),
@@ -1051,8 +1118,8 @@ VALUES
         'Customer 1',
         '1234567894',
         'M',
-        'image5.jpg',
-        4,
+        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
+        'NQ4',
         'active',
         '345 Customer St'
     ),
@@ -1064,8 +1131,8 @@ VALUES
         'Customer 2',
         '1234567895',
         'F',
-        'image6.jpg',
-        4,
+        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
+        'NQ4',
         'active',
         '678 Customer St'
     ),
@@ -1077,8 +1144,8 @@ VALUES
         'Customer 3',
         '1234567896',
         'M',
-        'image7.jpg',
-        4,
+        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
+        'NQ4',
         'active',
         '901 Customer St'
     ),
@@ -1090,8 +1157,8 @@ VALUES
         'Customer 4',
         '1234567897',
         'F',
-        'image8.jpg',
-        4,
+        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
+        'NQ4',
         'active',
         '234 Customer St'
     ),
@@ -1103,8 +1170,8 @@ VALUES
         'Customer 5',
         '1234567898',
         'M',
-        'image9.jpg',
-        4,
+        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
+        'NQ4',
         'active',
         '567 Customer St'
     ),
@@ -1116,76 +1183,12 @@ VALUES
         'Customer 6',
         '1234567899',
         'F',
-        'image10.jpg',
-        4,
+        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
+        'NQ4',
         'active',
         '890 Customer St'
     );
-
-INSERT INTO
-    `users_permissions`(`user_id`, `permission_id`, `status`)
-VALUES
-    (1, 1, 'ACTIVE'),
-    (1, 2, 'ACTIVE'),
-    (1, 3, 'ACTIVE'),
-    (1, 4, 'ACTIVE'),
-    (1, 5, 'ACTIVE'),
-    (1, 6, 'ACTIVE'),
-    (2, 1, 'ACTIVE'),
-    (2, 2, 'ACTIVE'),
-    (2, 3, 'ACTIVE'),
-    (2, 4, 'ACTIVE'),
-    (2, 5, 'ACTIVE'),
-    (2, 6, 'INACTIVE'),
-    (3, 1, 'ACTIVE'),
-    (3, 2, 'INACTIVE'),
-    (3, 3, 'ACTIVE'),
-    (3, 4, 'INACTIVE'),
-    (3, 5, 'ACTIVE'),
-    (3, 6, 'INACTIVE'),
-    (4, 1, 'ACTIVE'),
-    (4, 2, 'INACTIVE'),
-    (4, 3, 'ACTIVE'),
-    (4, 4, 'INACTIVE'),
-    (4, 5, 'ACTIVE'),
-    (4, 6, 'INACTIVE'),
-    (5, 1, 'ACTIVE'),
-    (5, 2, 'INACTIVE'),
-    (5, 3, 'ACTIVE'),
-    (5, 4, 'INACTIVE'),
-    (5, 5, 'ACTIVE'),
-    (5, 6, 'INACTIVE'),
-    (6, 1, 'ACTIVE'),
-    (6, 2, 'INACTIVE'),
-    (6, 3, 'ACTIVE'),
-    (6, 4, 'INACTIVE'),
-    (6, 5, 'ACTIVE'),
-    (6, 6, 'INACTIVE'),
-    (7, 1, 'ACTIVE'),
-    (7, 2, 'INACTIVE'),
-    (7, 3, 'ACTIVE'),
-    (7, 4, 'INACTIVE'),
-    (7, 5, 'ACTIVE'),
-    (7, 6, 'INACTIVE'),
-    (8, 1, 'ACTIVE'),
-    (8, 2, 'INACTIVE'),
-    (8, 3, 'ACTIVE'),
-    (8, 4, 'INACTIVE'),
-    (8, 5, 'ACTIVE'),
-    (8, 6, 'INACTIVE'),
-    (9, 1, 'ACTIVE'),
-    (9, 2, 'INACTIVE'),
-    (9, 3, 'INACTIVE'),
-    (9, 4, 'INACTIVE'),
-    (9, 5, 'ACTIVE'),
-    (9, 6, 'INACTIVE'),
-    (10, 1, 'ACTIVE'),
-    (10, 2, 'INACTIVE'),
-    (10, 3, 'ACTIVE'),
-    (10, 4, 'INACTIVE'),
-    (10, 5, 'ACTIVE'),
-    (10, 6, 'INACTIVE');
-
+    
 INSERT INTO
     coupons (
         id,

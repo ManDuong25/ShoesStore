@@ -15,7 +15,7 @@ if (!isAllowToDashBoard()) {
     die('Access denied');
 }
 
-if (!checkPermission(2)) {
+if (!checkPermission("Q7", "CN1")) {
     die('Access denied');
 }
 
@@ -43,13 +43,14 @@ $productList = ProductBUS::getInstance()->getAllModels();
                     <h1 class="h2">
                         <?= $title ?>
                     </h1>
-
+                    <?php if (checkPermission("Q7", "CN4")) {?>
                     <div class="btn-toolbar mb-2 mb-0">
                         <button type="button" class="btn btn-sm btn-success align-middle" data-bs-toggle="modal" data-bs-target="#addModal" id="addSizeItem" class="addBtn">
                             <span data-feather="plus"></span>
                             Add
                         </button>
                     </div>
+                    <?php } ?>
                 </div>
 
                 <div class="search-group input-group">
@@ -345,12 +346,16 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                     <td>${sizeItem.size}</td>
                                     <td>${sizeItem.quantity}</td>
                                     <td>
+                                        <?php if (checkPermission("Q7", "CN2")) {?>
                                         <button class="btn btn-sm btn-warning" name="updateBtn">
                                             <span data-feather="tool">Sửa</span>
                                         </button>
+                                        <?php } ?>
+                                        <?php if (checkPermission("Q7", "CN3")) {?>
                                         <button class="deleteSizeItemBtn btn btn-sm btn-danger" name="deleteSizeItemBtn">
                                             <span data-feather="trash-2">Xoá</span>
                                         </button>
+                                        <?php } ?>
                                     </td>
                                 </tr>
                             `;

@@ -4,7 +4,6 @@ use backend\bus\PaymentsBUS;
 use backend\bus\ProductBUS;
 use backend\bus\TokenLoginBUS;
 use backend\bus\UserBUS;
-use backend\enums\RolesEnums;
 use backend\services\session;
 use backend\bus\OrderItemsBUS;
 use backend\bus\OrdersBUS;
@@ -17,7 +16,7 @@ $token = session::getInstance()->getSession('tokenLogin');
 $tokenModel = TokenLoginBUS::getInstance()->getModelByToken($token);
 $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
 //Only customer can access this page:
-if ($userModel->getRoleId() != 4) {
+if ($userModel->getMaNhomQuyen() != "NQ4") {
     //Echo a message then redirect to the user's homepage
     echo '<script>alert("You are not authorized to access this page!")</script>';
     redirect('?module=indexphp&action=userhomepage');
@@ -25,7 +24,7 @@ if ($userModel->getRoleId() != 4) {
 
 $order = OrdersBUS::getInstance()->getModelById($orderId);
 
-if ($order->getUserId() != $userModel->getId() && $userModel->getRoleId() == RolesEnums::CUSTOMER) {
+if ($order->getUserId() != $userModel->getId() && $userModel->getMaNhomQuyen() == "NQ4") {
     // The order doesn't belong to the user, return a 403 Forbidden status code
     http_response_code(403);
     echo 'You do not have permission to view this order.';
@@ -33,10 +32,7 @@ if ($order->getUserId() != $userModel->getId() && $userModel->getRoleId() == Rol
 } else {
     // Admin, manager, employee can view all orders:
     if (
-        $userModel->getRoleId() != RolesEnums::CUSTOMER &&
-        ($userModel->getRoleId() == RolesEnums::ADMIN ||
-            $userModel->getRoleId() == RolesEnums::MANAGER ||
-            $userModel->getRoleId() == RolesEnums::EMPLOYEE)
+        $userModel->getMaNhomQuyen() != "NQ4"
     ) {
         $orderId = $_GET['orderId'];
         $order = OrdersBUS::getInstance()->getModelById($orderId);

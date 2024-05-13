@@ -15,58 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let firstCard = document.querySelector('.card-body');
     let resetButton = firstCard.querySelector('#resetButton');
 
-    // Attach click event listener to the reset button
-    resetButton.addEventListener('click', (event) => {
-        // Get the input fields and checkboxes
-        let username = document.getElementById('usernameId');
-        let name = document.getElementById('accountNameId');
-        let email = document.getElementById('mailAccountId');
-        let maleGender = document.getElementById('male');
-        let femaleGender = document.getElementById('female');
-
-        // Check for any of these changes then reset, if it remains the same, do nothing:
-        if (username.value !== username.defaultValue ||
-            name.value !== name.defaultValue ||
-            email.value !== email.defaultValue ||
-            maleGender.checked !== maleGender.defaultChecked ||
-            femaleGender.checked !== femaleGender.defaultChecked) {
-
-            // Reset the input fields and checkboxes to their original values
-            username.value = username.defaultValue;
-            name.value = name.defaultValue;
-            email.value = email.defaultValue;
-            maleGender.checked = maleGender.defaultChecked;
-            femaleGender.checked = femaleGender.defaultChecked;
-        }
-
-        // Use ajax to send the data only if there is a change:
-        $.ajax({
-            url: "http://localhost/ShoesStore/frontend/index.php?module=account&action=profilesetting",
-            type: "POST",
-            dataType: "json",
-            data: {
-                username: username.value,
-                name: name.value,
-                email: email.value,
-                maleGender: maleGender.checked,
-                femaleGender: femaleGender.checked,
-                saveButton: true,
-            },
-            success: function (data) {
-                console.log("sent successfully");
-                if (data.status == "success") {
-                    alert(data.message);
-                } else if (data.status == "error") {
-                    alert(data.message);
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error("Error:", error);
-                alert("Error occurred. Please try again.");
-            },
-        });
-    });
-
     // Select the image upload button
     let imageUploadButton = document.getElementById('imageUploadIdButton');
     let showImage = document.getElementById('showImageId');
@@ -83,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     // Create an AJAX request
                     let xhr = new XMLHttpRequest();
-                    xhr.open('POST', 'http://localhost/ShoesStore/frontend/index.php?module=account&action=profilesetting', true);
+                    xhr.open('POST', 'http://localhost/ShoesStore/frontend/?module=account&action=profilesetting', true);
 
                     // Set up a handler for when the request finishes
                     xhr.onload = function () {
@@ -104,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Select the save button inside the first card
+
     //let saveButton = firstCard.querySelector('#applyChangesFirstCard');
     let saveButton = document.getElementById('applyChangesFirstCard');
     if (saveButton) {
@@ -115,27 +63,53 @@ document.addEventListener('DOMContentLoaded', function () {
             let maleGender = document.getElementById('male');
             let femaleGender = document.getElementById('female');
 
-            if (username.value !== username.defaultValue ||
-                name.value !== name.defaultValue ||
-                email.value !== email.defaultValue ||
-                maleGender.checked !== maleGender.defaultChecked ||
-                femaleGender.checked !== femaleGender.defaultChecked) {
-                // Use ajax to send the data only if there is a change:
-                $.ajax({
-                    url: "http://localhost/ShoesStore/frontend/index.php?module=account&action=profilesetting",
-                    type: "POST",
-                    dataType: "json",
-                    data: {
-                        username: username.value,
-                        'account-name': name.value,
-                        mailAccount: email.value,
-                        maleGender: maleGender.checked,
-                        femaleGender: femaleGender.checked,
-                        gender: maleGender.checked ? 'male' : 'female',
-                        saveButton: true,
-                    },
-                });
+            if (name.value === "") {
+                alert("Please enter your name!");
+                return;
             }
+
+            if (email.value === "") {
+                alert("Please enter your email!");
+                return;
+            } else {
+                // Biểu thức chính quy để kiểm tra định dạng email
+                var emailPattern = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
+
+
+                // Kiểm tra email có khớp với định dạng không
+                if (!emailPattern.test(email.value)) {
+                    alert("Please enter a valid email address!");
+                    return;
+                }
+            }
+            // Use ajax to send the data only if there is a change:
+            $.ajax({
+                url: "http://localhost/ShoesStore/frontend/?module=account&action=profilesetting",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    username: username.value,
+                    'account-name': name.value,
+                    mailAccount: email.value,
+                    maleGender: maleGender.checked,
+                    femaleGender: femaleGender.checked,
+                    gender: maleGender.checked ? 'male' : 'female',
+                    showImage: showImage.src,
+                    saveButton: true,
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.status == "success") {
+                        alert(data.message);
+                    } else if (data.status == "error") {
+                        alert(data.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error:", error);
+                    alert("Error occurred. Please try again.");
+                },
+            });
         });
     }
 
@@ -178,30 +152,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            //Check for changes then use ajax to send the changed data:
-            if (currentPassword.value !== currentPassword.defaultValue ||
-                newPassword.value !== newPassword.defaultValue ||
-                confirmPassword.value !== confirmPassword.defaultValue) {
-                // Use ajax to send the data only if there is a change:
-                $.ajax({
-                    url: "http://localhost/ShoesStore/frontend/index.php?module=account&action=profilesetting",
-                    type: "POST",
-                    dataType: "json",
-                    data: {
-                        'saveButtonPassword': true,
-                        'currentPassword': currentPassword.value,
-                        'newPassword': newPassword.value,
-                        'repeatNewPassword': confirmNewPassword.value
-                    },
-                    success: function (data) {
-                        if (data.status == "success") {
-                            alert(data.message);
-                        } else if (data.status == "error") {
-                            alert(data.message);
-                        }
-                    },
-                });
-            }
+            $.ajax({
+                url: "http://localhost/ShoesStore/frontend/index.php?module=account&action=profilesetting",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    'saveButtonPassword': true,
+                    'currentPassword': currentPassword.value,
+                    'newPassword': newPassword.value,
+                    'repeatNewPassword': confirmNewPassword.value
+                },
+                success: function (data) {
+                    currentPassword.value = "";
+                    newPassword.value = "";
+                    confirmNewPassword.value = "";
+                    if (data.status == "success") {
+                        alert(data.message);
+                    } else if (data.status == "error") {
+                        alert(data.message);
+                    }
+                },
+            });
         });
     }
 
@@ -217,6 +188,12 @@ document.addEventListener('DOMContentLoaded', function () {
             if (phoneNumber.value === "") {
                 alert("Please enter your phone number!");
                 return;
+            } else {
+                var regex = /(84|0[3|5|7|8|9])+([0-9]{8})/;
+                if (!regex.test(phoneNumber.value)) {
+                    alert("Invalid phone number!");
+                    return;
+                }
             }
 
             //Check for empty address field:
@@ -233,6 +210,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     'phone-customer': phoneNumber.value,
                     'address-customer': address.value,
                     saveContactButton: true,
+                },
+                success: function (data) {
+                    if (data.status == "success") {
+                        alert(data.message);
+                    } else if (data.status == "error") {
+                        alert(data.message);
+                    }
                 },
             });
 

@@ -17,7 +17,7 @@ if (!isAllowToDashBoard()) {
     die('Access denied');
 }
 
-if (!checkPermission(4)) {
+if (!checkPermission("Q8", "CN2")) {
     die('Access denied');
 }
 

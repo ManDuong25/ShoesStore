@@ -1,5 +1,6 @@
 <?php
 ob_start();
+
 use backend\bus\UserBUS;
 use backend\bus\OrdersBUS;
 use backend\bus\TokenLoginBUS;
@@ -14,7 +15,7 @@ $tokenModel = TokenLoginBUS::getInstance()->getModelByToken($token);
 $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
 
 //Only customer can access this page:
-if ($userModel->getRoleId() != 4) {
+if ($userModel->getMaNhomQuyen() != "NQ4") {
     //Echo a message then redirect to the user's homepage
     echo '<script>alert("You are not authorized to access this page!")</script>';
     redirect('?module=indexphp&action=userhomepage');
@@ -44,25 +45,20 @@ $ordersListFromUser = OrdersBUS::getInstance()->getOrdersByUserId($userModel->ge
             <div class="row no-gutters row-bordered row-border-light">
                 <div class="col-md-3 pt-0">
                     <div class="list-group list-group-flush account-settings-links">
-                        <a class="list-group-item list-group-item-action active" data-toggle="list"
-                            href="#account-general">General</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list"
-                            href="#account-change-password">Change password</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list"
-                            href="#account-info">Info</a>
+                        <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">General</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Change password</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-info">Info</a>
                     </div>
                 </div>
                 <div class="col-md-9">
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="account-general">
                             <div class="card-body media align-items-center">
-                                <img src="<?php echo $userModel->getImage(); ?>" alt="" class="d-block ui-w-80"
-                                    name="showImage" id="showImageId">
+                                <img src="<?php echo $userModel->getImage(); ?>" alt="" class="d-block ui-w-80" name="showImage" id="showImageId">
                                 <div class="media-body ml-4">
                                     <label class="btn btn-outline-primary">
                                         Upload new photo
-                                        <input type="file" class="account-settings-fileinput" name="imageUploadButton"
-                                            id="imageUploadIdButton" accept=".jpg, .jpeg, .png">
+                                        <input type="file" class="account-settings-fileinput" name="imageUploadButton" id="imageUploadIdButton" accept=".jpg, .jpeg, .png">
                                     </label> &nbsp;
                                     <?php
                                     if (isPost()) {
@@ -74,8 +70,6 @@ $ordersListFromUser = OrdersBUS::getInstance()->getOrdersByUserId($userModel->ge
                                         }
                                     }
                                     ?>
-                                    <button type="button" class="btn btn-default md-btn-flat" name="resetButton"
-                                        id="resetButton">Reset</button>
                                     <div class="text-bold small mt-1">Allowed JPG, JPEG or PNG. Max size of 1MB</div>
                                 </div>
                             </div>
@@ -83,18 +77,15 @@ $ordersListFromUser = OrdersBUS::getInstance()->getOrdersByUserId($userModel->ge
                             <div class="card-body">
                                 <div class="form-group">
                                     <label class="form-label">Username</label>
-                                    <input type="text" class="form-control mb-1" name="username" id="usernameId"
-                                        value="<?php echo $userModel->getUsername() ?>" required>
+                                    <input type="text" class="form-control mb-1" name="username" id="usernameId" value="<?php echo $userModel->getUsername() ?>" required readonly>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Name</label>
-                                    <input type="text" class="form-control" name="account-name" id="accountNameId"
-                                        value="<?php echo $userModel->getName() ?>" required>
+                                    <input type="text" class="form-control" name="account-name" id="accountNameId" value="<?php echo $userModel->getName() ?>" required>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">E-mail</label>
-                                    <input type="text" class="form-control mb-1" name="mailAccount" id="mailAccountId"
-                                        value="<?php echo $userModel->getEmail() ?>" required>
+                                    <input type="text" class="form-control mb-1" name="mailAccount" id="mailAccountId" value="<?php echo $userModel->getEmail() ?>" required>
                                     <!-- <div class="alert alert-warning mt-3">
                                         Your email is not confirmed. Please check your inbox.<br>
                                         <a href="javascript:void(0)">Resend confirmation</a>
@@ -104,15 +95,13 @@ $ordersListFromUser = OrdersBUS::getInstance()->getOrdersByUserId($userModel->ge
                                     <!-- Radio button for choosing gender male or female -->
                                     <label class="form-label">Gender</label>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" id="male"
-                                            value="male" <?php echo ($userModel->getGender() == 0) ? 'checked' : ''; ?>>
+                                        <input class="form-check-input" type="radio" name="gender" id="male" value="male" <?php echo ($userModel->getGender() == 0) ? 'checked' : ''; ?>>
                                         <label class="form-check-label" for="male">
                                             Male
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" id="female"
-                                            value="female" <?php echo ($userModel->getGender() == 1) ? 'checked' : ''; ?>>
+                                        <input class="form-check-input" type="radio" name="gender" id="female" value="female" <?php echo ($userModel->getGender() == 1) ? 'checked' : ''; ?>>
                                         <label class="form-check-label" for="female">
                                             Female
                                         </label>
@@ -120,8 +109,7 @@ $ordersListFromUser = OrdersBUS::getInstance()->getOrdersByUserId($userModel->ge
                                 </div>
                                 <div class="form-group">
                                     <div class="text-right mt-3">
-                                        <button type="button" class="btn btn-primary" name="saveButton"
-                                            id="applyChangesFirstCard">Apply changes</button>&nbsp;
+                                        <button type="button" class="btn btn-primary" name="saveButton" id="applyChangesFirstCard">Apply changes</button>&nbsp;
                                     </div>
                                 </div>
                             </div>
@@ -155,6 +143,7 @@ $ordersListFromUser = OrdersBUS::getInstance()->getOrdersByUserId($userModel->ge
                                     $accountName = $_POST['account-name'];
                                     $mailAccount = $_POST['mailAccount'];
                                     $gender = ($_POST['gender'] == 'male') ? 0 : 1;
+                                    $showImage = ($_POST['showImage']);
 
                                     $userBUS = UserBUS::getInstance();
 
@@ -175,7 +164,7 @@ $ordersListFromUser = OrdersBUS::getInstance()->getOrdersByUserId($userModel->ge
                                     }
 
                                     // Save the updated user model
-                                    $userBUS->updateModel($userModel);
+                                    $result = $userBUS->updateModel($userModel);
                                     $userBUS->refreshData();
                                     ob_end_clean();
                                     return jsonResponse('success', 'Apply changes successfully!');
@@ -188,8 +177,7 @@ $ordersListFromUser = OrdersBUS::getInstance()->getOrdersByUserId($userModel->ge
                             <div class="card-body pb-2">
                                 <div class="form-group">
                                     <label class="form-label">Current password</label>
-                                    <input type="password" class="form-control" name="currentPassword"
-                                        id="currentPassword">
+                                    <input type="password" class="form-control" name="currentPassword" id="currentPassword">
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">New password</label>
@@ -197,53 +185,43 @@ $ordersListFromUser = OrdersBUS::getInstance()->getOrdersByUserId($userModel->ge
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Repeat new password</label>
-                                    <input type="password" class="form-control" name="repeatNewPassword"
-                                        id="repeatNewPassword">
+                                    <input type="password" class="form-control" name="repeatNewPassword" id="repeatNewPassword">
                                 </div>
                                 <div class="text-right mt-3">
-                                    <button type="button" class="btn btn-primary" name="saveButtonPassword"
-                                        id="applyChangesSecondCard">Change password</button>&nbsp;
+                                    <button type="button" class="btn btn-primary" name="saveButtonPassword" id="applyChangesSecondCard">Change password</button>&nbsp;
                                 </div>
                                 <?php
                                 if (isPost()) {
                                     if (isset($_POST['saveButtonPassword'])) {
-                                        error_log("Change password button clicked!");
 
                                         $currentPassword = $_POST['currentPassword'];
                                         $newPassword = $_POST['newPassword'];
                                         $repeatNewPassword = $_POST['repeatNewPassword'];
                                         $userBUS = UserBUS::getInstance();
-
                                         $passwordHash = $userModel->getPassword();
-                                        error_log("Current password hash: $passwordHash");
-
                                         if (!PasswordUtilities::getInstance()->verifyPassword($currentPassword, $passwordHash)) {
-                                            error_log("Current password is incorrect!");
-                                            //echo '<script>alert("Current password is incorrect!")</script>';
+                                            ob_end_clean();
                                             return jsonResponse('error', 'Current password is incorrect!');
                                         }
 
                                         if ($newPassword != $repeatNewPassword) {
-                                            error_log("New passwords do not match!");
+                                            ob_end_clean();
                                             return jsonResponse('error', 'New passwords do not match!');
                                         }
 
                                         $newPasswordHash = PasswordUtilities::getInstance()->hashPassword($newPassword);
-                                        error_log("New password hash: $newPasswordHash");
 
                                         $userModel->setPassword($newPasswordHash);
                                         $result = $userBUS->updateModel($userModel);
-                                        error_log("Update result: $result");
+                                        $userBUS->refreshData();
 
                                         if (!$result) {
-                                            error_log("Failed to change password!");
+                                            ob_end_clean();
                                             return jsonResponse('error', 'Failed to change password!');
+                                        } else {
+                                            ob_end_clean();
+                                            return jsonResponse('success', 'Password changed!');
                                         }
-
-                                        $userBUS->refreshData();
-                                        error_log("Changed password successfully!");
-                                        echo '<script>location.reload();</script>';
-                                        return jsonResponse('success', 'Changed password successfully!');
                                     }
                                 }
                                 ?>
@@ -255,17 +233,14 @@ $ordersListFromUser = OrdersBUS::getInstance()->getOrdersByUserId($userModel->ge
                                 <h6 class="mb-4">Contacts</h6>
                                 <div class="form-group">
                                     <label class="form-label">Phone:</label>
-                                    <input type="text" class="form-control" name="phone-customer" id="phoneField"
-                                        value="<?php echo $userModel->getPhone() ?>">
+                                    <input type="text" class="form-control" name="phone-customer" id="phoneField" value="<?php echo $userModel->getPhone() ?>">
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Address:</label>
-                                    <input type="text" class="form-control" name="address-customer" id="addressField"
-                                        value="<?php echo $userModel->getAddress() ?>">
+                                    <input type="text" class="form-control" name="address-customer" id="addressField" value="<?php echo $userModel->getAddress() ?>">
                                 </div>
                                 <div class="text-right mt-3">
-                                    <button type="button" class="btn btn-primary" name="saveContactButton"
-                                        id="applyChangesThirdCard">Apply</button>&nbsp;
+                                    <button type="button" class="btn btn-primary" name="saveContactButton" id="applyChangesThirdCard">Apply</button>&nbsp;
                                 </div>
 
                                 <?php
@@ -277,13 +252,13 @@ $ordersListFromUser = OrdersBUS::getInstance()->getOrdersByUserId($userModel->ge
 
                                         if ($phone != $userModel->getPhone()) {
                                             if (UserBUS::getInstance()->isPhoneTaken($phone, $userModel->getId())) {
-                                                error_log("Phone number is already taken!");
+                                                ob_end_clean();
                                                 return jsonResponse('error', 'Phone number is already taken!');
                                             } else {
                                                 if (validation::isValidPhoneNumber($phone)) {
                                                     $userModel->setPhone($phone);
                                                 } else {
-                                                    error_log("Invalid phone number!");
+                                                    ob_end_clean();
                                                     return jsonResponse('error', 'Invalid phone number!');
                                                 }
                                             }
@@ -293,9 +268,15 @@ $ordersListFromUser = OrdersBUS::getInstance()->getOrdersByUserId($userModel->ge
                                             $userModel->setAddress($address);
                                         }
 
-                                        $userBUS->updateModel($userModel);
+                                        $result = $userBUS->updateModel($userModel);
                                         $userBUS->refreshData();
-                                        return jsonResponse('success', 'Apply changes successfully!');
+                                        if ($result) {
+                                            ob_end_clean();
+                                            return jsonResponse('success', 'Apply changes successfully!');
+                                        } else {
+                                            ob_end_clean();
+                                            return jsonResponse('error', 'Something went wrong!');
+                                        }
                                     }
                                 }
                                 ?>
@@ -307,7 +288,7 @@ $ordersListFromUser = OrdersBUS::getInstance()->getOrdersByUserId($userModel->ge
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="<?php echo _WEB_HOST_TEMPLATE ?>/js/email-decode.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo _WEB_HOST_TEMPLATE ?>/js/profile_setting.js"></script>
 </body>

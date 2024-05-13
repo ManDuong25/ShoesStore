@@ -11,7 +11,7 @@ if (!isAllowToDashBoard()) {
     die('Access denied');
 }
 
-if (!checkPermission(3)) {
+if (!checkPermission("Q2", "CN1")) {
     die('Access denied');
 }
 
@@ -40,13 +40,15 @@ function showOrder($order)
     echo '<td>' . $paymentMethod->getMethodName() . '</td>';
     echo '<td>' . $order->getTotalAmount() . '</td>';
     echo '<td class="text-center">';
-    echo '<select class="form-control" name="status" id="orderStatus" onchange="updateOrderStatus(' . $order->getId() . ', this.value)">';
-    echo '<option value="PENDING"' . (strtoupper($order->getStatus()) == OrderStatusEnums::PENDING ? ' selected' : '') . '>Pending</option>';
-    echo '<option value="SHIPPING"' . (strtoupper($order->getStatus()) == OrderStatusEnums::SHIPPING ? ' selected' : '') . '>Shipping</option>';
-    echo '<option value="COMPLETED"' . (strtoupper($order->getStatus()) == OrderStatusEnums::COMPLETED ? ' selected' : '') . '>Completed</option>';
-    echo '<option value="CANCELED"' . (strtoupper($order->getStatus()) == OrderStatusEnums::CANCELED ? ' selected' : '') . '>Canceled</option>';
-    echo '<option value="ACCEPTED"' . (strtoupper($order->getStatus()) == OrderStatusEnums::ACCEPTED ? ' selected' : '') . '>Accepted</option>';
-    echo '</select>';
+    if (checkPermission("Q2", "CN2")) {
+        echo '<select class="form-control" name="status" id="orderStatus" onchange="updateOrderStatus(' . $order->getId() . ', this.value)">';
+        echo '<option value="PENDING"' . (strtoupper($order->getStatus()) == OrderStatusEnums::PENDING ? ' selected' : '') . '>Pending</option>';
+        echo '<option value="SHIPPING"' . (strtoupper($order->getStatus()) == OrderStatusEnums::SHIPPING ? ' selected' : '') . '>Shipping</option>';
+        echo '<option value="COMPLETED"' . (strtoupper($order->getStatus()) == OrderStatusEnums::COMPLETED ? ' selected' : '') . '>Completed</option>';
+        echo '<option value="CANCELED"' . (strtoupper($order->getStatus()) == OrderStatusEnums::CANCELED ? ' selected' : '') . '>Canceled</option>';
+        echo '<option value="ACCEPTED"' . (strtoupper($order->getStatus()) == OrderStatusEnums::ACCEPTED ? ' selected' : '') . '>Accepted</option>';
+        echo '</select>';
+    }
     echo '</td>';
     echo '<td class="text-center">';
     echo '<a href="http://localhost/ShoesStore/frontend/index.php?module=dashboard&view=order.view.detail&customerOrderId=' . $order->getId() . '">';

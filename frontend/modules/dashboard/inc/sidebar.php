@@ -22,7 +22,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
         <ul class="nav flex-column">
             <li class="nav-item">
                 <?php
-                if (checkPermission(5)) {
+                if (checkPermission("Q1", "CN1")) {
                     ?>
                     <a class="nav-link <?php echo isActivePage($_GET['view'], 'dashboard.view'); ?>" aria-current="page"
                         href="?module=dashboard&view=dashboard.view">
@@ -35,7 +35,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
             </li>
             <li class="nav-item">
                 <?php
-                if (checkPermission(3)) {
+                if (checkPermission("Q2", "CN1")) {
                     ?>
                 <li class="nav-item">
                     <a class="nav-link <?php echo isActivePage($_GET['view'], 'order.view'); ?>"
@@ -50,7 +50,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
             </li>
             <li class="nav-item">
                 <?php
-                if (checkPermission(1)) {
+                if (checkPermission("Q3", "CN1")) {
                     ?>
                 <li class="nav-item">
                     <a class="nav-link <?php echo isActivePage($_GET['view'], 'product.view'); ?>"
@@ -65,7 +65,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
             </li>
             <li class="nav-item">
                 <?php
-                if (checkPermission(2)) {
+                if (checkPermission("Q4", "CN1")) {
                     ?>
                 <li class="nav-item">
                     <a class="nav-link <?php echo isActivePage($_GET['view'], 'category.view'); ?>"
@@ -80,7 +80,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
             </li>
             <li class="nav-item">
                 <?php
-                if (checkPermission(2)) {
+                if (checkPermission("Q5", "CN1")) {
                     ?>
                 <li class="nav-item">
                     <a class="nav-link <?php echo isActivePage($_GET['view'], 'size.view'); ?>"
@@ -94,15 +94,21 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                 ?>
             </li>
             <li class="nav-item">
+                <?php
+                if (checkPermission("Q6", "CN1")) {
+                    ?>
                 <a class="nav-link <?php echo isActivePage($_GET['view'], 'coupon.view'); ?>"
                     href="?module=dashboard&view=coupon.view">
                     <span data-feather="star"></span>
                     Coupons
                 </a>
+                <?php
+                }
+                ?>
             </li>
             <li class="nav-item">
                 <?php
-                if (checkPermission(2)) {
+                if (checkPermission("Q7", "CN1")) {
                     ?>
                     <a class="nav-link <?php echo isActivePage($_GET['view'], 'inventory.view'); ?>"
                         href="?module=dashboard&view=inventory.view">
@@ -115,7 +121,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
             </li>
             <li class="nav-item">
                 <?php
-                if (checkPermission(4)) {
+                if (checkPermission("Q8", "CN1")) {
                     ?>
                 <li class="nav-item">
                     <a class="nav-link <?php echo isActivePage($_GET['view'], 'account.view'); ?>"
@@ -129,21 +135,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                 ?>
             <li class="nav-item">
                 <?php
-                if (checkPermission(6)) {
-                    ?>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo isActivePage($_GET['view'], 'permission.view'); ?>"
-                        href="?module=dashboard&view=permission.view">
-                        <span data-feather="life-buoy"></span>
-                        Permissions
-                    </a>
-                </li>
-                <?php
-                }
-                ?>
-            <li class="nav-item">
-                <?php
-                if (checkPermission(6)) {
+                if (checkPermission("Q9", "CN1")) {
                     ?>
                 <li class="nav-item">
                     <a class="nav-link <?php echo isActivePage($_GET['view'], 'role.view'); ?>"

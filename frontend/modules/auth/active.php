@@ -37,7 +37,6 @@ if (!empty($token)) {
             session::getInstance()->setFlashData('msg_type', 'danger');
         }
     } else {
-        echo 123;
         getMsg('The url is not available or expired', 'danger');
     }
 } else {

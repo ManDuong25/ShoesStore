@@ -13,7 +13,7 @@ if (!isAllowToDashBoard()) {
     die('Access denied');
 }
 
-if (!checkPermission(2)) {
+if (!checkPermission("Q5", "CN1")) {
     die('Access denied');
 }
 
@@ -40,6 +40,7 @@ use backend\bus\SizeBUS;
                     <h1 class="h2">
                         <?= $title ?>
                     </h1>
+                    <?php if (checkPermission("Q5", "CN4")) {?>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <button type="button" class="btn btn-sm btn-success align-middle" data-bs-toggle="modal"
                             data-bs-target="#addModal" id="addSize" class="addBtn">
@@ -47,6 +48,7 @@ use backend\bus\SizeBUS;
                             Add
                         </button>
                     </div>
+                    <?php } ?>
                 </div>
 
                 <!-- BODY DATABASE -->
@@ -68,11 +70,13 @@ use backend\bus\SizeBUS;
                                     <?= count(SizeItemsBUS::getInstance()->searchModel($sizes->getId(), ['size_id'])); ?>
                                 </td>
                                 <td class='col-2 sizeAction'>
+                                    <?php if (checkPermission("Q5", "CN2")) {?>
                                     <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                         data-bs-target="#editModal<?= $sizes->getId() ?>">
                                         <span data-feather="tool"></span>
                                         Update
                                     </button>
+                                    <?php } ?>
                                     <?php if (count(SizeItemsBUS::getInstance()->searchModel($sizes->getId(), ['size_id'])) > 0) { ?>
                                         <button class="btn btn-sm btn-secondary" id='deleteSizeBtnId' name='deleteSizeBtn'
                                             disabled style="display: none;">
@@ -80,10 +84,12 @@ use backend\bus\SizeBUS;
                                             Delete
                                         </button>
                                     <?php } else { ?>
+                                        <?php if (checkPermission("Q5", "CN3")) {?>
                                         <button class="btn btn-sm btn-danger" id='deleteSizeBtnId' name='deleteSizeBtn'>
                                             <span data-feather="trash-2"></span>
                                             Delete
                                         </button>
+                                        <?php } ?>
                                     <?php } ?>
                                 </td>
                             </tr>
