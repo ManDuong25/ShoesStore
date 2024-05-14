@@ -41,7 +41,8 @@ class ProductDAO implements DAOInterface
         $image = $rs['image'];
         $gender = $rs['gender'];
         $status = $rs['status'];
-        return new ProductModel($id, $name, $categoryId, $price, $description, $image, $gender, $status);
+        $giaNhap = $rs['giaNhap'];
+        return new ProductModel($id, $name, $categoryId, $price, $description, $image, $gender, $status, $giaNhap);
     }
 
     public function getAll(): array
@@ -82,22 +83,7 @@ class ProductDAO implements DAOInterface
 
     public function insert($data): int
     {
-        $query = "INSERT INTO products (name, category_id, price, description, image, gender, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $args = [
-            $data->getName(),
-            $data->getCategoryId(),
-            $data->getPrice(),
-            $data->getDescription(),
-            $data->getImage(),
-            $data->getGender(),
-            $data->getStatus()
-        ];
-        return DatabaseConnection::executeUpdate($query, ...$args);
-    }
-
-    public function update($data): int
-    {
-        $query = "UPDATE products SET name = ?, category_id = ?, price = ?, description = ?, image = ?, gender = ?, status = ? WHERE id = ?";
+        $query = "INSERT INTO products (name, category_id, price, description, image, gender, status, giaNhap) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $args = [
             $data->getName(),
             $data->getCategoryId(),
@@ -106,7 +92,24 @@ class ProductDAO implements DAOInterface
             $data->getImage(),
             $data->getGender(),
             $data->getStatus(),
-            $data->getId()
+            $data->getGiaNhap()
+        ];
+        return DatabaseConnection::executeUpdate($query, ...$args);
+    }
+
+    public function update($data): int
+    {
+        $query = "UPDATE products SET name = ?, category_id = ?, price = ?, description = ?, image = ?, gender = ?, status = ?, giaNhap = ? WHERE id = ?";
+        $args = [
+            $data->getName(),
+            $data->getCategoryId(),
+            $data->getPrice(),
+            $data->getDescription(),
+            $data->getImage(),
+            $data->getGender(),
+            $data->getStatus(),
+            $data->getGiaNhap(),
+            $data->getId(),
         ];
         return DatabaseConnection::executeUpdate($query, ...$args);
     }
@@ -168,7 +171,7 @@ class ProductDAO implements DAOInterface
         $productList = [];
         $query = "SELECT * FROM products LIMIT ?, ?;";
         $args = [
-            $from + 1,
+            $from,
             $limit
         ];
         $rs = DatabaseConnection::executeQuery($query, ...$args);
@@ -292,7 +295,7 @@ class ProductDAO implements DAOInterface
         $productList = [];
         $query = "SELECT * FROM products WHERE status = 'active' LIMIT ?, ?;";
         $args = [
-            $from + 1,
+            $from,
             $limit
         ];
         $rs = DatabaseConnection::executeQuery($query, ...$args);

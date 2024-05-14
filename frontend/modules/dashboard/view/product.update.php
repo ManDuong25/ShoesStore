@@ -114,6 +114,12 @@ if (isset($_GET['id'])) {
                 <input type="text" class="form-control" id="inputEditPrice" value="<?php $price = ProductBUS::getInstance()->getModelById($id)->getPrice();
                 echo $price; ?>">
             </div>
+
+            <div class="col">
+                <label for="giaNhap" class="form-label">Import Price</label>
+                <input type="text" class="form-control" id="giaNhap" value="<?php $giaNhap = ProductBUS::getInstance()->getModelById($id)->getGiaNhap();
+                echo $giaNhap; ?>">
+            </div>
             <div class="col">
                 <label for="inputPhone" class="form-label">Description</label>
                 <textarea class="form-control" id="w3Editreview" name="w3review" rows="6"
@@ -150,6 +156,7 @@ if (isset($_GET['id'])) {
                 $productName = $_POST['productNameEdit'] ?? '';
                 $productCategory = $_POST['categoryEdit'] ?? '';
                 $productPrice = $_POST['priceEdit'] ?? '';
+                $productGiaNhap = $_POST['giaNhapEdit'] ?? '';
                 $productGender = $_POST['genderEdit'] ?? '';
                 $productDescription = $_POST['descriptionEdit'] ?? '';
                 $productStatus = $_POST['statusEdit'] ?? '';
@@ -157,6 +164,7 @@ if (isset($_GET['id'])) {
                 $productUpdate->setGender($productGender);
                 $productUpdate->setName($productName);
                 $productUpdate->setPrice($productPrice);
+                $productUpdate->setGiaNhap($productGiaNhap);
                 $productUpdate->setDescription($productDescription);
                 $productUpdate->setStatus($productStatus);
                 $data = $_POST['imageEdit'];

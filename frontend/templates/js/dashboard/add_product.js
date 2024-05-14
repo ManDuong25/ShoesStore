@@ -6,6 +6,7 @@ $(document).ready(function () {
     let productDescription = document.getElementById("w3review");
     let productImageUpload = document.getElementById("inputImg");
     let imageProductReview = document.getElementById("imgPreview");
+    let giaNhap = document.getElementById("giaNhap");
     productImageUpload.addEventListener('change', (event) => {
         let file = event.target.files[0];
         if (file) {
@@ -56,6 +57,28 @@ $(document).ready(function () {
                 return;
             }
 
+            //
+            if (!giaNhap.value) {
+                alert("Please enter product import price");
+                //clear the input field
+                giaNhap.value = "";
+                return;
+            }
+
+            if (isNaN(giaNhap.value)) {
+                alert("Please enter a valid import price");
+                //clear the input field
+                giaNhap.value = "";
+                return;
+            }
+
+            if (giaNhap.value < 1) {
+                alert("Import price can't be less than 1");
+                //clear the input field
+                giaNhap.value = "";
+                return;
+            }
+
             // if (chosenGender.value == "0") {
             //     chosenGender.value = 0;
             // } else {
@@ -94,6 +117,7 @@ $(document).ready(function () {
                     gender: chosenGender.value,
                     description: productDescription.value,
                     image: imageProductReview.src,
+                    giaNhap: giaNhap.value,
                     saveBtn: true,
                 },
                 success: function (data) {

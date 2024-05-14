@@ -29,7 +29,8 @@ INSERT INTO
         `price`,
         `description`,
         `image`,
-        `gender`
+        `gender`,
+        `giaNhap`
     )
 VALUES
     (
@@ -39,7 +40,8 @@ VALUES
         '100000',
         'Has thick cushioning to absorb shock when the foot hits the road. Protects the forefoot and heel. Suitable for marathons or long-distance running.',
         '../img/Running Shoes/Asics GT-2000 11.avif',
-        '0'
+        '0',
+        '50000'
     ),
     (
         '5',
@@ -48,7 +50,8 @@ VALUES
         '100000',
         'Has thick cushioning to absorb shock when the foot hits the road. Protects the forefoot and heel. Suitable for marathons or long-distance running.',
         '../img/Running Shoes/On Women’s Cloudrunner.avif',
-        '1'
+        '1',
+        '50000'
     ),
     (
         '6',
@@ -57,7 +60,8 @@ VALUES
         '150000',
         'Has thick cushioning to absorb shock when the foot hits the road. Protects the forefoot and heel. Suitable for marathons or long-distance running.',
         '../img/Running Shoes/Saucony Guide 16.avif',
-        '0'
+        '0',
+        '100000'
     ),
     (
         '7',
@@ -66,7 +70,8 @@ VALUES
         '150000',
         'Has thick cushioning to absorb shock when the foot hits the road. Protects the forefoot and heel. Suitable for marathons or long-distance running.',
         '../img/Running Shoes/Hoka Bondi 8.avif',
-        '1'
+        '1',
+        '100000'
     ),
     (
         '8',
@@ -75,7 +80,8 @@ VALUES
         '150000',
         'Has thick cushioning to absorb shock when the foot hits the road. Protects the forefoot and heel. Suitable for marathons or long-distance running. ',
         '../img/Running Shoes/Brooks Women Ariel 20 Running.avif',
-        '1'
+        '1',
+        '100000'
     ),
     (
         '9',
@@ -84,7 +90,8 @@ VALUES
         '150000',
         'Has thick cushioning to absorb shock when the foot hits the road. Protects the forefoot and heel. Suitable for marathons or long-distance running.',
         '../img/Running Shoes/Saucony Peregrine 13 Hiking Shoe.avif',
-        '0'
+        '0',
+        '100000'
     ),
     (
         '10',
@@ -93,7 +100,8 @@ VALUES
         '150000',
         'Has thick cushioning to absorb shock when the foot hits the road. Protects the forefoot and heel. Suitable for marathons or long-distance running. ',
         '../img/Running Shoes/Asics Gel-Excite 9.avif',
-        '0'
+        '0',
+        '100000'
     ),
     (
         '11',
@@ -102,7 +110,8 @@ VALUES
         '200000',
         'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe.',
         '../img/Walking Shoes/Adidas Ultraboost Light Running Shoe.avif',
-        '1'
+        '1',
+        '150000'
     ),
     (
         '12',
@@ -111,7 +120,8 @@ VALUES
         '200000',
         'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe. ',
         '../img/Walking Shoes/Ryka Devotion Plus 3 Walking Shoe.avif',
-        '0'
+        '0',
+        '150000'
     ),
     (
         '13',
@@ -120,7 +130,8 @@ VALUES
         '200000',
         'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe.',
         '../img/Walking Shoes/Brooks Glycerin GTS 20.avif',
-        '0'
+        '0',
+        '150000'
     ),
     (
         '14',
@@ -129,7 +140,8 @@ VALUES
         '200000',
         'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe. ',
         '../img/Walking Shoes/Asics Gel-venture 8.avif',
-        '1'
+        '1',
+        '150000'
     ),
     (
         '15',
@@ -138,7 +150,8 @@ VALUES
         '200000',
         'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe.',
         '../img/Walking Shoes/New Balance Men’s Fresh Foam 1080 V11.avif',
-        '1'
+        '1',
+        '150000'
     ),
     (
         '16',
@@ -147,7 +160,8 @@ VALUES
         '250000',
         'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe.',
         '../img/Walking Shoes/Hoka Bondi 7 Shoes.avif',
-        '1'
+        '1',
+        '200000'
     ),
     (
         '17',
@@ -156,7 +170,8 @@ VALUES
         '250000',
         'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe. ',
         '../img/Walking Shoes/Vionic Tokyo Sneaker.avif',
-        '0'
+        '0',
+        '200000'
     ),
     (
         '18',
@@ -165,7 +180,8 @@ VALUES
         '250000',
         'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe.',
         '../img/Walking Shoes/Altra Women’s Lone Peak 7 Trail Running Shoe.avif',
-        '1'
+        '1',
+        '200000'
     ),
     (
         '19',
@@ -174,7 +190,8 @@ VALUES
         '250000',
         'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe. ',
         '../img/Walking Shoes/Keen Targhee Vent Hiking Shoes.avif',
-        '0'
+        '0',
+        '200000'
     ),
     (
         '20',
@@ -183,7 +200,8 @@ VALUES
         '250000',
         'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe.',
         '../img/Walking Shoes/Allbirds Tree Runners.avif',
-        '0'
+        '0',
+        '200000'
     ),
     (
         '21',
@@ -192,7 +210,8 @@ VALUES
         '300000',
         'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
         '../img/Tennis Shoes/NikeCourt Air Zoom Vapor Pro 2 (Nam).avif',
-        '0'
+        '0',
+        '200000'
     ),
     (
         '22',
@@ -201,7 +220,8 @@ VALUES
         '300000',
         'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
         '../img/Tennis Shoes/NikeCourt Air Zoom Vapor Pro 2.avif',
-        '1'
+        '1',
+        '250000'
     ),
     (
         '23',
@@ -210,7 +230,8 @@ VALUES
         '300000',
         'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
         '../img/Tennis Shoes/Nike Zoom GP Challenge 1 (Nam).avif',
-        '0'
+        '0',
+        '250000'
     ),
     (
         '24',
@@ -219,7 +240,8 @@ VALUES
         '300000',
         'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
         '../img/Tennis Shoes/Nike Zoom GP Challenge 1.avif',
-        '1'
+        '1',
+        '250000'
     ),
     (
         '25',
@@ -228,7 +250,8 @@ VALUES
         '300000',
         'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
         '../img/Tennis Shoes/Adidas Barricade Tokyo (Nam).avif',
-        '0'
+        '0',
+        '250000'
     ),
     (
         '26',
@@ -237,7 +260,8 @@ VALUES
         '300000',
         'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
         '../img/Tennis Shoes/Adidas Adizero Ubersonic 4 (Nam).avif',
-        '0'
+        '0',
+        '250000'
     ),
     (
         '27',
@@ -246,7 +270,8 @@ VALUES
         '300000',
         'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
         '../img/Tennis Shoes/Nike Vapor Lite HC.avif',
-        '1'
+        '1',
+        '250000'
     ),
     (
         '28',
@@ -255,7 +280,8 @@ VALUES
         '300000',
         'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
         '../img/Tennis Shoes/Adidas Gamecourt (Nam).avif',
-        '0'
+        '0',
+        '250000'
     ),
     (
         '29',
@@ -264,7 +290,8 @@ VALUES
         '300000',
         'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
         '../img/Tennis Shoes/Adidas Solematch Bounce (Nam).avif',
-        '0'
+        '0',
+        '250000'
     ),
     (
         '30',
@@ -273,7 +300,8 @@ VALUES
         '300000',
         'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
         '../img/Tennis Shoes/NikeCourt Air Zoom Vapor Pro 2 (Nam).avif',
-        '0'
+        '0',
+        '250000'
     ),
     (
         '31',
@@ -282,7 +310,8 @@ VALUES
         '350000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
         '../img/Trail Running Shoes/Nike Pegasus Trail 4 GTX.avif',
-        '0'
+        '0',
+        '300000'
     ),
     (
         '32',
@@ -291,7 +320,8 @@ VALUES
         '350000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
         '../img/Trail Running Shoes/Topo Athletic Ultraventure 3.avif',
-        '0'
+        '0',
+        '300000'
     ),
     (
         '33',
@@ -300,7 +330,8 @@ VALUES
         '350000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
         '../img/Trail Running Shoes/Hoka Mafate Speed 4.avif',
-        '0'
+        '0',
+        '300000'
     ),
     (
         '34',
@@ -309,7 +340,8 @@ VALUES
         '350000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
         '../img/Trail Running Shoes/Altra Lone Peak 7.avif',
-        '1'
+        '1',
+        '300000'
     ),
     (
         '35',
@@ -318,7 +350,8 @@ VALUES
         '350000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
         '../img/Trail Running Shoes/Salomon Speedcross 5.avif',
-        '0'
+        '0',
+        '300000'
     ),
     (
         '36',
@@ -327,7 +360,8 @@ VALUES
         '350000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
         '../img/Trail Running Shoes/Brooks Cascadia 16.avif',
-        '1'
+        '1',
+        '300000'
     ),
     (
         '37',
@@ -336,7 +370,8 @@ VALUES
         '350000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
         '../img/Trail Running Shoes/Saucony Peregrine 11.avif',
-        '0'
+        '0',
+        '300000'
     ),
     (
         '38',
@@ -345,7 +380,8 @@ VALUES
         '350000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
         '../img/Trail Running Shoes/La Sportiva Bushido II.avif',
-        '0'
+        '0',
+        '300000'
     ),
     (
         '39',
@@ -354,7 +390,8 @@ VALUES
         '350000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
         '../img/Trail Running Shoes/Inov-8 Terraultra G 270.avif',
-        '0'
+        '0',
+        '300000'
     ),
     (
         '40',
@@ -363,7 +400,8 @@ VALUES
         '350000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
         '../img/Trail Running Shoes/Merrell MTL Long Sky.avif',
-        '1'
+        '1',
+        '300000'
     ),
     (
         '41',
@@ -372,7 +410,8 @@ VALUES
         '360000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
         '../img/Basketball Shoes/Nike Kyrie 7.avif',
-        '1'
+        '1',
+        '310000'
     ),
     (
         '42',
@@ -381,7 +420,8 @@ VALUES
         '360000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
         '../img/Basketball Shoes/PEAK Streetball Master.avif',
-        '0'
+        '0',
+        '310000'
     ),
     (
         '43',
@@ -390,7 +430,8 @@ VALUES
         '360000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
         '../img/Basketball Shoes/Adidas Harden Stepback.avif',
-        '0'
+        '0',
+        '310000'
     ),
     (
         '44',
@@ -399,7 +440,8 @@ VALUES
         '360000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
         '../img/Basketball Shoes/Nike PG 5.avif',
-        '0'
+        '0',
+        '310000'
     ),
     (
         '45',
@@ -408,7 +450,8 @@ VALUES
         '360000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
         '../img/Basketball Shoes/Nike LeBron 19.avif',
-        '0'
+        '0',
+        '310000'
     ),
     (
         '46',
@@ -417,7 +460,8 @@ VALUES
         '360000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
         '../img/Basketball Shoes/Adidas Dame 7.avif',
-        '1'
+        '1',
+        '310000'
     ),
     (
         '47',
@@ -426,7 +470,8 @@ VALUES
         '360000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
         '../img/Basketball Shoes/Adidas N3XT L3V3L 2022.avif',
-        '0'
+        '0',
+        '310000'
     ),
     (
         '48',
@@ -435,7 +480,8 @@ VALUES
         '360000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
         '../img/Basketball Shoes/Under Armour HOVR Havoc 5.avif',
-        '1'
+        '1',
+        '310000'
     ),
     (
         '49',
@@ -444,7 +490,8 @@ VALUES
         '360000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
         '../img/Basketball Shoes/Puma Clyde All-Pro.avif',
-        '1'
+        '1',
+        '310000'
     ),
     (
         '50',
@@ -453,7 +500,8 @@ VALUES
         '360000',
         'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
         '../img/Basketball Shoes/New Balance Kawhi Leonard 1.avif',
-        '0'
+        '0',
+        '310000'
     );
 
 INSERT INTO
@@ -1064,7 +1112,7 @@ VALUES
         '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
         'admin@example.com',
         'Admin',
-        '1234567890',
+        '0911111232',
         'M',
         'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ1',
@@ -1077,7 +1125,7 @@ VALUES
         '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
         'manager@example.com',
         'Manager',
-        '1234567891',
+        '0948733232',
         'F',
         'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ2',
@@ -1090,7 +1138,7 @@ VALUES
         '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
         'employee1@example.com',
         'Employee 1',
-        '1234567892',
+        '0911238523',
         'M',
         'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ3',
@@ -1103,7 +1151,7 @@ VALUES
         '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
         'employee2@example.com',
         'Employee 2',
-        '1234567893',
+        '0911239233',
         'F',
         'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ3',
@@ -1116,7 +1164,7 @@ VALUES
         '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
         'customer1@example.com',
         'Customer 1',
-        '1234567894',
+        '0911286233',
         'M',
         'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ4',
@@ -1129,7 +1177,7 @@ VALUES
         '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
         'customer2@example.com',
         'Customer 2',
-        '1234567895',
+        '0911543233',
         'F',
         'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ4',
@@ -1142,7 +1190,7 @@ VALUES
         '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
         'customer3@example.com',
         'Customer 3',
-        '1234567896',
+        '0911233233',
         'M',
         'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ4',
@@ -1155,7 +1203,7 @@ VALUES
         '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
         'customer4@example.com',
         'Customer 4',
-        '1234567897',
+        '0913223232',
         'F',
         'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ4',
@@ -1168,7 +1216,7 @@ VALUES
         '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
         'customer5@example.com',
         'Customer 5',
-        '1234567898',
+        '0913883434',
         'M',
         'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ4',
@@ -1181,7 +1229,7 @@ VALUES
         '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
         'customer6@example.com',
         'Customer 6',
-        '1234567899',
+        '0911432234',
         'F',
         'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ4',
@@ -1239,3 +1287,17 @@ VALUES
         '2022-12-31',
         'Giảm 50% cho tất cả sản phẩm'
     );
+    
+    
+INSERT INTO nhacungcap (maNCC, ten, diaChi, sdt, email, trangThai)
+VALUES 
+	('1', 'Nhà cung cấp A', 'Địa chỉ A', '0323456789', 'email1@gmail.com', 1),
+	('2', 'Nhà cung cấp B', 'Địa chỉ B', '0987654321', 'email2@gmail.com', 1),
+	('3', 'Nhà cung cấp C', 'Địa chỉ C', '0369696969', 'email3@gmail.com', 1),
+	('4', 'Nhà cung cấp D', 'Địa chỉ D', '0888888888', 'email4@gmail.com', 1),
+	('5', 'Nhà cung cấp E', 'Địa chỉ E', '0777777777', 'email5@gmail.com', 1),
+	('6', 'Nhà cung cấp F', 'Địa chỉ F', '0999999999', 'email6@gmail.com', 1),
+	('7', 'Nhà cung cấp G', 'Địa chỉ G', '0912345678', 'email7@gmail.com', 1),
+	('8', 'Nhà cung cấp H', 'Địa chỉ H', '0966666666', 'email8@gmail.com', 1),
+	('9', 'Nhà cung cấp I', 'Địa chỉ I', '0333333333', 'email9@gmail.com', 1),
+	('10', 'Nhà cung cấp J', 'Địa chỉ J', '0355555555', 'email10@gmail.com', 1);

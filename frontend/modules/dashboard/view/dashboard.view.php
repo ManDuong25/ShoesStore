@@ -161,9 +161,6 @@ function displayThongKeKH($thongKe, $index)
                             }
                             if (isPost()) {
                                 $filterAll = filter();
-                                echo '<pre>';
-                                print_r($filterAll);
-                                echo '</pre>';
                                 if (isset($filterAll['dateFrom']) && isset($filterAll['dateTo'])) {
                                     if (isset($filterAll['khachhang'])) {
                                         //Add +1 day to dateTo:

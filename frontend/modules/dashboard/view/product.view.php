@@ -69,8 +69,9 @@ $productList = ProductBUS::getInstance()->getAllModels();
                             <th class='text-center'>ID</th>
                             <th class='col-3'>Product Name</th>
                             <th class='col-1'>Category</th>
-                            <th class='col-5'>Description</th>
+                            <th class='col-4'>Description</th>
                             <th class='col-1 text-center'>Price</th>
+                            <th class='col-1 text-center'>Import price</th>
                             <th class='col-2 text-center'>Action</th>
                             <th class='col-1 text-center'>Status</th>
                         </tr>
@@ -160,6 +161,10 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                         <input type="text" class="form-control" id="inputPrice" name="price">
                                     </div>
                                     <div class="col-4">
+                                        <label for="giaNhap" class="form-label">Import Price</label>
+                                        <input type="text" class="form-control" id="giaNhap" name="price">
+                                    </div>
+                                    <div class="col-4">
                                         <label for="inputGender" class="form-label">Gender</label>
                                         <select id="inputGender" class="form-select" name="gender">
                                             <option value="0" selected>Male</option>
@@ -192,7 +197,8 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                     $productGender = $_POST['gender'];
                                     $productDescription = $_POST['description'];
                                     $data = $_POST['image'];
-                                    $productModel = new ProductModel(null, $productName, $productCategory, $productPrice, $productDescription, $data, $productGender, strtolower(StatusEnums::INACTIVE));
+                                    $giaNhap = $_POST['giaNhap'];
+                                    $productModel = new ProductModel(null, $productName, $productCategory, $productPrice, $productDescription, $data, $productGender, strtolower(StatusEnums::INACTIVE), $giaNhap);
                                     ProductBUS::getInstance()->addModel($productModel);
                                     ProductBUS::getInstance()->refreshData();
                                     ob_end_clean();
@@ -212,6 +218,7 @@ $productList = ProductBUS::getInstance()->getAllModels();
                     if (isset($filterAll['hide']) && isset($filterAll['id'])) {
                         $productId = $filterAll['id'];
                         $updateProductStatus = ProductBUS::getInstance()->getModelById($productId);
+                        var_dump($updateProductStatus);
                         $updateProductStatus->setStatus(strtolower(StatusEnums::INACTIVE));
                         $result = ProductBUS::getInstance()->updateModel($updateProductStatus);
                         ProductBUS::getInstance()->refreshData();
@@ -306,6 +313,7 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                     <td class="product_category_name">${product.categoryName}</td>
                                     <td class="product_description">${product.description}</td>
                                     <td class='text-center'>${product.price}</td>
+                                    <td class='text-center'>${product.giaNhap}</td>
                                     <td class='text-center'>
                                         <div>
                                             <?php if (checkPermission("Q3", "CN2")) {?>

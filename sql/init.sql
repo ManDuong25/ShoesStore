@@ -161,7 +161,8 @@ CREATE TABLE `products` (
   `description` text NOT NULL,
   `image` longtext NOT NULL,
   `gender` int(11) NOT NULL DEFAULT 0,
-  `status` enum('active', 'inactive') NOT NULL DEFAULT 'active'
+  `status` enum('active', 'inactive') NOT NULL DEFAULT 'active',
+  `giaNhap` DOUBLE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = UTF8MB4_GENERAL_CI;
 
 CREATE TABLE `sizes` (
@@ -580,3 +581,50 @@ ALTER TABLE
   tokenLogin
 ADD
   CONSTRAINT FK_tokenLogin_user FOREIGN KEY (user_id) REFERENCES `users`(id);
+  
+  
+  
+CREATE TABLE IF NOT EXISTS nhacungcap (
+    maNCC INT(11) PRIMARY KEY AUTO_INCREMENT,
+    ten VARCHAR(255),
+    diaChi VARCHAR(512),
+    sdt VARCHAR(20),
+    email VARCHAR(255),
+    trangThai BIT NOT NULL
+);
+
+
+CREATE TABLE `phieunhap` (
+  `maPhieuNhap` int(11) PRIMARY KEY AUTO_INCREMENT,
+  `user_id` INT(11) DEFAULT NULL,
+  `phieuNhapDate` datetime NOT NULL DEFAULT current_timestamp(),
+  `total_amount` double NOT NULL,
+  `maNCC` INT(11),
+  trangThai BIT NOT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+ALTER TABLE phieunhap
+ADD CONSTRAINT fk_phieunhap_users FOREIGN KEY (user_id) REFERENCES `users`(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE phieunhap
+ADD CONSTRAINT fk_phieunhap_nhacungcap FOREIGN KEY (maNCC) REFERENCES `nhacungcap`(maNCC) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+CREATE TABLE `chitietphieunhap` (
+  `maCTPN` int(11) PRIMARY KEY AUTO_INCREMENT,
+  `maPhieuNhap` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `size_id` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `price` double NOT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+
+ALTER TABLE chitietphieunhap
+ADD CONSTRAINT fk_chitietphieunhap_phieunhap FOREIGN KEY (maPhieuNhap) REFERENCES phieunhap(maPhieuNhap) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE chitietphieunhap
+ADD CONSTRAINT fk_chitietphieunhap_products FOREIGN KEY (product_id) REFERENCES products(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE chitietphieunhap
+ADD CONSTRAINT fk_chitietphieunhap_sizes FOREIGN KEY (size_id) REFERENCES sizes(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+

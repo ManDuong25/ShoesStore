@@ -133,7 +133,7 @@ class SizeItemsDAO implements DAOInterface
         $sizeItemsList = [];
         $query = "SELECT * FROM size_items LIMIT ?, ?;";
         $args = [
-            $from + 1,
+            $from,
             $limit
         ];
         $rs = DatabaseConnection::executeQuery($query, ...$args);
