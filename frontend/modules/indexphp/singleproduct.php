@@ -141,7 +141,7 @@ if (isLogin()) {
                 <?php
                 $hideButton = false;
                 if (isLogin()) {
-                    if ($userModel->getMaNhomQuyen() === "NQ1" || $userModel->getRoleId() === "NQ2" || $userModel->getRoleId() === "NQ3") {
+                    if ($userModel->getMaNhomQuyen() === "NQ1" || $userModel->getMaNhomQuyen() === "NQ2" || $userModel->getMaNhomQuyen() === "NQ3") {
                         $hideButton = true;
                     }
                 }

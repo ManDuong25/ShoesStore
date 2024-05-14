@@ -251,4 +251,35 @@ class OrdersBUS implements BUSInterface
         }
         return $ordersByUserIdInDateRange;
     }
+
+    public function countAllModels()
+    {
+        return OrdersDAO::getInstance()->countAllModels();
+    }
+
+    public function paginationTech($from, $limit)
+    {
+        return OrdersDAO::getInstance()->paginationTech($from, $limit);
+    }
+
+    public function countFilteredModel($filterName, $dateFrom, $dateTo, $filterStatus) {
+        if (!empty($dateFrom)) {
+            $dateFrom = date('Y-m-d', strtotime($dateFrom));
+        }
+        if (!empty($dateTo)) {
+            $dateTo = date('Y-m-d', strtotime($dateTo));
+        }
+        return OrdersDAO::getInstance()->countFilteredModel($filterName, $dateFrom, $dateTo, $filterStatus);
+    }
+
+    public function multiFilterModel($from, $limit, $filterName, $dateFrom, $dateTo, $filterStatus) {
+        if (!empty($dateFrom)) {
+            $dateFrom = date('Y-m-d', strtotime($dateFrom));
+        }
+        if (!empty($dateTo)) {
+            $dateTo = date('Y-m-d', strtotime($dateTo));
+        }
+        return OrdersDAO::getInstance()->multiFilterModel($from, $limit, $filterName, $dateFrom, $dateTo, $filterStatus);
+    }
+
 }

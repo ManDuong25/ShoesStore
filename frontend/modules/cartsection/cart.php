@@ -14,7 +14,7 @@ $tokenModel = TokenLoginBUS::getInstance()->getModelByToken($token);
 $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
 $cartList = CartsBUS::getInstance()->getModelByUserId($userModel->getId());
 
-if ($userModel->getRoleId() == 1 || $userModel->getRoleId() == 2 || $userModel->getRoleId() == 3) {
+if ($userModel->getMaNhomQuyen() == 1 || $userModel->getMaNhomQuyen() == 2 || $userModel->getMaNhomQuyen() == 3) {
     echo '<script>';
     echo 'alert("You don\'t have access to this page!")';
     echo '</script>';

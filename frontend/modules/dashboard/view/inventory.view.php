@@ -80,7 +80,7 @@ $productList = ProductBUS::getInstance()->getAllModels();
                         </nav>
                         <?php
                         if (isPost()) {
-                            $filterAll = filter();
+                            $filterAll = filter();  
                             if (isset($filterAll['thisPage']) && $filterAll['limit']) {
                                 $thisPage = $filterAll['thisPage'];
                                 $limit = $filterAll['limit'];

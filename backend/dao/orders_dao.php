@@ -524,4 +524,176 @@ class OrdersDAO implements DAOInterface
         }
         return $thongKeList;
     }
+
+
+
+    public function countAllModels()
+    {
+        $query = "SELECT COUNT(*) AS total FROM orders;";
+        $rs = DatabaseConnection::executeQuery($query);
+        $row = $rs->fetch_assoc();
+        return $row['total'];
+    }
+
+    public function paginationTech($from, $limit)
+    {
+        $orderItemsList = [];
+        $query = "
+        SELECT 
+            o.id,
+            o.user_id,
+            o.order_date,
+            o.total_amount,
+            o.customer_name,
+            o.customer_phone,
+            o.customer_address,
+            o.status,
+            pm.method_name AS payment_method
+        FROM 
+            orders o
+        LEFT JOIN 
+            payments p ON o.id = p.order_id
+        LEFT JOIN 
+            payment_methods pm ON p.method_id = pm.id
+        LIMIT ?, ?;    
+        ";
+        $args = [
+            $from,
+            $limit
+        ];
+        $rs = DatabaseConnection::executeQuery($query, ...$args);
+        while ($row = $rs->fetch_assoc()) {
+            $id = $row['id'];
+            $userId = $row['user_id'];
+            $orderDate = $row['order_date'];
+            $totalAmount = $row['total_amount'];
+            $customerName = $row['customer_name'];
+            $customerPhone = $row['customer_phone'];
+            $customerAddress = $row['customer_address'];
+            $status = $row['status'];
+            $paymentMethod = $row['payment_method'];
+
+            $orderItem = [
+                'id' => $id,
+                'userId' => $userId,
+                'orderDate' => $orderDate,
+                'totalAmount' => $totalAmount,
+                'customerName' => $customerName,
+                'customerPhone' => $customerPhone,
+                'customerAddress' => $customerAddress,
+                'status' => $status,
+                'paymentMethod' => $paymentMethod
+            ];
+            array_push($orderItemsList, $orderItem);
+        }
+        return $orderItemsList;
+    }
+
+
+    public function countFilteredModel($filterName, $dateFrom, $dateTo, $filterStatus)
+    {
+        $query = "SELECT COUNT(*) AS total FROM orders WHERE 1=1";
+        $args = [];
+
+        if (!empty($filterName)) {
+            $query .= " AND customer_name LIKE ?";
+            $args[] = "%" . $filterName . "%";
+        }
+
+        if (!empty($dateFrom)) {
+            $query .= " AND order_date >= ?";
+            $args[] = $dateFrom;
+        }
+
+        if (!empty($dateTo)) {
+            $query .= " AND order_date <= ?";
+            $args[] = $dateTo;
+        }
+
+        if (!empty($filterStatus)) {
+            $query .= " AND status = ?";
+            $args[] = $filterStatus;
+        }
+
+        $rs = DatabaseConnection::executeQuery($query, ...$args);
+        $row = $rs->fetch_assoc();
+        return $row['total'];
+    }
+
+
+    public function multiFilterModel($from, $limit, $filterName, $dateFrom, $dateTo, $filterStatus)
+    {
+        $orderItemsList = [];
+        $query = "
+        SELECT 
+            o.id,
+            o.user_id,
+            o.order_date,
+            o.total_amount,
+            o.customer_name,
+            o.customer_phone,
+            o.customer_address,
+            o.status,
+            pm.method_name AS payment_method
+        FROM 
+            orders o
+        LEFT JOIN 
+            payments p ON o.id = p.order_id
+        LEFT JOIN 
+            payment_methods pm ON p.method_id = pm.id
+        WHERE 1=1
+    ";
+        $args = [];
+
+        if (!empty($filterName)) {
+            $query .= " AND o.customer_name LIKE ?";
+            $args[] = "%" . $filterName . "%";
+        }
+
+        if (!empty($dateFrom)) {
+            $query .= " AND o.order_date >= ?";
+            $args[] = $dateFrom;
+        }
+
+        if (!empty($dateTo)) {
+            $query .= " AND o.order_date <= ?";
+            $args[] = $dateTo;
+        }
+
+        if (!empty($filterStatus)) {
+            $query .= " AND o.status = ?";
+            $args[] = $filterStatus;
+        }
+
+        $query .= " LIMIT ?, ?";
+        $args[] = $from;
+        $args[] = $limit;
+
+        $rs = DatabaseConnection::executeQuery($query, ...$args);
+        while ($row = $rs->fetch_assoc()) {
+            $id = $row['id'];
+            $userId = $row['user_id'];
+            $orderDate = $row['order_date'];
+            $totalAmount = $row['total_amount'];
+            $customerName = $row['customer_name'];
+            $customerPhone = $row['customer_phone'];
+            $customerAddress = $row['customer_address'];
+            $status = $row['status'];
+            $paymentMethod = $row['payment_method'];
+
+            $orderItem = [
+                'id' => $id,
+                'userId' => $userId,
+                'orderDate' => $orderDate,
+                'totalAmount' => $totalAmount,
+                'customerName' => $customerName,
+                'customerPhone' => $customerPhone,
+                'customerAddress' => $customerAddress,
+                'status' => $status,
+                'paymentMethod' => $paymentMethod
+            ];
+            array_push($orderItemsList, $orderItem);
+        }
+        return $orderItemsList;
+    }
 }

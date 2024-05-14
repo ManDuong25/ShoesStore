@@ -21,7 +21,8 @@ $userIdTemp = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginTemp)->ge
 $userLoginRightNow = UserBUS::getInstance()->getModelById($userIdTemp);
 
 
-if ($order->getUserId() != $userLoginRightNow->getId() && $userModel->getMaNhomQuyen() == "NQ4") {
+if ($order->getUserId() != $userLoginRightNow->getId() && $userLoginRightNow->getMaNhomQuyen() == "NQ4") {
+    echo $userModel->getMaNhomQuyen();
     // The order doesn't belong to the user, return a 403 Forbidden status code
     http_response_code(403);
     echo 'You do not have permission to view this order.';
