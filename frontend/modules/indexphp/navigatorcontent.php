@@ -5,6 +5,52 @@ $products = ProductBUS::getInstance()->getActiveProductOnly();
 $randomProducts = ProductBUS::getInstance()->getRandomRecommendProducts();
 ?>
 
+<style>
+.cart-button {
+  background: transparent;
+  color: #fff;
+  font-size: 17px;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: none;
+  width: 12vw;
+  height: 6vh;
+  perspective: 30rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.308);
+}
+
+.cart-button::before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: 10px;
+  background: linear-gradient(320deg, rgba(0, 140, 255, 0.678), rgba(128, 0, 128, 0.308));
+  z-index: 1;
+  transition: background 3s;
+}
+
+.cart-button:hover::before {
+  animation: rotate 1s;
+  transition: all .5s;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotateY(180deg);
+  }
+
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+   
+</style>
+
 <div class="content">
     <div class="text__content">
         <ul>
@@ -57,6 +103,8 @@ $randomProducts = ProductBUS::getInstance()->getRandomRecommendProducts();
             <?php
             for ($i = 0; $i < 3; $i++) {
                 $product = $randomProducts[$i];
+                $productName = strlen($product->getName()) > 20 ? substr($product->getName(), 0, 20) . '...' : $product->getName();
+
                 echo '
         <li>
             <div class="product-item">
@@ -66,10 +114,10 @@ $randomProducts = ProductBUS::getInstance()->getRandomRecommendProducts();
                     </a>
                 </div>
                 <div class="product-info">
-                    <a href="?module=indexphp&action=singleproduct&id=' . $product->getId() . '" class="product-name">' . $product->getName() . '</a>
+                    <a href="?module=indexphp&action=singleproduct&id=' . $product->getId() . '" class="product-name">' . $productName . '</a>
                     <div class="product-price">
-                        <ul class="price"><span>$' . $product->getPrice() . '</span>
-                            <a href="?module=indexphp&action=singleproduct&id=' . $product->getId() . '"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i></a>
+                        <ul class="price"><span>' . $product->getPrice() . '<sup>đ</sup></span>
+                        <a class="cart-button" href="?module=indexphp&action=singleproduct&id=<?php echo $product->getId(); ?>">See more</a>
                         </ul>
                     </div>
                 </div>
@@ -121,6 +169,8 @@ $randomProducts = ProductBUS::getInstance()->getRandomRecommendProducts();
                 <?php
                 for ($i = 0; $i < 8; $i++) {
                     $product = $products[$i];
+                    $productName = strlen($product->getName()) > 20 ? substr($product->getName(), 0, 20) . '...' : $product->getName();
+
                     echo '
         <li class="tbay">
             <div class="product-item">
@@ -130,10 +180,10 @@ $randomProducts = ProductBUS::getInstance()->getRandomRecommendProducts();
                     </a>
                 </div>
                 <div class="product-info">
-                    <a href="?module=indexphp&action=singleproduct&id=' . $product->getId() . '" class="product-name">' . $product->getName() . '</a>
+                    <a href="?module=indexphp&action=singleproduct&id=' . $product->getId() . '" class="product-name">' . $productName . '</a>
                     <div class="product-price">
-                        <ul class="price"><span>$' . $product->getPrice() . '</span>
-                            <a href="?module=indexphp&action=singleproduct&id=' . $product->getId() . '"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i></a>
+                        <ul class="price"><span>' . $product->getPrice() . '<sup>đ</sup></span>
+                        <a class="cart-button" href="?module=indexphp&action=singleproduct&id=<?php echo $product->getId(); ?>">See more</a>
                         </ul>
                     </div>
                 </div>

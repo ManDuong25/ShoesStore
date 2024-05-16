@@ -995,7 +995,8 @@ VALUES
     ('Q6', 'Quản lí mã giảm giá'),
     ('Q7', 'Quản lí kho hàng'),
 	 ('Q8', 'Quản lí tài khoản'),
-	 ('Q9', 'Quản lí phân quyền');
+	 ('Q9', 'Quản lí phân quyền'),
+	 ('Q10', 'Quản lí phiếu nhập');
 	 
 INSERT INTO nhomquyen (maNhomQuyen, tenNhomQuyen, trangThai)
 VALUES 
@@ -1043,6 +1044,10 @@ VALUES
     ('NQ1', 'CN2', 'Q9'),
     ('NQ1', 'CN3', 'Q9'),
     ('NQ1', 'CN4', 'Q9'),
+    ('NQ1', 'CN1', 'Q10'),
+    ('NQ1', 'CN2', 'Q10'),
+    ('NQ1', 'CN3', 'Q10'),
+    ('NQ1', 'CN4', 'Q10'),
     
     ('NQ2', 'CN1', 'Q1'),
     ('NQ2', 'CN2', 'Q1'),
@@ -1072,6 +1077,10 @@ VALUES
     ('NQ2', 'CN2', 'Q7'),
     ('NQ2', 'CN3', 'Q7'),
     ('NQ2', 'CN4', 'Q7'),
+    ('NQ2', 'CN1', 'Q10'),
+    ('NQ2', 'CN2', 'Q10'),
+    ('NQ2', 'CN3', 'Q10'),
+    ('NQ2', 'CN4', 'Q10'),
     
     ('NQ3', 'CN1', 'Q2'),
     ('NQ3', 'CN2', 'Q2'),
