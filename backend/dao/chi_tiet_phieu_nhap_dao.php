@@ -126,4 +126,16 @@ class ChiTietPhieuNhapDAO implements DAOInterface
         }
         return $productList;
     }
+
+    public function getCTPNListByProductId($productId)
+    {
+        $query = "SELECT * FROM chitietphieunhap WHERE product_id = ?";
+        $rs = DatabaseConnection::executeQuery($query, $productId);
+        $orderItemsList = [];
+        while ($row = $rs->fetch_assoc()) {
+            $orderItemsModel = $this->createCTPNModel($row);
+            array_push($orderItemsList, $orderItemsModel);
+        }
+        return $orderItemsList;
+    }
 }

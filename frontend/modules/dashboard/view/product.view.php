@@ -1,11 +1,15 @@
 <?php
 
+use backend\bus\CartsBUS;
 use backend\enums\StatusEnums;
 
 ob_start();
 
 use backend\bus\CategoriesBUS;
+use backend\bus\ChiTietPhieuNhapBUS;
+use backend\bus\ChiTietQuyenBUS;
 use backend\bus\OrderItemsBUS;
+use backend\bus\PhieuNhapBUS;
 use backend\bus\SizeItemsBUS;
 use backend\models\ProductModel;
 
@@ -240,9 +244,11 @@ $productList = ProductBUS::getInstance()->getAllModels();
 
                         //Check for orders that contain the product:
                         $orders = OrderItemsBUS::getInstance()->getOrderItemsListByProductId($productId);
-                        if (count($orders) > 0) {
+                        $ctpnListHaveProduct = ChiTietPhieuNhapBUS::getInstance()->getCTPNListByProductId($productId); 
+                        $cartListHaveProduct = CartsBUS::getInstance()->getCartListByProductId($productId);
+                        if (count($orders) > 0 || count($ctpnListHaveProduct) > 0 || count($cartListHaveProduct) > 0) {
                             ob_end_clean();
-                            return jsonResponse('error', 'Cannot delete product. Product is in orders.');
+                            return jsonResponse('error', 'Cannot delete product. Product is in orders/ carts/ ctpn.');
                         } else {
                             foreach (SizeItemsBUS::getInstance()->getModelByProductId($productId) as $sizeItem) {
                                 if ($sizeItem->getProductId() == $productId) {

@@ -1,18 +1,17 @@
 $(document).ready(function () {
-    var sizeId = null; // Variable to store selected size ID
+    var sizeId = null;
 
-    // Event delegation for dynamically generated elements
     $(".psize").on("click", ".squish-in", function () {
         console.log("size clicked");
         $(".squish-in").css("color", "");
         $(this).css("color", "black");
-        sizeId = $(this).text(); // Retrieving size ID from button text
+        sizeId = $(this).text(); 
     });
 
     var addtoCartButton = $(".addtocart");
     if (addtoCartButton.length) {
         addtoCartButton.on("click", function () {
-            var quantity = $('[name="pquantity"]').val(); // Retrieving quantity
+            var quantity = $('[name="pquantity"]').val();
             var urlParams = new URLSearchParams(window.location.search);
             var id = urlParams.get("id");
 
@@ -52,6 +51,9 @@ $(document).ready(function () {
                 success: function (data) {
                     if (data.status == "success") {
                         alert(data.message);
+                        $(".squish-in").css("color", "");
+                        $('[name="pquantity"]').val("");
+                        sizeId = null;
                     } else if (data.status == "error") {
                         alert(data.message);
                     }

@@ -34,7 +34,7 @@ class ChiTietPhieuNhapBUS
         $this->ctpnList = ChiTietPhieuNhapDAO::getInstance()->getAll();
     }
 
-    public function getModelByIdPhieuNhap($id) : array
+    public function getModelByIdPhieuNhap($id): array
     {
         return ChiTietPhieuNhapDAO::getInstance()->getByIdPhieuNhap($id);
     }
@@ -80,5 +80,9 @@ class ChiTietPhieuNhapBUS
             return [];
         }
         return ChiTietPhieuNhapDAO::getInstance()->search($condition, $columnNames);
+    }
+
+    public function getCTPNListByProductId($productId) {
+        return ChiTietPhieuNhapDAO::getInstance()->getCTPNListByProductId($productId);
     }
 }

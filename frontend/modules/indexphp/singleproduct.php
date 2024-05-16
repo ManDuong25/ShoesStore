@@ -118,6 +118,7 @@ if (isLogin()) {
                             $sizeId = $sizeModel->getId();
                             $sizeName = preg_replace('/[^0-9]/', '', $sizeModel->getName());
                             $sizes[$sizeId] = ['name' => $sizeName, 'quantity' => $s->getQuantity()];
+                            
                         }
                     }
 

@@ -157,4 +157,9 @@ class CartsBUS implements BUSInterface
     {
         return CartsDAO::getInstance()->getDetailedCartInfoByUserId($userId);
     }
+
+    public function getCartListByProductId($productId) {
+        return CartsDAO::getInstance()->getCartListByProductId($productId);
+    }
+
 }
