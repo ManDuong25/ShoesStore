@@ -416,7 +416,7 @@ $orderListItem = OrderItemsBUS::getInstance();
                         document.getElementById('prevPage').classList.add('hideBtn');
                         document.getElementById('nextPage').classList.add('hideBtn');
                         areaPhieuNhapItems.innerHTML = `
-                            <h1> Không tồn tại đơn hàng nào </h1>
+                            <td colspan='12' class="text-center"> <p>Không tồn tại đơn hàng nào</p> </td>
                             `
                     }
                 }

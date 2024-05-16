@@ -297,7 +297,7 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div style="display: flex; justify-content: space-between;" class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Cart</h1>
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Nhập hàng</h1>
                                 <button type="button" class="btn-close closeCartIcon" aria-label="Close">
                                 </button>
                             </div>
@@ -639,7 +639,7 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                                 document.getElementById('prevPage').classList.add('hideBtn');
                                 document.getElementById('nextPage').classList.add('hideBtn');
                                 areaProduct.innerHTML = `
-                            <h1> Không tồn tại sản phẩm nào </h1>
+                                <td colspan='12' class="text-center"> <p >Không tồn tại sản phẩm nào</p> </td>
                             `
                             }
                         }
@@ -789,9 +789,9 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                                     <td class="col-3">${userCartItem.product_name}</td>
                                     <td class="col-2 text-center">${userCartItem.product_giaNhap}</td>
                                     <td class="col-3 text-center">
-                                    <button class="minusProductQuantity">-</button>
+                                    <button class="importButton minusProductQuantity">-</button>
                                     <span class="productInCartQuantity">${userCartItem.cart_quantity}</span>
-                                    <button class="plusProductQuantity">+</button>
+                                    <button class="importButton plusProductQuantity">+</button>
                                     </td>
                                     <td class="col-1 text-center">${userCartItem.size_name}</td>
                                     <td class="col-1 text-center">
