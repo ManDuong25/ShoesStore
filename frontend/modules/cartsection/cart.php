@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 use backend\bus\ProductBUS;
 use backend\bus\CartsBUS;
 use backend\bus\UserBUS;
@@ -12,38 +14,37 @@ CartsBUS::getInstance()->refreshData();
 $token = session::getInstance()->getSession('tokenLogin');
 $tokenModel = TokenLoginBUS::getInstance()->getModelByToken($token);
 $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
-$cartList = CartsBUS::getInstance()->getModelByUserId($userModel->getId());
 
-// if ($userModel->getMaNhomQuyen() == 1 || $userModel->getMaNhomQuyen() == 2 || $userModel->getMaNhomQuyen() == 3) {
-//     echo '<script>';
-//     echo 'alert("You don\'t have access to this page!")';
-//     echo '</script>';
-//     echo '<script>';
-//     echo 'window.location.href = "?module=indexphp&action=product"';
-//     echo '</script>';
-//     die();
-// }
+if ($userModel->getMaNhomQuyen() == 1 || $userModel->getMaNhomQuyen() == 2 || $userModel->getMaNhomQuyen() == 3) {
+    echo '<script>';
+    echo 'alert("You don\'t have access to this page!")';
+    echo '</script>';
+    echo '<script>';
+    echo 'window.location.href = "?module=indexphp&action=product"';
+    echo '</script>';
+    die();
+}
 ?>
 
 <?php
-if (isPost()) {
-    if (isset($_POST['quantity'])) {
-        $quantity = $_POST['quantity'];
-        $cartId = $_POST['cartId'];
-        $cart = CartsBUS::getInstance()->getModelById($cartId);
-        $cart->setQuantity($quantity);
-        CartsBUS::getInstance()->updateModel($cart);
-        CartsBUS::getInstance()->refreshData();
-    } else if (isset($_POST['delete'])) {
-        $cartId = $_POST['cartId'];
-        CartsBUS::getInstance()->deleteModel($cartId);
-        CartsBUS::getInstance()->refreshData();
-        //Refresh the page:
-        echo '<script>';
-        echo 'window.location.href = "?module=cartsection&action=cart"';
-        echo '</script>';
-    }
-}
+// if (isPost()) {
+//     if (isset($_POST['quantity'])) {
+//         $quantity = $_POST['quantity'];
+//         $cartId = $_POST['cartId'];
+//         $cart = CartsBUS::getInstance()->getModelById($cartId);
+//         $cart->setQuantity($quantity);
+//         CartsBUS::getInstance()->updateModel($cart);
+//         CartsBUS::getInstance()->refreshData();
+//     } else if (isset($_POST['delete'])) {
+//         $cartId = $_POST['cartId'];
+//         CartsBUS::getInstance()->deleteModel($cartId);
+//         CartsBUS::getInstance()->refreshData();
+//         //Refresh the page:
+//         echo '<script>';
+//         echo 'window.location.href = "?module=cartsection&action=cart"';
+//         echo '</script>';
+//     }
+// }
 ?>
 <div id="header">
     <meta charset="UTF-8">
@@ -57,36 +58,19 @@ if (isPost()) {
 
 <body>
     <div id="cart">
-        <script src="<?php echo _WEB_HOST_TEMPLATE ?>/js/cart_handler.js"></script>
+        <!-- <script src="<?php echo _WEB_HOST_TEMPLATE ?>/js/cart_handler.js"></script> -->
         <div class="cart-header">
             <div class="cart-header-wrapper">
                 <h1>Cart</h1>
                 <div class="cart-info">
                     <div class="text-group">
                         <label class="cart-header-label" for="cart-total">Total:</label>
-                        <div id="cart-total">
-                            <?php
-                            $total = 0;
-                            foreach ($cartList as $cart) {
-                                $total += $cart->getQuantity() * ProductBUS::getInstance()->getModelById($cart->getProductId())->getPrice();
-                            }
-                            //Split the $total by 3 digits like: 3.000.000:
-                            $total = number_format($total, 0, '', '.');
-                            echo $total;
-                            ?>
+                        <div id="cartTotalAll">
+                            
                         </div>
                     </div>
                 </div>
-                <?php
-                if (count($cartList) > 0) {
-                    echo '<form action="?module=cartsection&action=order" method="POST">';
-                    echo '<button id="order-continue" type="submit" class="checkout">Continue</button>';
-                    echo '</form>';
-                } else {
-                    echo '<button id="order-continue" type="button" class="checkout" style="display: none;">';
-                    echo '</button>';
-                }
-                ?>
+                <button id="order-continue" type="submit" class="checkout">Continue</button>
             </div>
         </div>
 
@@ -101,80 +85,272 @@ if (isPost()) {
                     <p class="cart-action">Action</p>
                 </div>
             </div>
-            <div class="cart-content-body">
+            <div class="areaCartItems">
                 <?php
-                foreach ($cartList as $cart) {
-                    $product = ProductBUS::getInstance()->getModelById($cart->getProductId());
-                    $sizeItems = SizeItemsBUS::getInstance()->getModelBySizeIdAndProductId($cart->getSizeId(), $cart->getProductId());
-                    if ($product != null && $sizeItems != null) {
-                        if ($sizeItems->getQuantity() == 0 || $product->getStatus() == 'inactive') {
-                            //Possible case: The product is deleted by the admin / out of stock / unavailable
-                            //If the product is not found, delete that product from the cart and refresh the data:
-                            //Possibly tell user that the product is out of stock / unavailable:
-                            echo '<script>';
-                            echo 'alert("A product you have in cart: ' . $product->getName() . ' is not available or out of stock!")';
-                            echo '</script>';
-                            CartsBUS::getInstance()->deleteModel($cart->getId());
-                            CartsBUS::getInstance()->refreshData();
+                if (isPost()) {
+                    $filterAll = filter();
+                    if (isset($filterAll['loadData'])) {
+                        $cartList = CartsBUS::getInstance()->getModelByUserId($userModel->getId());
 
-                            //Refresh a page?
-                            echo '<script>';
-                            echo 'window.location.href = "?module=cartsection&action=cart"';
-                            echo '</script>';
-                            break;
+                        foreach ($cartList as $cart) {
+                            $product = ProductBUS::getInstance()->getModelById($cart->getProductId());
+                            $sizeItems = SizeItemsBUS::getInstance()->getModelBySizeIdAndProductId($cart->getSizeId(), $cart->getProductId());
+
+                            if ($product != null && $sizeItems != null) {
+                                if ($sizeItems->getQuantity() == 0 || $product->getStatus() == 'inactive') {
+                                    echo '<script>';
+                                    echo 'alert("A product you have in cart: ' . $product->getName() . ' is not available or out of stock!")';
+                                    echo '</script>';
+                                    CartsBUS::getInstance()->deleteModel($cart->getId());
+                                    CartsBUS::getInstance()->refreshData();
+
+                                    //Refresh a page?
+                                    echo '<script>';
+                                    echo 'window.location.href = "?module=cartsection&action=cart"';
+                                    echo '</script>';
+                                    break;
+                                }
+                            } else {
+                                echo '<script>';
+                                echo 'alert("A product you have in cart is not available or out of stock!")';
+                                echo '</script>';
+                                CartsBUS::getInstance()->deleteModel($cart->getId());
+                                CartsBUS::getInstance()->refreshData();
+
+                                //Refresh a page?
+                                echo '<script>';
+                                echo 'window.location.href = "?module=cartsection&action=cart"';
+                                echo '</script>';
+                                break;
+                            }
                         }
-                    } else {
-                        //If the product is not found, delete that product from the cart and refresh the data:
-                        echo '<script>';
-                        echo 'alert("A product you have in cart is not available or out of stock!")';
-                        echo '</script>';
-                        CartsBUS::getInstance()->deleteModel($cart->getId());
-                        CartsBUS::getInstance()->refreshData();
 
-                        //Refresh a page?
-                        echo '<script>';
-                        echo 'window.location.href = "?module=cartsection&action=cart"';
-                        echo '</script>';
-                        break;
+                        $cartListArray = array_map(function ($cart) {
+                            $cartArray = $cart->toArray();
+                            $productModel = ProductBUS::getInstance()->getModelById($cart->getProductId());
+                            $productImage = $productModel->getImage();
+                            $productName = $productModel->getName();
+                            $productPrice = $productModel->getPrice();
+                            $totaPrice = (float)$productModel->getPrice() * (float)$cart->getQuantity();
+                            $cartArray['productImage'] = $productImage;
+                            $cartArray['productName'] = $productName;
+                            $cartArray['productPrice'] = $productPrice;
+                            $cartArray['totalPrice'] = $totaPrice;
+                            return $cartArray;
+                        }, $cartList);
+
+                        ob_end_clean();
+                        header('Content-Type: application/json');
+                        echo json_encode(['cartList' => $cartListArray]);
+                        exit;
                     }
-                    $sizeItems = SizeItemsBUS::getInstance()->getModelBySizeIdAndProductId($cart->getSizeId(), $product->getId());
-                    $size = SizeBUS::getInstance()->getModelById($cart->getSizeId());
-                    echo '<form method="POST" action="?module=cartsection&action=cart">';
-                    echo '<div class="item-container" name="itemContainer">';
-                    echo '<div class="cart-item cart-product" name="cartProduct">';
-                    echo '<img src="' . $product->getImage() . '" alt="" name="productImage">';
-                    echo '<p name="productName">' . $product->getName() . '</p>';
-                    echo '</div>';
-                    echo '<div class="cart-item cart-size" name="cartSize">';
-                    $sizeName = $size->getName();
-                    $sizeNumber = preg_replace('/[^0-9]/', '', $sizeName);
-                    echo '<p name="sizeNumber">' . $sizeNumber . '</p>';
-                    echo '</div>';
-                    echo '<div class="cart-item cart-price" name="cartPrice">' . $product->getPrice() . '</div>';
-                    echo '<div class="cart-item cart-quantity" name="cartQuantity">';
-                    echo '<button class="minus-btn" name="minusBtn">-</button>';
-                    echo '<input type="text" class="productQuantity" value="' . $cart->getQuantity() . '" disabled name="productQuantity" data-max-quantity="' . $sizeItems->getQuantity() . '">';
-                    echo '<button class="plus-btn" name="plusBtn">+</button>';
-                    echo '</div>';
-                    echo '<div class="cart-item cart-total" name="cartTotal">' . $product->getPrice() * $cart->getQuantity() . '</div>';
-                    echo '<div class="cart-item cart-action" name="cartAction"><i class="fa-solid fa-trash" style="color: #ff0700a6;" name="trashIcon"></i></div>';
-                    echo '</div>';
-                    echo '<input type="hidden" name="cartId" value="' . $cart->getId() . '">';
-                    echo '</form>';
-                }
-                ?>
-                <?php
-                if (count($cartList) == 0) {
-                    echo '<div class="no-product">';
-                    echo '<p>This cart is empty. Please add something :3</p>';
-                    echo '</div>';
                 }
                 ?>
             </div>
         </div>
     </div>
+
+    <?php
+    if (isPost()) {
+        $filterAll = filter();
+        if (isset($filterAll['plusBtn']) && isset($filterAll['cartId'])) {
+            $cartId = $filterAll['cartId'];
+            $cart = CartsBUS::getInstance()->getModelById($cartId);
+            $cart->setQuantity($cart->getQuantity() + 1);
+            CartsBUS::getInstance()->updateModel($cart);
+            CartsBUS::getInstance()->refreshData();
+            ob_end_clean();
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'success']);
+            exit;
+        }
+    }
+
+    if (isPost()) {
+        $filterAll = filter();
+        if (isset($filterAll['minusBtn']) && isset($filterAll['cartId'])) {
+            $cartId = $filterAll['cartId'];
+            $cart = CartsBUS::getInstance()->getModelById($cartId);
+            if ($cart->getQuantity() > 1) {
+                $cart->setQuantity($cart->getQuantity() - 1);
+                CartsBUS::getInstance()->updateModel($cart);
+                CartsBUS::getInstance()->refreshData();
+                ob_end_clean();
+                header('Content-Type: application/json');
+                echo json_encode(['status' => 'success']);
+                exit;
+            } else {
+                $result = CartsBUS::getInstance()->deleteModel($cartId);
+                ob_end_clean();
+                header('Content-Type: application/json');
+                echo json_encode(['status' => 'success']);
+                exit;
+            }
+        }
+    }
+
+    if (isPost()) {
+        $filterAll = filter();
+        if (isset($filterAll['deleteItemInCartBtn']) && isset($filterAll['cartId'])) {
+            $cartId = $filterAll['cartId'];
+            $cart = CartsBUS::getInstance()->getModelById($cartId);
+
+            $result = CartsBUS::getInstance()->deleteModel($cartId);
+            ob_end_clean();
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'success']);
+            exit;
+        }
+    }
+    ?>
 </body>
 <!--Footer-->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let areaCartItems = document.querySelector('.areaCartItems');
+        let cartTotalAll = document.getElementById('cartTotalAll');
+
+        function loadData() {
+            fetch('http://localhost/ShoesStore/frontend/?module=cartsection&action=cart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'loadData=' + true
+                })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    console.log(data);
+                    areaCartItems.innerHTML = toHTMLCartList(data.cartList);
+                    cartTotalAll.innerHTML = countTotalAll(data.cartList);
+                    addEventToPlusBtn();
+                    addEventToMinusBtn();
+                    addEventToDeleteBtn();
+                });
+        }
+
+        loadData();
+
+        function toHTMLCartList(cartList) {
+            let html = '';
+            cartList.forEach(function(cart) {
+                html += `
+                <div id="${cart.id}" class="item-container" name="itemContainer">
+                    <div class="cart-item cart-product" name="cartProduct">
+                        <img src="${cart.productImage}" alt="" name="productImage">
+                        <p name="productName">${cart.productName}</p>
+                    </div>
+                    <div class="cart-item cart-size" name="cartSize">
+                        <p name="sizeNumber">${cart.sizeId}</p>
+                    </div>
+                    <div class="cart-item cart-price" name="cartPrice">${cart.productPrice}</div>
+                    <div class="cart-item cart-quantity" name="cartQuantity">
+                        <button class="minus-btn minusBtn" name="">-</button>
+                        <input type="number" class="productQuantity" value="${cart.quantity}" readonly>
+                        <button class="plus-btn plusBtn" name="">+</button>
+                    </div>
+                    <div class="cart-item cart-total" name="cartTotal">${cart.totalPrice}</div>
+                    <div class="cart-item cart-action deleteItemInCartBtn" name="">
+                        <i class="fa-solid fa-trash" style="color: #ff0700a6;" name="trashIcon"></i>
+                    </div>
+                </div>
+                `
+            })
+            return html;
+        }
+
+        function countTotalAll(cartList) {
+            let total = 0;
+            cartList.forEach(function(cart) {
+                total += cart.totalPrice;
+            })
+            return total;
+        }
+
+        function addEventToPlusBtn() {
+            let plusBtns = document.querySelectorAll('.plusBtn');
+            plusBtns.forEach(function(plusBtn) {
+                plusBtn.addEventListener('click', function() {
+                    row = this.closest('.item-container');
+                    let cartId = row.id;
+                    fetch('http://localhost/ShoesStore/frontend/?module=cartsection&action=cart', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: 'plusBtn=' + true + '&cartId=' + cartId
+                        })
+                        .then(function(response) {
+                            return response.json();
+                        })
+                        .then(function(data) {
+                            if (data.status == 'success') {
+                                loadData();
+                            }
+                        });
+                });
+            })
+        }
+
+        function addEventToMinusBtn() {
+            let minusBtns = document.querySelectorAll('.minusBtn');
+            minusBtns.forEach(function(minusBtn) {
+                minusBtn.addEventListener('click', function() {
+                    row = this.closest('.item-container');
+                    let cartId = row.id;
+                    fetch('http://localhost/ShoesStore/frontend/?module=cartsection&action=cart', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: 'minusBtn=' + true + '&cartId=' + cartId
+                        })
+                        .then(function(response) {
+                            return response.json();
+                        })
+                        .then(function(data) {
+                            if (data.status == 'success') {
+                                loadData();
+                            }
+                        });
+                });
+            })
+        }
+
+        function addEventToDeleteBtn() {
+            let deleteItemInCartBtns = document.querySelectorAll('.deleteItemInCartBtn');
+            deleteItemInCartBtns.forEach(function(deleteItemInCartBtn) {
+                deleteItemInCartBtn.addEventListener('click', function() {
+                    row = this.closest('.item-container');
+                    let cartId = row.id;
+                    fetch('http://localhost/ShoesStore/frontend/?module=cartsection&action=cart', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: 'deleteItemInCartBtn=' + true + '&cartId=' + cartId
+                        })
+                        .then(function(response) {
+                            return response.json();
+                        })
+                        .then(function(data) {
+                            if (data.status == 'success') {
+                                loadData();
+                            }
+                        });
+                })
+            })
+        }
+
+        let orderContinue = document.getElementById('order-continue');
+        orderContinue.addEventListener('click', function() {
+            window.location.href = 'http://localhost/ShoesStore/frontend/?module=cartsection&action=order';
+        })
+    });
+</script>
 <div id="footer" style="margin-top: 15rem">
     <?php layouts('footer') ?>
 </div>

@@ -145,4 +145,16 @@ class CartsDAO implements DAOInterface
         }
         return $detailedCartsList;
     }
+
+    public function getCartListByProductId($productId)
+    {
+        $query = "SELECT * FROM carts WHERE product_id = ?";
+        $rs = DatabaseConnection::executeQuery($query, $productId);
+        $orderItemsList = [];
+        while ($row = $rs->fetch_assoc()) {
+            $orderItemsModel = $this->createCartsModel($row);
+            array_push($orderItemsList, $orderItemsModel);
+        }
+        return $orderItemsList;
+    }
 }
