@@ -61,29 +61,6 @@ CREATE TABLE `coupons` (
   `description` varchar(255) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
--- --------------------------------------------------------
---
--- Table structure for table `import`
---
-CREATE TABLE `import` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `total_price` double NOT NULL,
-  `import_date` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
-
--- --------------------------------------------------------
---
--- Table structure for table `import_items`
---
-CREATE TABLE `import_items` (
-  `id` int(11) NOT NULL,
-  `import_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `size_id` int(11) DEFAULT NULL,
-  `quantity` int(11) NOT NULL,
-  `price` double NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 --
@@ -138,15 +115,6 @@ CREATE TABLE `payments` (
 CREATE TABLE `payment_methods` (
   `id` int(11) NOT NULL,
   `method_name` varchar(50) DEFAULT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
-
--- --------------------------------------------------------
---
--- Table structure for table `permissions`
---
-CREATE TABLE `permissions` (
-  `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -224,31 +192,8 @@ ALTER TABLE
 ADD
   PRIMARY KEY (`id`);
 
---
--- Indexes for table `import`
---
-ALTER TABLE
-  `import`
-ADD
-  PRIMARY KEY (`id`),
-ADD
-  KEY `user_id` (`user_id`);
 
---
--- Indexes for table `import_items`
---
-ALTER TABLE
-  `import_items`
-ADD
-  PRIMARY KEY (`id`),
-ADD
-  KEY `import_id` (`import_id`, `product_id`, `size_id`),
-ADD
-  KEY `product_id` (`product_id`),
-ADD
-  KEY `size_id` (`size_id`);
 
---
 -- Indexes for table `orders`
 --
 ALTER TABLE
@@ -390,21 +335,7 @@ ALTER TABLE
 MODIFY
   `id` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT for table `import`
---
-ALTER TABLE
-  `import`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT for table `import_items`
---
-ALTER TABLE
-  `import_items`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -473,25 +404,7 @@ ADD
 ADD
   CONSTRAINT `carts_ibfk_3` FOREIGN KEY (`size_id`) REFERENCES `sizes` (`id`);
 
---
--- Constraints for table `import`
---
-ALTER TABLE
-  `import`
-ADD
-  CONSTRAINT `import_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
---
--- Constraints for table `import_items`
---
-ALTER TABLE
-  `import_items`
-ADD
-  CONSTRAINT `import_items_ibfk_1` FOREIGN KEY (`import_id`) REFERENCES `import` (`id`),
-ADD
-  CONSTRAINT `import_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-ADD
-  CONSTRAINT `import_items_ibfk_3` FOREIGN KEY (`size_id`) REFERENCES `sizes` (`id`);
 
 --
 -- Constraints for table `orders`
