@@ -324,18 +324,18 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                         <div>
                                             <?php if (checkPermission("Q3", "CN2")) {?>
                                             <a href='http://localhost/ShoesStore/frontend/index.php?module=dashboard&view=product.update&id=${product.id}' class='btn btn-sm btn-warning'>
-                                                <span data-feather='tool'>Sửa</span>
+                                                <i class='fas fa-edit'></i>
                                             </a>
                                             <?php } ?>
                                             <?php if (checkPermission("Q3", "CN3")) {?>
                                             <button class='btn btn-sm btn-danger' id='completelyDeleteProduct' name='completelyDeleteProduct'>
-                                                <span data-feather='trash-2'>Xoá</span>
+                                                <i class='fas fa-trash-alt'></i>
                                             </button>
                                             <?php }?>
 
                                             <?php if (checkPermission("Q3", "CN2")) {?>
                                             <button class='btn btn-sm btn-danger' id='deleteProductButton' name='deleteProductButton'>
-                                                <span data-feather='eye-off'>Ẩn</span>
+                                                <i class='fas fa-eye-slash'></i>
                                             </button>
                                             <?php } ?>
                                         </div>

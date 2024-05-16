@@ -494,17 +494,17 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                         <td>
                             <?php if (checkPermission("Q8", "CN2")) {?>
                             <button class="editAccountBtn btn btn-sm btn-warning">
-                                <span data-feather="tool">Update</span>
+                                <i class="fa-solid fa-edit"></i>    
                             </button>
                             <?php } ?>
                             <?php if (checkPermission("Q8", "CN2")) {?>
                             <button class="lockAccountBtn btn btn-sm btn-danger">
-                                <span data-feather="lock">Lock</span>
+                                <i class="fa-solid fa-lock"></i>
                             </button>
                             <?php } ?>
                             <?php if (checkPermission("Q8", "CN2")) {?>
                             <button class="unlockAccountBtn btn btn-sm btn-success">
-                                <span data-feather="unlock">Unlock</span>
+                                <i class="fa-solid fa-unlock"></i>
                             </button>
                             <?php } ?>
                         </td>

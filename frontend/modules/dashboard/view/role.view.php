@@ -145,13 +145,13 @@ if (isPost()) {
                             <td class='col-1'>
                                 <?php if (checkPermission("Q9", "CN2")) {?>
                                 <button class="updateRoleBtn btn btn-sm btn-warning">
-                                    <span data-feather="tool">Update</span>
+                                    <i class='fas fa-edit'></i>
                                 </button>
                                 <?php } ?>
 
                                 <?php if (checkPermission("Q9", "CN3")) {?>
                                 <button class="hideRoleBtn btn btn-sm btn-danger">
-                                    <span data-feather="delete">Delete</span>
+                                    <i class='fas fa-trash'></i>
                                 </button>
                                 <?php } ?>
                             </td>

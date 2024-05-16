@@ -348,12 +348,12 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                     <td>
                                         <?php if (checkPermission("Q7", "CN2")) {?>
                                         <button class="btn btn-sm btn-warning" name="updateBtn">
-                                            <span data-feather="tool">Sửa</span>
+                                            <i class='fas fa-edit'></i>
                                         </button>
                                         <?php } ?>
                                         <?php if (checkPermission("Q7", "CN3")) {?>
                                         <button class="deleteSizeItemBtn btn btn-sm btn-danger" name="deleteSizeItemBtn">
-                                            <span data-feather="trash-2">Xoá</span>
+                                            <i class='fas fa-trash-alt'></i>
                                         </button>
                                         <?php } ?>
                                     </td>

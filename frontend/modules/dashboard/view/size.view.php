@@ -65,11 +65,11 @@ use backend\bus\SizeBUS;
                         <tbody>
                             <tr>
                                 <td class='col-1'><?= $sizes->getId() ?></td>
-                                <td class='col-2'><?= $sizes->getName() ?></td>
-                                <td class='col-2'>
+                                <td class='col-5'><?= $sizes->getName() ?></td>
+                                <td class='col-4'>
                                     <?= count(SizeItemsBUS::getInstance()->searchModel($sizes->getId(), ['size_id'])); ?>
                                 </td>
-                                <td class='col-2 sizeAction'>
+                                <td class='col-1 sizeAction'>
                                     <?php if (checkPermission("Q5", "CN2")) {?>
                                     <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                         data-bs-target="#editModal<?= $sizes->getId() ?>">

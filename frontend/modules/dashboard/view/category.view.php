@@ -65,11 +65,11 @@ use backend\bus\CategoriesBUS;
                         <tbody>
                             <tr>
                                 <td class='col-1'><?= $categories->getId() ?></td>
-                                <td class='col-2'><?= $categories->getName() ?></td>
-                                <td class='col-2'>
+                                <td class='col-7'><?= $categories->getName() ?></td>
+                                <td class='col-3'>
                                     <?= count(ProductBUS::getInstance()->searchModel($categories->getId(), ['category_id'])); ?>
                                 </td>
-                                <td class='col-2 categoryAction'>
+                                <td class='col-1 categoryAction'>
                                     <?php if (checkPermission("Q4", "CN2")) {?>
                                     <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                         data-bs-target="#editModal<?= $categories->getId() ?>">

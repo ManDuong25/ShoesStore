@@ -27,21 +27,19 @@ function showCouponList($coupon)
     echo "<td class='col-1'>" . $coupon->getId() . "</td>";
     echo "<td class='col-2'>" . $coupon->getCode() . "</td>";
     echo "<td class='col-2'>" . $coupon->getQuantity() . "</td>";
-    echo "<td class='col-1'>" . $coupon->getPercent() . "</td>";
+    echo "<td class='col-2'>" . $coupon->getPercent() . "</td>";
     echo "<td class='col-2'>" . $coupon->getExpired() . "</td>";
-    echo "<td class='col-1'>" . $coupon->getDescription() . "</td>";
-    echo "<td class='col-2 couponAction'>";
+    echo "<td class='col-2'>" . $coupon->getDescription() . "</td>";
+    echo "<td class='col-1 couponAction'>";
     if (checkPermission("Q6", "CN2")) {
         echo "<button class='btn btn-sm btn-warning' data-bs-toggle='modal' data-bs-target='#editModal" . $coupon->getId() . "'>";
-        echo "<span data-feather='tool'></span>";
-        echo "Update";
+        echo "<i class='fas fa-edit'></i>";
         echo "</button>";
     }
 
     if (checkPermission("Q6", "CN3")) {
         echo "<button class='btn btn-sm btn-danger' id='deleteCouponBtnId' name='deleteCouponBtnName'>";
-        echo "<span data-feather='trash-2'></span>";
-        echo "Delete";
+        echo "<i class='fas fa-trash'></i>";
         echo "</button>";
     }
     echo "</td>";
@@ -131,6 +129,7 @@ function showCouponList($coupon)
                             <th>Discount (%)</th>
                             <th>Expired Date</th>
                             <th>Description</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <?php
