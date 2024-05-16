@@ -109,4 +109,40 @@ class CartsDAO implements DAOInterface
         }
         return $cartsList;
     }
+
+
+    public function getDetailedCartInfoByUserId($userId): array
+    {
+        $query = "
+            SELECT 
+                carts.id AS cart_id, 
+                products.id AS product_id, 
+                products.image, 
+                products.name, 
+                products.giaNhap, 
+                carts.quantity, 
+                sizes.id AS size_id,
+                sizes.name AS size_name 
+            FROM carts
+            INNER JOIN products ON carts.product_id = products.id
+            INNER JOIN sizes ON carts.size_id = sizes.id
+            WHERE carts.user_id = ?
+    ";
+
+        $rs = DatabaseConnection::executeQuery($query, $userId);
+        $detailedCartsList = [];
+        while ($row = $rs->fetch_assoc()) {
+            $detailedCartsList[] = [
+                'cart_id' => $row['cart_id'],
+                'product_id' => $row['product_id'],
+                'product_image' => $row['image'],
+                'product_name' => $row['name'],
+                'product_giaNhap' => $row['giaNhap'],
+                'cart_quantity' => $row['quantity'],
+                'size_id' => $row['size_id'],
+                'size_name' => $row['size_name']
+            ];
+        }
+        return $detailedCartsList;
+    }
 }

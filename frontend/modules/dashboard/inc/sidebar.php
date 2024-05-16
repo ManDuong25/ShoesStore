@@ -133,6 +133,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                 <?php
                 }
                 ?>
+            </li>
             <li class="nav-item">
                 <?php
                 if (checkPermission("Q9", "CN1")) {
@@ -148,17 +149,36 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                 }
                 ?>
             </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="bar-chart-2"></span>
-                    Reports
-                </a>
-            </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="layers"></span>
-                    Integrations
-                </a> -->
+                <?php
+                if (checkPermission("Q10", "CN4") && checkPermission("Q10", "CN1")) {
+                    ?>
+                <li class="nav-item">
+                    <a class="nav-link <?php echo isActivePage($_GET['view'], 'nhaphang.view'); ?>"
+                        href="?module=dashboard&view=nhaphang.view">
+                        <span data-feather="clipboard"></span>
+                        Nhập hàng
+                    </a>
+                </li>
+                <?php
+                }
+                ?>
+            </li>
+
+            <li class="nav-item">
+                <?php
+                if (checkPermission("Q10", "CN1")) {
+                    ?>
+                <li class="nav-item">
+                    <a class="nav-link <?php echo isActivePage($_GET['view'], 'phieunhap.view'); ?>"
+                        href="?module=dashboard&view=phieunhap.view">
+                        <span data-feather="clipboard"></span>
+                        Phiếu nhập
+                    </a>
+                </li>
+                <?php
+                }
+                ?>
             </li>
         </ul>
     </div>

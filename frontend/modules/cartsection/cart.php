@@ -14,15 +14,15 @@ $tokenModel = TokenLoginBUS::getInstance()->getModelByToken($token);
 $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
 $cartList = CartsBUS::getInstance()->getModelByUserId($userModel->getId());
 
-if ($userModel->getMaNhomQuyen() == 1 || $userModel->getMaNhomQuyen() == 2 || $userModel->getMaNhomQuyen() == 3) {
-    echo '<script>';
-    echo 'alert("You don\'t have access to this page!")';
-    echo '</script>';
-    echo '<script>';
-    echo 'window.location.href = "?module=indexphp&action=product"';
-    echo '</script>';
-    die();
-}
+// if ($userModel->getMaNhomQuyen() == 1 || $userModel->getMaNhomQuyen() == 2 || $userModel->getMaNhomQuyen() == 3) {
+//     echo '<script>';
+//     echo 'alert("You don\'t have access to this page!")';
+//     echo '</script>';
+//     echo '<script>';
+//     echo 'window.location.href = "?module=indexphp&action=product"';
+//     echo '</script>';
+//     die();
+// }
 ?>
 
 <?php

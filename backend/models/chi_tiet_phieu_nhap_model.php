@@ -6,7 +6,16 @@ class ChiTietPhieuNhapModel
 {
     private $maCTPN, $maPhieuNhap, $productId, $sizeId, $quantity, $price;
 
-    // Getters
+    public function __construct($maCTPN, $maPhieuNhap, $productId, $sizeId, $quantity, $price)
+    {
+        $this->maCTPN = $maCTPN;
+        $this->maPhieuNhap = $maPhieuNhap;
+        $this->productId = $productId;
+        $this->sizeId = $sizeId;
+        $this->quantity = $quantity;
+        $this->price = $price;
+    }
+
     public function getMaCTPN() {
         return $this->maCTPN;
     }

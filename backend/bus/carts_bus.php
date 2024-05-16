@@ -87,6 +87,16 @@ class CartsBUS implements BUSInterface
         return null;
     }
 
+    public function checkDuplicateProductMD($userId, $productId, $sizeId)
+    {
+        foreach ($this->cartsList as $carts) {
+            if ($carts->getUserId() == $userId && $carts->getProductId() == $productId && $carts->getSizeId() == $sizeId) {
+                return $carts;
+            }
+        }
+        return null;
+    }
+
     public function addModel($cartsModel): int
     {
         $this->validateModel($cartsModel);
@@ -141,5 +151,10 @@ class CartsBUS implements BUSInterface
         ) {
             throw new InvalidArgumentException("Please fill in all fields");
         }
+    }
+
+    public function getDetailedCartInfoByUserId($userId): array 
+    {
+        return CartsDAO::getInstance()->getDetailedCartInfoByUserId($userId);
     }
 }

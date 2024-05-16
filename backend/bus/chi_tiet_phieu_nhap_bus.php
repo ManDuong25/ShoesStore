@@ -34,7 +34,7 @@ class ChiTietPhieuNhapBUS
         $this->ctpnList = ChiTietPhieuNhapDAO::getInstance()->getAll();
     }
 
-    public function getModelByIdPhieuNhap($id)
+    public function getModelByIdPhieuNhap($id) : array
     {
         return ChiTietPhieuNhapDAO::getInstance()->getByIdPhieuNhap($id);
     }

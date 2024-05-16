@@ -1,5 +1,7 @@
 <?php
+
 namespace backend\models;
+
 class CartsModel
 {
     private $id, $userId, $productId, $quantity, $sizeId;
@@ -60,5 +62,16 @@ class CartsModel
     public function setSizeId($sizeId)
     {
         $this->sizeId = $sizeId;
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'userId' => $this->getUserId(),
+            'productId' => $this->getProductId(),
+            'quantity' => $this->getQuantity(),
+            'sizeId' => $this->getSizeId()
+        ];
     }
 }

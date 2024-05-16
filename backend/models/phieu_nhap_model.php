@@ -6,6 +6,16 @@ class PhieuNhapModel
 {
     private $maPhieuNhap, $userId, $phieuNhapDate, $totalAmount, $maNCC, $trangThai;
 
+    public function __construct($maPhieuNhap, $userId, $phieuNhapDate, $totalAmount, $maNCC, $trangThai)
+    {
+        $this->maPhieuNhap = $maPhieuNhap;
+        $this->userId = $userId;
+        $this->phieuNhapDate = $phieuNhapDate;
+        $this->totalAmount = $totalAmount;
+        $this->maNCC = $maNCC;
+        $this->trangThai = $trangThai;
+    }
+    
     // Getters
     public function getMaPhieuNhap() {
         return $this->maPhieuNhap;

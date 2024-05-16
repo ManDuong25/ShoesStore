@@ -53,17 +53,15 @@ class ChiTietPhieuNhapDAO implements DAOInterface
         return $ctpnList;
     }
 
-    public function getByIdPhieuNhap($id)
+    public function getByIdPhieuNhap($id): array
     {
-        $query = "SELECT * FROM chitietphieunhap WHERE maPhieuNhap = ?";
-        $result = DatabaseConnection::executeQuery($query, $id);
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            if ($row) {
-                return $this->createCTPNModel($row);
-            }
+        $ctpnList = [];
+        $rs = DatabaseConnection::executeQuery("SELECT * FROM chitietphieunhap WHERE maPhieuNhap = ?", $id);
+        while ($row = $rs->fetch_assoc()) {
+            $ctpnModel = $this->createCTPNModel($row);
+            array_push($ctpnList, $ctpnModel);
         }
-        return null;
+        return $ctpnList;
     }
 
     public function insert($data): int

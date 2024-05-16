@@ -86,4 +86,37 @@ class PhieuNhapBUS implements BUSInterface
         }
         return PhieuNhapDAO::getInstance()->search($condition, $columnNames);
     }
+
+    public function getMaxPhieuNhapId(): int
+    {
+        return PhieuNhapDAO::getInstance()->getMaxPhieuNhapId();
+    }
+
+    public function countAllModels() {
+        return PhieuNhapDAO::getInstance()->countAllModels();
+    }
+
+    public function paginationTech($from, $limit) {
+        return PhieuNhapDAO::getInstance()->paginationTech($from, $limit);
+    }
+
+    public function multiFilterModel($from, $limit, $filterName, $dateFrom, $dateTo, $filterStatus) {
+        if (!empty($dateFrom)) {
+            $dateFrom = date('Y-m-d', strtotime($dateFrom));
+        }
+        if (!empty($dateTo)) {
+            $dateTo = date('Y-m-d', strtotime($dateTo));
+        }
+        return PhieuNhapDAO::getInstance()->multiFilterModel($from, $limit, $filterName, $dateFrom, $dateTo, $filterStatus);
+    }
+
+    public function countFilteredModel($filterName, $dateFrom, $dateTo, $filterStatus) {
+        if (!empty($dateFrom)) {
+            $dateFrom = date('Y-m-d', strtotime($dateFrom));
+        }
+        if (!empty($dateTo)) {
+            $dateTo = date('Y-m-d', strtotime($dateTo));
+        }
+        return PhieuNhapDAO::getInstance()->countFilteredModel($filterName, $dateFrom, $dateTo, $filterStatus);
+    }
 }

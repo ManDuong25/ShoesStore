@@ -33,7 +33,7 @@ class PhieuNhapDAO implements DAOInterface
 
     private function createPNModel($rs)
     {
-        $maPhieuNhap = $rs['maNCC'];
+        $maPhieuNhap = $rs['maPhieuNhap'];
         $userId = $rs['user_id'];
         $phieuNhapDate = $rs['phieuNhapDate'];
         $totalAmount = $rs['total_amount'];
@@ -108,7 +108,7 @@ class PhieuNhapDAO implements DAOInterface
 
     public function delete(int $id): int
     {
-        $query = "UPDATE phieunhap SET trangThai = 0 WHERE maPhieuNhap = ?";
+        $query = "DELETE FROM phieunhap WHERE maPhieuNhap = ?";
         return DatabaseConnection::executeUpdate($query, $id);
     }
 
@@ -139,5 +139,114 @@ class PhieuNhapDAO implements DAOInterface
             return [];
         }
         return $productList;
+    }
+
+    public function getMaxPhieuNhapId(): int
+    {
+        $query = "SELECT MAX(maPhieuNhap) AS max_id FROM phieunhap";
+        $result = DatabaseConnection::executeQuery($query);
+        $row = $result->fetch_assoc();
+        return isset($row['max_id']) ? (int)$row['max_id'] : 0;
+    }
+
+    public function countAllModels()
+    {
+        $query = "SELECT COUNT(*) AS total FROM phieunhap;";
+        $rs = DatabaseConnection::executeQuery($query);
+        $row = $rs->fetch_assoc();
+        return $row['total'];
+    }
+
+    public function paginationTech($from, $limit)
+    {
+        $phieuNhapList = [];
+        $query = "SELECT * FROM phieunhap LIMIT ?, ?;";
+        $args = [
+            $from,
+            $limit
+        ];
+        $rs = DatabaseConnection::executeQuery($query, ...$args);
+        while ($row = $rs->fetch_assoc()) {
+            $phieuNhapModel = $this->createPNModel($row);
+            array_push($phieuNhapList, $phieuNhapModel);
+        }
+        return $phieuNhapList;
+    }
+
+
+    public function multiFilterModel($from, $limit, $filterName, $dateFrom, $dateTo, $filterStatus)
+    {
+        $phieuNhapList = [];
+        $query = "SELECT phieunhap.* FROM phieunhap
+          JOIN users ON phieunhap.user_id = users.id
+          WHERE 1=1";
+        $args = [];
+
+        if (!empty($filterName)) {
+            $query .= " AND users.name LIKE ?";
+            $filterParam = "%" . $filterName . "%";
+            array_push($args, $filterParam);
+        }
+
+        if ($filterStatus !== null && $filterStatus != "") {
+            $query .= " AND phieunhap.trangThai = ?";
+            array_push($args, $filterStatus);
+        }
+
+        if (!empty($dateFrom)) {
+            $query .= " AND phieunhap.phieuNhapDate >= ?";
+            array_push($args, $dateFrom);
+        }
+
+        if (!empty($dateTo)) {
+            $query .= " AND phieunhap.phieuNhapDate <= ?";
+            array_push($args, $dateTo);
+        }
+
+
+
+        $query .= " LIMIT ?, ?";
+        array_push($args, $from, $limit);
+
+        $rs = DatabaseConnection::executeQuery($query, ...$args);
+        while ($row = $rs->fetch_assoc()) {
+            $phieuNhapModel = $this->createPNModel($row);
+            array_push($phieuNhapList, $phieuNhapModel);
+        }
+
+        return $phieuNhapList;
+    }
+
+    public function countFilteredModel($filterName, $dateFrom, $dateTo, $filterStatus)
+    {
+        $query = "SELECT COUNT(*) AS total FROM phieunhap
+          JOIN users ON phieunhap.user_id = users.id
+          WHERE 1=1";
+        $args = [];
+
+        if (!empty($filterName)) {
+            $query .= " AND users.name LIKE ?";
+            $filterParam = "%" . $filterName . "%";
+            array_push($args, $filterParam);
+        }
+
+        if ($filterStatus !== null && $filterStatus != "") {
+            $query .= " AND phieunhap.trangThai = ?";
+            array_push($args, $filterStatus);
+        }
+
+        if (!empty($dateFrom)) {
+            $query .= " AND phieunhap.phieuNhapDate >= ?";
+            array_push($args, $dateFrom);
+        }
+
+        if (!empty($dateTo)) {
+            $query .= " AND phieunhap.phieuNhapDate <= ?";
+            array_push($args, $dateTo);
+        }
+
+        $rs = DatabaseConnection::executeQuery($query, ...$args);
+        $row = $rs->fetch_assoc();
+        return $row['total'];
     }
 }
