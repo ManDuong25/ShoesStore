@@ -53,6 +53,17 @@ class NhaCungCapDAO implements DAOInterface
         return $nccList;
     }
 
+    public function getAllActive(): array
+    {
+        $nccList = [];
+        $rs = DatabaseConnection::executeQuery("SELECT * FROM nhacungcap WHERE trangThai = 1");
+        while ($row = $rs->fetch_assoc()) {
+            $nccModel = $this->createNCCModel($row);
+            array_push($nccList, $nccModel);
+        }
+        return $nccList;
+    }
+
     public function getById($id)
     {
         $query = "SELECT * FROM nhacungcap WHERE maNCC = ?";
@@ -80,9 +91,8 @@ class NhaCungCapDAO implements DAOInterface
 
     public function insert($data): int
     {
-        $query = "INSERT INTO nhacungcap (maNCC, ten, diaChi, sdt, email, trangThai) VALUES (?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO nhacungcap (ten, diaChi, sdt, email, trangThai) VALUES (?, ?, ?, ?, ?)";
         $args = [
-            $data->getMaNCC(),
             $data->getTen(),
             $data->getDiaChi(),
             $data->getSdt(),

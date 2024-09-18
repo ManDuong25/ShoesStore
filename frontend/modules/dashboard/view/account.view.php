@@ -865,7 +865,6 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                         showUpdateModal();
                     })
                 })
-
             }
 
             let updateBtn = document.getElementById('updateBtn');

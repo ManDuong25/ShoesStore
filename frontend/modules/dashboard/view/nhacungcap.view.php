@@ -2,7 +2,9 @@
 use backend\bus\NhaCungCapBUS;
 use backend\bus\TokenLoginBUS;
 use backend\bus\UserBUS;
+use backend\models\NhaCungCapModel;
 use backend\services\session;
+use backend\services\validation;
 ob_start();
 
 $title = 'Nhà Cung Cấp';
@@ -146,11 +148,11 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                         </div>
                         <div class="col-md-8">
                             <label for="inputAdressAdd" class="form-label">Address</label>
-                            <input type="password" id="inputAdressAdd" name="inputAdressName" class="form-control">
+                            <input type="text" id="inputAdressAdd" name="inputAdressName" class="form-control">
                         </div>
                         <div class="col-5">
                             <label for="inputEmailAdd" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="inputEmailAdd">
+                            <input type="email" class="form-control" id="inputEmailAdd">
                         </div>
                         <div class="col-4">
                             <label for="inputPhoneAdd" class="form-label">Phone</label>
@@ -175,7 +177,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
 
 
     <!-- Update modal -->
-    <!-- <div class="modal fade" id="updateModal">
+    <div class="modal fade" id="updateModal">
         <div class="modal-dialog modal-lg">
             <div id="updateModalWrapper" class="modal-content">
                 <div class="modal-header">
@@ -185,47 +187,27 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                 <div class="modal-body">
                     <form class="row g-3">
                         <div class="col-md-4">
-                            <label for="inputUsername" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="inputUsernameUpdate" name="inputUsernameName">
+                            <label for="inputNameUpdate" class="form-label">Name</label>
+                            <input disabled type="text" class="form-control" id="inputNameUpdate">
+                        </div>
+                        <div class="col-md-8">
+                            <label for="inputAddressUpdate" class="form-label">Address</label>
+                            <input type="text" id="inputAddressUpdate" class="form-control">
+                        </div>
+                        <div class="col-5">
+                            <label for="inputEmailUpdate" class="form-label">Email</label>
+                            <input disabled type="email" class="form-control" id="inputEmailUpdate">
+                        </div>
+                        <div class="col-4">
+                            <label for="inputPhoneUpdate" class="form-label">Phone</label>
+                            <input type="text" class="form-control" id="inputPhoneUpdate">
                         </div>
                         <div class="col-md-3">
-                            <label for="inputPassword" class="form-label">Password</label>
-                            <input type="password" id="inputPasswordUpdate" name="inputPasswordName" class="form-control">
-                        </div>
-                        <div class="col-5">
-                            <label for="inputEmail" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="inputEmailUpdate" name="inputEmailName">
-                        </div>
-                        <div class="col-5">
-                            <label for="inputName" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="inputNameUpdate" name="inputNameName">
-                        </div>
-                        <div class="col-3">
-                            <label for="inputPhone" class="form-label">Phone</label>
-                            <input type="text" class="form-control" id="inputPhoneUpdate" name="inputPhoneName">
-                        </div>
-                        <div class="col-md-2">
-                            <label for="inputGender" class="form-label">Gender</label>
-                            <select id="inputGenderUpdate" class="form-select">
-                                <option value="0" selected>Male</option>
-                                <option value="1">Female</option>
+                            <label for="inputStatusUpdate" class="form-label">Status</label>
+                            <select id="inputStatusUpdate" class="form-select">
+                                <option value="0" selected>0: Inactive</option>
+                                <option value="1">1: Active</option>
                             </select>
-                        </div>
-                        <div class="col-md-2">
-                            <label for="inputRole" class="form-label">Role</label>
-                            <select name="" id="inputRoleUpdate" class="form-select">
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="inputAddress" class="form-label">Address</label>
-                            <input type="text" name="inputAddressName" id="inputAddressUpdate" class="form-control">
-                        </div>
-                        <div class="col-6  userImg">
-                            <img id="imgPreviewUpdate" src="" alt="Preview Image" a class="img-circle">
-                        </div>
-                        <div class="col-6">
-                            <label for="inputImg">Image</label>
-                            <input type="file" class="form-control" name="imgaccount" id="inputImgUpdate" accept="image/*">
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -235,13 +217,85 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                 </form>
             </div>
         </div>
-    </div> -->
+    </div>
 
-    <?php 
-    if(isPost()) {
+    <?php
+    if (isPost()) {
         $filterAll = filter();
         if (isset($filterAll['saveBtn'])) {
-            
+            $nameAdd = $filterAll['nameAdd'];
+            $addressAdd = $filterAll['addressAdd'];
+            $emailAdd = $filterAll['emailAdd'];
+            $phoneAdd = $filterAll['phoneAdd'];
+            $statusAdd = $filterAll['statusAdd'];
+
+            if (!validation::getInstance()->isValidEmail($emailAdd)) {
+                ob_end_clean();
+                return jsonResponse('error', "Email is invalid!");
+            }
+
+            if (!validation::getInstance()->isValidPhoneNumber($phoneAdd)) {
+                ob_end_clean();
+                return jsonResponse('error', "Phone is invalid!");
+            }
+
+            if (NhaCungCapBUS::getInstance()->isEmailUsed($emailAdd)) {
+                ob_end_clean();
+                return jsonResponse('error', "Email is used!");
+            }
+
+            if (NhaCungCapBUS::getInstance()->isPhoneNumberUsedToAdd($phoneAdd)) {
+                ob_end_clean();
+                return jsonResponse('error', "Phone number is used!");
+            }
+
+            $statusAdd = intval($statusAdd);
+            $nccNew = new NhaCungCapModel(null, $nameAdd, $addressAdd, $phoneAdd, $emailAdd, $statusAdd);
+            $result = NhaCungCapBUS::getInstance()->addModel($nccNew);
+            if ($result) {
+                ob_end_clean();
+                return jsonResponse('success', "NCC added successfully!");
+            } else {
+                ob_end_clean();
+                return jsonResponse('error', "Something went wrong!");
+            }
+        }
+
+        if (isset($filterAll['updateBtn'])) {
+            $nccIdUpdate = $filterAll['nccIdUpdate'];
+            $nameUpdate = $filterAll['nameUpdate'];
+            $addressUpdate = $filterAll['addressUpdate'];
+            $emailUpdate = $filterAll['emailUpdate'];
+            $phoneUpdate = $filterAll['phoneUpdate'];
+            $statusUpdate = $filterAll['statusUpdate'];
+
+            if (!validation::getInstance()->isValidPhoneNumber($phoneUpdate)) {
+                ob_end_clean();
+                return jsonResponse('error', "Phone is invalid!");
+            }
+
+
+            if (NhaCungCapBUS::getInstance()->isPhoneNumberUsedToUpdate($phoneUpdate, $nccIdUpdate)) {
+                ob_end_clean();
+                return jsonResponse('error', "Phone number is used!");
+            }
+
+            $nccUpdate = NhaCungCapBUS::getInstance()->getModelById($nccIdUpdate);
+            if ($nameUpdate == $nccUpdate->getTen() && $addressUpdate == $nccUpdate->getDiaChi() && $emailUpdate == $nccUpdate->getEmail() && $phoneUpdate == $nccUpdate->getSdt() && $statusUpdate == $nccUpdate->getTrangThai()) {
+                ob_end_clean();
+                return jsonResponse('sucess', "Nothing change!");
+            }
+
+            $statusUpdate = intval($statusUpdate);
+            $nccUpdate = new NhaCungCapModel($nccIdUpdate, $nameUpdate, $addressUpdate, $phoneUpdate, $emailUpdate, $statusUpdate);
+            $result = NhaCungCapBUS::getInstance()->updateModel($nccUpdate);
+            if ($result) {
+                ob_end_clean();
+                return jsonResponse('success', "NCC updated successfully!");
+            } else {
+                ob_end_clean();
+                return jsonResponse('error', "Something went wrong!");
+            }
         }
     }
     ?>
@@ -258,12 +312,6 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
             let areaPagination = document.querySelector('.areaPagination');
             let searchInput = document.getElementById('accountSearch');
 
-
-            // let addModal = document.getElementById('addModal');
-            // let addModalWrapper = document.getElementById('addModalWrapper');
-            // let addAcountBtn = document.getElementById('addAcountBtn');
-            // let closeAddModalIcon = document.getElementById('closeAddModalIcon');
-            // let closeAddModalBtn = document.getElementById('closeAddModalBtn');
 
 
             let filterEmail = "";
@@ -285,6 +333,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                         areaPagination.innerHTML = toHTMLPagination(data.totalQuantity, data.thisPage, data.limit);
                         totalPage = Math.ceil(data.totalQuantity / data.limit);
                         changePageIndexLogic(totalPage, data.totalQuantity, data.limit);
+                        addEventToEditBtn(data.listNCCItems);
                     });
             }
 
@@ -298,14 +347,14 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                         <td class="col-1">${userItem.maNCC}</td>
                         <td class="user_username col-1">${userItem.ten}</td>
                         <td class="user_name col-2">${userItem.diaChi}</td>
-                        <td class="user_email col-2">${userItem.sdt}</td>
+                        <td class="ncc_email col-2">${userItem.sdt}</td>
                         <td class="user_phone col-1">${userItem.email}</td>
                         <td class="user_status col-1">${userItem.trangThai}</td>
                         <td>
                             <?php if (checkPermission("Q8", "CN2")) { ?>
-                                    <button class="editAccountBtn btn btn-sm btn-warning">
-                                        <i class="fa-solid fa-edit"></i>    
-                                    </button>
+                                                                            <button class="editNCCBtn btn btn-sm btn-warning">
+                                                                                <i class="fa-solid fa-edit"></i>    
+                                                                            </button>
                             <?php } ?>
                         </td>
                     </tr>
@@ -468,7 +517,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                             return response.json();
                         })
                         .then(function (data) {
-                            alert(data.message);
+                            alert(data.message)
                             if (data.status == 'success') {
                                 nameAdd.value = "";
                                 addressAdd.value = "";
@@ -481,6 +530,98 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                         });
                 })
             }
+
+            let updateModal = document.getElementById('updateModal');
+            let updateModalWrapper = document.getElementById('updateModalWrapper');
+            let closeUpdateModalIcon = document.getElementById('closeUpdateModalIcon');
+            let closeUpdateModalBtn = document.getElementById('closeUpdateModalBtn');
+
+            function showUpdateModal() {
+                updateModal.style.display = 'block';
+                updateModal.setAttribute('role', 'dialog');
+                updateModal.classList.add('show');
+                updateModal.style.backgroundColor = 'rgba(0,0,0,0.4)';
+            }
+
+            function hideUpdateModal() {
+                updateModal.style.display = 'none';
+                updateModal.removeAttribute('role');
+                updateModal.classList.remove('show');
+                updateModal.style.backgroundColor = 'rgba(0,0,0,0.4)';
+            }
+
+            updateModal.addEventListener('click', function () {
+                hideUpdateModal();
+            })
+
+            updateModalWrapper.addEventListener('click', function (e) {
+                e.stopPropagation();
+            })
+
+            closeUpdateModalIcon.addEventListener('click', function () {
+                hideUpdateModal();
+            })
+
+            closeUpdateModalBtn.addEventListener('click', function () {
+                hideUpdateModal();
+            })
+
+            let nccIdUpdate = -1;
+            let nameUpdate = document.getElementById("inputNameUpdate");
+            let addressUpdate = document.getElementById("inputAddressUpdate")
+            let emailUpdate = document.getElementById("inputEmailUpdate");
+            let phoneUpdate = document.getElementById("inputPhoneUpdate");
+            let statusUpdate = document.getElementById("inputStatusUpdate");
+
+            function addEventToEditBtn(listNCC) {
+                let editBtns = document.querySelectorAll('.editNCCBtn');
+                editBtns.forEach(function (editBtn) {
+                    editBtn.addEventListener('click', function () {
+                        let row = this.closest('tr');
+                        let nccId = row.id;
+                        let ncc;
+                        listNCC.forEach(function (nccTemp) {
+                            if (nccTemp.maNCC == nccId) {
+                                ncc = nccTemp;
+                            }
+                        });
+                        nccIdUpdate = ncc.maNCC;
+                        nameUpdate.value = ncc.ten;
+                        addressUpdate.value = ncc.diaChi;
+                        emailUpdate.value = ncc.email;
+                        phoneUpdate.value = ncc.sdt;
+                        statusUpdate.value = ncc.trangThai;
+                        showUpdateModal();
+                    })
+                })
+            }
+
+            let updateBtn = document.getElementById('updateBtn');
+            updateBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (!nameUpdate.value || !addressUpdate.value || !emailUpdate.value || !phoneUpdate.value || !statusUpdate.value) {
+                    alert("Please fill all fields");
+                    return;
+                }
+
+                fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=nhacungcap.view', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: 'nameUpdate=' + nameUpdate.value + '&addressUpdate=' + addressUpdate.value + '&emailUpdate=' + emailUpdate.value + '&phoneUpdate=' + phoneUpdate.value + '&statusUpdate=' + statusUpdate.value + '&updateBtn=' + true + '&nccIdUpdate=' + nccIdUpdate
+                    })
+                    .then(function(response) {
+                        return response.json();
+                    })
+                    .then(function(data) {
+                        alert(data.message);
+                        if (data.status == 'success') {
+                            hideUpdateModal();
+                            loadData(thisPage, limit, filterEmail);
+                        }
+                    });
+            })
         });
     </script>
 </body>

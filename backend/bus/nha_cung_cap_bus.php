@@ -3,6 +3,7 @@
 namespace backend\bus;
 
 use backend\interfaces\BUSInterface;
+use backend\services\validation;
 use InvalidArgumentException;
 use backend\dao\NhaCungCapDAO;
 use Exception;
@@ -27,6 +28,11 @@ class NhaCungCapBUS implements BUSInterface
     public function getAllModels(): array
     {
         return $this->nhaCungCapList;
+    }
+
+    public function getAllActive()
+    {
+        return NhaCungCapDAO::getInstance()->getAllActive();
     }
 
     public function refreshData(): void
@@ -75,6 +81,39 @@ class NhaCungCapBUS implements BUSInterface
             unset($this->nhaCungCapList[$index]);
             $this->refreshData();
             return true;
+        }
+        return false;
+    }
+
+    public function isEmailUsed($email)
+    {
+        $this->nhaCungCapList = NhaCungCapDAO::getInstance()->getAll();
+        for ($i = 0; $i < count($this->nhaCungCapList); $i++) {
+            if ($this->nhaCungCapList[$i]->getEmail() == $email) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function isPhoneNumberUsedToAdd($phone)
+    {
+        $this->nhaCungCapList = NhaCungCapDAO::getInstance()->getAll();
+        for ($i = 0; $i < count($this->nhaCungCapList); $i++) {
+            if ($this->nhaCungCapList[$i]->getSdt() == $phone) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function isPhoneNumberUsedToUpdate($phone, $nccIdUpdate)
+    {
+        $this->nhaCungCapList = NhaCungCapDAO::getInstance()->getAll();
+        for ($i = 0; $i < count($this->nhaCungCapList); $i++) {
+            if ($this->nhaCungCapList[$i]->getSdt() == $phone && !($this->nhaCungCapList[$i]->getMaNCC() == $nccIdUpdate)) {
+                return true;
+            }
         }
         return false;
     }

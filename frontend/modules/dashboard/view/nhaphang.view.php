@@ -316,7 +316,7 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                             <div class="modal-body">
                                 <select name="" id="nhaCungCap">
                                     <?php
-                                    $nhaCungCapList = NhaCungCapBUS::getInstance()->getAllModels();
+                                    $nhaCungCapList = NhaCungCapBUS::getInstance()->getAllActive();
                                     foreach ($nhaCungCapList as $nhaCungCap) {
                                         echo "<option value='" . $nhaCungCap->getMaNCC() . "'>" . $nhaCungCap->getTen() . "</option>";
                                     }
