@@ -154,6 +154,12 @@ if (isset($_GET['id'])) {
                 $productGender = $_POST['genderEdit'] ?? '';
                 $productDescription = $_POST['descriptionEdit'] ?? '';
                 $importPriceHighestNow = SizeItemsBUS::getInstance()->getHighestImportPriceByProductId($id);
+
+                if (ProductBUS::getInstance()->isUsedNameUpdate($productName, $id)) {
+                    ob_end_clean();
+                    return jsonResponse('error', "Product name is already taken!");
+                }
+
                 if ($importPriceHighestNow) {
                     $highestImportPrice = $importPriceHighestNow->getImportPrice();
                     if ($productPrice <= $highestImportPrice) {

@@ -202,12 +202,23 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                     $productGender = $_POST['gender'];
                                     $productDescription = $_POST['description'];
                                     $data = $_POST['image'];
+
+                                    if (ProductBUS::getInstance()->isUsedName($productName)) {
+                                        ob_end_clean();
+                                        return jsonResponse('error', 'Already have product using this name!');
+                                    }
+
                                     $productModel = new ProductModel(null, $productName, $productCategory, 0, $productDescription, $data, $productGender, strtolower(StatusEnums::INACTIVE));
-                                    
-                                    ProductBUS::getInstance()->addModel($productModel);
-                                    ProductBUS::getInstance()->refreshData();
-                                    ob_end_clean();
-                                    return jsonResponse('success', 'Product added successfully!');
+
+                                    $result = ProductBUS::getInstance()->addModel($productModel);
+                                    if ($result) {
+                                        ProductBUS::getInstance()->refreshData();
+                                        ob_end_clean();
+                                        return jsonResponse('success', 'Product added successfully!');
+                                    } else {
+                                        ob_end_clean();
+                                        return jsonResponse('error', 'Something went wrong!');
+                                    }
                                 }
                             }
                             ?>
@@ -330,20 +341,20 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                     <td class='text-center'>
                                         <div>
                                             <?php if (checkPermission("Q3", "CN2")) { ?>
-                                                <a href='http://localhost/ShoesStore/frontend/index.php?module=dashboard&view=product.update&id=${product.id}' class='btn btn-sm btn-warning'>
-                                                    <i class='fas fa-edit'></i>
-                                                </a>
+                                                            <a href='http://localhost/ShoesStore/frontend/index.php?module=dashboard&view=product.update&id=${product.id}' class='btn btn-sm btn-warning'>
+                                                                <i class='fas fa-edit'></i>
+                                                            </a>
                                             <?php } ?>
                                             <?php if (checkPermission("Q3", "CN3")) { ?>
-                                                <button class='btn btn-sm btn-danger' id='completelyDeleteProduct' name='completelyDeleteProduct'>
-                                                    <i class='fas fa-trash-alt'></i>
-                                                </button>
+                                                            <button class='btn btn-sm btn-danger' id='completelyDeleteProduct' name='completelyDeleteProduct'>
+                                                                <i class='fas fa-trash-alt'></i>
+                                                            </button>
                                             <?php } ?>
 
                                             <?php if (checkPermission("Q3", "CN2")) { ?>
-                                                <button class='btn btn-sm btn-danger' id='deleteProductButton' name='deleteProductButton'>
-                                                    <i class='fas fa-eye-slash'></i>
-                                                </button>
+                                                            <button class='btn btn-sm btn-danger' id='deleteProductButton' name='deleteProductButton'>
+                                                                <i class='fas fa-eye-slash'></i>
+                                                            </button>
                                             <?php } ?>
                                         </div>
                                     </td>
@@ -560,14 +571,22 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                     headers: {
                                         'Content-Type': 'application/x-www-form-urlencoded',
                                     },
-                                    body: 'productName=' + productName.value + '&category=' + chosenCategory.value + '&gender=' + chosenGender.value + '&description=' + productDescription.value + '&image=' + imageProductReview.src + '&saveBtn=' + true
+                                    body: 'productName=' + productName.value + '&category=' + chosenCategory.value + '&gender=' + chosenGender.value + '&description=' + productDescription.value + '&image=' + encodeURIComponent(imageProductReview.src) + '&saveBtn=' + true
                                 })
                                     .then(function (response) {
                                         return response.json();
                                     })
                                     .then(function (data) {
-                                        console.log(data);
                                         alert(data.message)
+                                        if (data.status == 'success') {
+                                            productName.value = '';
+                                            chosenCategory.value = 1;
+                                            chosenGender.value = 0;
+                                            productDescription.value = "";
+                                            imageProductReview.src = 'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp';
+                                            document.getElementById('inputImg').value = "";
+                                            document.querySelector('.btn-close').click();
+                                        }
                                         loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
                                     });
                             })

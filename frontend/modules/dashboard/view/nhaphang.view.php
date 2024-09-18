@@ -154,94 +154,6 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                     </tbody>
                 </table>
 
-                <!-- Add modal -->
-                <div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Product</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form class="row g-3">
-                                    <div class="col-7">
-                                        <label for="inputProductName" class="form-label">Name</label>
-                                        <input type="text" class="form-control" id="inputProductName"
-                                            name="productName">
-                                    </div>
-                                    <div class="col-5">
-                                        <label for="inputProductCate" class="form-label">Categories</label>
-                                        <select id="inputProductCate" class="form-select" name="category">
-                                            <?php $categoriesList = CategoriesBUS::getInstance()->getAllModels();
-                                            foreach ($categoriesList as $categories) {
-                                                echo "<option value='" . $categories->getId() . "'>" . $categories->getName() . "</option>";
-                                            } ?>
-                                        </select>
-                                    </div>
-                                    <div class="col-4">
-                                        <label for="inputPrice" class="form-label">Price</label>
-                                        <input type="text" class="form-control" id="inputPrice" name="price">
-                                    </div>
-                                    <div class="col-4">
-                                        <label for="giaNhap" class="form-label">Import Price</label>
-                                        <input type="text" class="form-control" id="giaNhap" name="price">
-                                    </div>
-                                    <div class="col-4">
-                                        <label for="inputGender" class="form-label">Gender</label>
-                                        <select id="inputGender" class="form-select" name="gender">
-                                            <option value="0" selected>Male</option>
-                                            <option value="1">Female</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-7">
-                                        <label for="inputDescription" class="form-label">Description</label>
-                                        <textarea class="form-control" id="w3review" name="description" row="1"
-                                            cols="40"></textarea>
-                                    </div>
-                                    <div class="col-7">
-                                        <label for="inputImg">Image (.JPG, .JPEG, .PNG)</label>
-                                        <input type="file" class="form-control" name="image" id="inputImg"
-                                            accept=".jpg, .jpeg, .png">
-                                    </div>
-                                    <div class="col-5 productImg">
-                                        <img id="imgPreview" src="" alt="Preview Image">
-                                    </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-primary" id="saveButton"
-                                    name="saveBtnName">Save</button>
-                            </div>
-                            <?php
-                            if (isPost()) {
-                                if (isset($_POST['saveBtn'])) {
-                                    error_log('Save button clicked');
-                                    $productName = $_POST['productName'];
-                                    $productCategory = $_POST['category'];
-                                    $productPrice = $_POST['price'];
-                                    $productGender = $_POST['gender'];
-                                    $productDescription = $_POST['description'];
-                                    $data = $_POST['image'];
-                                    $giaNhap = $_POST['giaNhap'];
-                                    $productModel = new ProductModel(null, $productName, $productCategory, $productPrice, $productDescription, $data, $productGender, strtolower(StatusEnums::INACTIVE), $giaNhap);
-                                    ProductBUS::getInstance()->addModel($productModel);
-                                    ProductBUS::getInstance()->refreshData();
-                                    ob_end_clean();
-                                    return jsonResponse('success', 'Product added successfully!');
-                                }
-                            }
-                            ?>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
 
 
                 <!-- Choose size modal -->
@@ -293,7 +205,8 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="closeAddModalBtn btn btn-secondary"
+                                    data-bs-dismiss="modal">Cancel</button>
                                 <button type="submit" class="btn btn-primary" id="importBtn"
                                     name="importBtnName">Import</button>
                             </div>
@@ -362,6 +275,91 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                     </div>
                 </div>
 
+                <!-- Add modal -->
+                <div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Product</h1>
+                                <button type="button" class="btn-close btn-close-add" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="row g-3">
+                                    <div class="col-7">
+                                        <label for="inputProductName" class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="inputProductName"
+                                            name="productName">
+                                    </div>
+                                    <div class="col-5">
+                                        <label for="inputProductCate" class="form-label">Categories</label>
+                                        <select id="inputProductCate" class="form-select" name="category">
+                                            <?php $categoriesList = CategoriesBUS::getInstance()->getAllModels();
+                                            foreach ($categoriesList as $categories) {
+                                                echo "<option value='" . $categories->getId() . "'>" . $categories->getName() . "</option>";
+                                            } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="inputGender" class="form-label">Gender</label>
+                                        <select id="inputGender" class="form-select" name="gender">
+                                            <option value="0" selected>Male</option>
+                                            <option value="1">Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-7">
+                                        <label for="inputDescription" class="form-label">Description</label>
+                                        <textarea class="form-control" id="w3review" name="description" row="1"
+                                            cols="40"></textarea>
+                                    </div>
+                                    <div class="col-7">
+                                        <label for="inputImg">Image (.JPG, .JPEG, .PNG)</label>
+                                        <input type="file" class="form-control" name="image" id="inputImg"
+                                            accept=".jpg, .jpeg, .png">
+                                    </div>
+                                    <div class="col-5 productImg">
+                                        <img id="imgPreview" src="" alt="Preview Image">
+                                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary" id="saveButton"
+                                    name="saveBtnName">Save</button>
+                            </div>
+                            <?php
+                            if (isPost()) {
+                                if (isset($_POST['saveBtn'])) {
+                                    error_log('Save button clicked');
+
+                                    $productName = $_POST['productName'];
+                                    $productCategory = $_POST['category'];
+                                    $productGender = $_POST['gender'];
+                                    $productDescription = $_POST['description'];
+                                    $data = $_POST['image'];
+
+                                    if (ProductBUS::getInstance()->isUsedName($productName)) {
+                                        ob_end_clean();
+                                        return jsonResponse('error', 'Already have product using this name!');
+                                    }
+
+                                    $productModel = new ProductModel(null, $productName, $productCategory, 0, $productDescription, $data, $productGender, strtolower(StatusEnums::INACTIVE));
+                                    $result = ProductBUS::getInstance()->addModel($productModel);
+                                    if ($result) {
+                                        ProductBUS::getInstance()->refreshData();
+                                        ob_end_clean();
+                                        return jsonResponse('success', 'Product added successfully!');
+                                    } else {
+                                        ob_end_clean();
+                                        return jsonResponse('error', 'Something went wrong!');
+                                    }
+                                }
+                            }
+                            ?>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
 
                 <?php
@@ -995,6 +993,92 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                             showCartModal();
                             loadDataCart();
                         })
+
+
+
+                        // add btn
+                        let productName = document.getElementById("inputProductName");
+                        let chosenCategory = document.getElementById("inputProductCate");
+                        let chosenGender = document.getElementById("inputGender");
+                        let productDescription = document.getElementById("w3review");
+                        let productImageUpload = document.getElementById("inputImg");
+                        let imageProductReview = document.getElementById("imgPreview");
+
+                        productImageUpload.addEventListener('change', function (event) {
+                            let file = event.target.files[0];
+                            if (file) {
+                                let reader = new FileReader();
+                                reader.onload = function (e) {
+                                    let base64Image = e.target.result;
+                                    imageProductReview.src = base64Image;
+                                };
+                                reader.readAsDataURL(file);
+                            } else {
+                                imageProductReview.src = 'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp';
+                            }
+                        });
+
+
+
+                        if (!productImageUpload.files.length) {
+                            // Nếu không có file nào được chọn, gán đường dẫn mặc định cho imageProductReview.src
+                            imageProductReview.src = 'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp';
+                        }
+
+                        let saveBtn = document.getElementById("saveButton");
+                        if (saveBtn) {
+                            saveBtn.addEventListener('click', function (e) {
+                                e.preventDefault();
+
+                                if (!productName.value) {
+                                    alert("Please enter product name");
+                                    productName.value = "";
+                                    return;
+                                }
+
+                                if (!chosenCategory.value) {
+                                    alert("Please select a category");
+                                    return;
+                                }
+
+                                if (!productDescription.value) {
+                                    alert("Please enter product description");
+                                    productDescription.value = "";
+                                    return;
+                                }
+
+                                let trimmedDescription = productDescription.value.trim();
+                                if (trimmedDescription.length < 10) {
+                                    alert("Description must be at least 10 characters long");
+                                    return;
+                                }
+
+                                fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=nhaphang.view', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded',
+                                    },
+                                    body: 'productName=' + productName.value + '&category=' + chosenCategory.value + '&gender=' + chosenGender.value + '&description=' + productDescription.value + '&image=' + encodeURIComponent(imageProductReview.src) + '&saveBtn=' + true
+                                })
+                                    .then(function (response) {
+                                        return response.json();
+                                    })
+                                    .then(function (data) {
+                                        alert(data.message)
+                                        if (data.status == 'success') {
+                                            productName.value = '';
+                                            chosenCategory.value = 1;
+                                            chosenGender.value = 0;
+                                            productDescription.value = "";
+                                            imageProductReview.src = 'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp';
+                                            document.getElementById('inputImg').value = "";
+                                            document.querySelector('.btn-close-add').click();
+                                        }
+                                        loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
+                                    });
+                            })
+                        }
+
                     });
                 </script>
 </body>

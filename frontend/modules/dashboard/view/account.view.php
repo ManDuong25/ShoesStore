@@ -148,8 +148,8 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                             <input type="text" class="form-control" id="inputUsernameAdd" name="inputUsernameName">
                         </div>
                         <div class="col-md-3">
-                            <label for="inputPassword" class="form-label">Password</label>
-                            <input type="password" id="inputPassword" name="inputPasswordNameAdd" class="form-control">
+                            <label for="inputPasswordAdd" class="form-label">Password</label>
+                            <input type="password" id="inputPasswordAdd" name="inputPasswordNameAdd" class="form-control">
                         </div>
                         <div class="col-5">
                             <label for="inputEmail" class="form-label">Email</label>
@@ -176,14 +176,15 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                                 <?php
                                 $nhomQuyenList = NhomQuyenBUS::getInstance()->getAllModels();
                                 foreach ($nhomQuyenList as $nhomQuyen) {
+                                    if ($nhomQuyen->getMaNhomQuyen() != 'NQ1')
                                     echo "<option value='" . $nhomQuyen->getMaNhomQuyen() . "'>" . $nhomQuyen->getTenNhomQuyen() . "</option>";
                                 }
                                 ?>
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label for="inputAddress" class="form-label">Address</label>
-                            <input type="text" name="inputAddressNameAdd" id="inputAddress" class="form-control">
+                            <label for="inputAddressAdd" class="form-label">Address</label>
+                            <input type="text" name="inputAddressNameAdd" id="inputAddressAdd" class="form-control">
                         </div>
                         <div class="col-6  userImg">
                             <img id="imgPreviewAdd" src="" alt="Preview Image" a class="img-circle">
@@ -246,6 +247,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                                 <?php
                                 $nhomQuyenList = NhomQuyenBUS::getInstance()->getAllModels();
                                 foreach ($nhomQuyenList as $nhomQuyen) {
+                                    if ($nhomQuyen->getMaNhomQuyen() != 'NQ1')
                                     echo "<option value='" . $nhomQuyen->getMaNhomQuyen() . "'>" . $nhomQuyen->getTenNhomQuyen() . "</option>";
                                 }
                                 ?>

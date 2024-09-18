@@ -231,4 +231,35 @@ class ProductBUS implements BUSInterface
     public function getQuantityProductsWithCategoryId($categoryId) {
         return ProductDAO::getInstance()->getQuantityProductsWithCategoryId($categoryId);
     }
+
+    public function isEmailUsed($email)
+    {
+        $this->userList = UserDAO::getInstance()->getAll();
+        for ($i = 0; $i < count($this->userList); $i++) {
+            if ($this->userList[$i]->getEmail() == $email) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public function isUsedName($name) {
+        $this->productList = ProductDAO::getInstance()->getAll();
+        for ($i = 0; $i < count($this->productList); $i++) {
+            if ($this->productList[$i]->getName() == $name) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function isUsedNameUpdate($name, $productId)
+    {
+        $this->productList = ProductDAO::getInstance()->getAll();
+        for ($i = 0; $i < count($this->productList); $i++) {
+            if ($this->productList[$i]->getName() == $name && !($this->productList[$i]->getId() == $productId)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
