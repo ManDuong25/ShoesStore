@@ -32,6 +32,19 @@ class UserDAO implements DAOInterface
         return $userList;
     }
 
+    public function getByMaNhomQuyen($maNhomQuyen): array
+    {
+        $userList = [];
+        $query = "SELECT * FROM users WHERE maNhomQuyen = ?";
+        $rs = DatabaseConnection::executeQuery($query, $maNhomQuyen);
+        while ($row = $rs->fetch_assoc()) {
+            $userModel = $this->createUserModel($row);
+            array_push($userList, $userModel);
+        }
+        return $userList;
+    }
+
+
     private function createUserModel($rs)
     {
         $id = $rs['id'];
@@ -92,7 +105,7 @@ class UserDAO implements DAOInterface
             $user->getEmail(),
             $user->getName(),
             $user->getPhone(),
-            (int)$genderValue,
+            (int) $genderValue,
             $user->getImage(),
             $user->getMaNhomQuyen(),
             $user->getAddress(),
@@ -205,6 +218,6 @@ class UserDAO implements DAOInterface
         $args = ["%" . $email . "%"];
         $rs = DatabaseConnection::executeQuery($query, ...$args);
         $row = $rs->fetch_assoc();
-        return (int)$row['total'];
+        return (int) $row['total'];
     }
 }

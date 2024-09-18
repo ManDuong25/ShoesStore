@@ -56,22 +56,24 @@ class SizeItemsDAO implements DAOInterface
 
     public function insert($sizeItem): int
     {
-        $insertSql = "INSERT INTO size_items (product_id, size_id, quantity) VALUES (?, ?, ?)";
+        $insertSql = "INSERT INTO size_items (product_id, size_id, quantity, import_price) VALUES (?, ?, ?, ?)";
         $args = [
             $sizeItem->getProductId(),
             $sizeItem->getSizeId(),
             $sizeItem->getQuantity(),
+            $sizeItem->getImportPrice(),
         ];
         return DatabaseConnection::executeUpdate($insertSql, ...$args);
     }
 
     public function update($sizeItem): int
     {
-        $updateSql = "UPDATE size_items SET product_id = ?, size_id = ?, quantity = ? WHERE id = ?";
+        $updateSql = "UPDATE size_items SET product_id = ?, size_id = ?, quantity = ?, import_price = ? WHERE id = ?";
         $args = [
             $sizeItem->getProductId(),
             $sizeItem->getSizeId(),
             $sizeItem->getQuantity(),
+            $sizeItem->getImportPrice(),
             $sizeItem->getId(),
         ];
         return DatabaseConnection::executeUpdate($updateSql, ...$args);
@@ -83,8 +85,8 @@ class SizeItemsDAO implements DAOInterface
         $productId = $rs['product_id'];
         $sizeId = $rs['size_id'];
         $quantity = $rs['quantity'];
-
-        return new SizeItemsModel($id, $productId, $sizeId, $quantity);
+        $importPrice = $rs['import_price'];
+        return new SizeItemsModel($id, $productId, $sizeId, $quantity, $importPrice);
     }
 
 
@@ -92,6 +94,18 @@ class SizeItemsDAO implements DAOInterface
     {
         $deleteSql = "DELETE FROM size_items WHERE id = ?";
         return DatabaseConnection::executeUpdate($deleteSql, $id);
+    }
+
+    public function getAllBySizeIdAndProductId(int $sizeId, int $productId): array
+    {
+        $sizeItemList = [];
+        $query = "SELECT * FROM size_items WHERE size_id = ? AND product_id = ?";
+        $rs = DatabaseConnection::executeQuery($query, $sizeId, $productId);
+        while ($row = $rs->fetch_assoc()) {
+            $sizeItemModel = $this->createSizeItemModel($row);
+            array_push($sizeItemList, $sizeItemModel);
+        }
+        return $sizeItemList;
     }
 
     public function search(string $condition, $columnNames): array
@@ -153,7 +167,8 @@ class SizeItemsDAO implements DAOInterface
             p.image AS Image, 
             p.name AS ProductName, 
             c.name AS Category, 
-            s.name AS Size, 
+            s.name AS Size,
+            si.import_price AS importPrice, 
             si.quantity AS Quantity,
             si.id AS Id
         FROM 
@@ -180,6 +195,7 @@ class SizeItemsDAO implements DAOInterface
             $category = $row['Category'];
             $size = $row['Size'];
             $quantity = $row['Quantity'];
+            $importPrice = $row['importPrice'];
             $id = $row['Id'];
 
             // Thêm các giá trị vào mảng kết quả
@@ -189,6 +205,7 @@ class SizeItemsDAO implements DAOInterface
                 'category' => $category,
                 'size' => $size,
                 'quantity' => $quantity,
+                'importPrice' => $importPrice,
                 'id' => $id
             ];
             array_push($inventoryList, $inventoryItem);
@@ -213,4 +230,20 @@ class SizeItemsDAO implements DAOInterface
         $row = $rs->fetch_assoc();
         return $row['Total'];
     }
+
+
+
+
+    // update(1) solving change import price problems
+    public function getHighestImportPriceByProductId(int $productId)
+    {
+        $query = "SELECT * FROM size_items WHERE product_id = ? ORDER BY import_price DESC LIMIT 1";
+        $rs = DatabaseConnection::executeQuery($query, $productId);
+        if ($rs->num_rows > 0) {
+            $row = $rs->fetch_assoc();
+            return $this->createSizeItemModel($row);
+        }
+        return null; // Không tìm thấy size_item nào với product_id này
+    }
+
 }

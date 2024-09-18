@@ -55,18 +55,21 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
 
             <!-- MAIN -->
             <main class="col-9 ms-sm-auto col-lg-10 px-4">
-                <div class="d-flex justify-content-between flex-wrap flex-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">
                         <?= $title ?>
                     </h1>
                     <div class="btn-toolbar mb-2 mb-0">
-                        <button type="button" class="btn btn-sm btn-warning align-middle" id="cartProduct" class="cartBtn">
+                        <button type="button" class="btn btn-sm btn-warning align-middle" id="cartProduct"
+                            class="cartBtn">
                             <span data-feather="shopping-cart"></span>
                             Cart
                         </button>
                     </div>
                     <div class="btn-toolbar mb-2 mb-0">
-                        <button type="button" class="btn btn-sm btn-success align-middle" data-bs-toggle="modal" data-bs-target="#addModal" id="addProduct" class="addBtn">
+                        <button type="button" class="btn btn-sm btn-success align-middle" data-bs-toggle="modal"
+                            data-bs-target="#addModal" id="addProduct" class="addBtn">
                             <span data-feather="plus"></span>
                             Add
                         </button>
@@ -74,8 +77,10 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                 </div>
 
                 <div class="search-group input-group py-2">
-                    <input type="text" name="productSearch" id="productSearchBar" class="searchInput form-control" placeholder="Search anything here...">
-                    <button type="submit" id="productSearchButton" name="productSearchButtonName" class="btn btn-sm btn-primary align-middle px-3">
+                    <input type="text" name="productSearch" id="productSearchBar" class="searchInput form-control"
+                        placeholder="Search anything here...">
+                    <button type="submit" id="productSearchButton" name="productSearchButtonName"
+                        class="btn btn-sm btn-primary align-middle px-3">
                         <span data-feather="search"></span>
                     </button>
                 </div>
@@ -86,10 +91,8 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                             <th></th>
                             <th class='text-center'>ID</th>
                             <th class='col-3'>Product Name</th>
-                            <th class='col-1'>Category</th>
-                            <th class='col-4'>Description</th>
-                            <th class='col-1 text-center'>Price</th>
-                            <th class='col-1 text-center'>Import price</th>
+                            <th class='col-2'>Category</th>
+                            <th class='col-5'>Description</th>
                             <th class='col-2 text-center'>Action</th>
                             <th class='col-1 text-center'>Status</th>
                         </tr>
@@ -152,18 +155,21 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                 </table>
 
                 <!-- Add modal -->
-                <div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                    aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Product</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <form class="row g-3">
                                     <div class="col-7">
                                         <label for="inputProductName" class="form-label">Name</label>
-                                        <input type="text" class="form-control" id="inputProductName" name="productName">
+                                        <input type="text" class="form-control" id="inputProductName"
+                                            name="productName">
                                     </div>
                                     <div class="col-5">
                                         <label for="inputProductCate" class="form-label">Categories</label>
@@ -191,11 +197,13 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                                     </div>
                                     <div class="col-7">
                                         <label for="inputDescription" class="form-label">Description</label>
-                                        <textarea class="form-control" id="w3review" name="description" row="1" cols="40"></textarea>
+                                        <textarea class="form-control" id="w3review" name="description" row="1"
+                                            cols="40"></textarea>
                                     </div>
                                     <div class="col-7">
                                         <label for="inputImg">Image (.JPG, .JPEG, .PNG)</label>
-                                        <input type="file" class="form-control" name="image" id="inputImg" accept=".jpg, .jpeg, .png">
+                                        <input type="file" class="form-control" name="image" id="inputImg"
+                                            accept=".jpg, .jpeg, .png">
                                     </div>
                                     <div class="col-5 productImg">
                                         <img id="imgPreview" src="" alt="Preview Image">
@@ -203,7 +211,8 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-primary" id="saveButton" name="saveBtnName">Save</button>
+                                <button type="submit" class="btn btn-primary" id="saveButton"
+                                    name="saveBtnName">Save</button>
                             </div>
                             <?php
                             if (isPost()) {
@@ -236,12 +245,14 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
 
 
                 <!-- Choose size modal -->
-                <div class="modal fade" id="chooseSizeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal fade" id="chooseSizeModal" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Choose Size</h1>
-                                <button type="button" class="btn-close closeChooseSizeIcon" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close closeChooseSizeIcon" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <form class="row g-3">
@@ -259,7 +270,7 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                                     </div>
                                     <div class="col-4">
                                         <label for="productPriceCS" class="form-label">Import Price</label>
-                                        <input type="text" class="form-control" id="productPriceCS" readonly>
+                                        <input type="text" class="form-control" id="productPriceCS">
                                     </div>
                                     <div class="col-4">
                                         <label for="productGenderCS" class="form-label">Gender</label>
@@ -283,7 +294,8 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-primary" id="importBtn" name="importBtnName">Import</button>
+                                <button type="submit" class="btn btn-primary" id="importBtn"
+                                    name="importBtnName">Import</button>
                             </div>
                             </form>
                         </div>
@@ -330,7 +342,6 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                                             if (isset($filterAll['loadDataCart'])) {
                                                 $userIdLoggedIn = $userIdNow;
                                                 $userCartItems = CartsBUS::getInstance()->getDetailedCartInfoByUserId($userIdLoggedIn);
-
                                                 ob_end_clean();
                                                 header('Content-Type: application/json');
                                                 echo json_encode(['userCartItems' => $userCartItems]);
@@ -340,6 +351,8 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                                         ?>
                                     </tbody>
                                 </table>
+                                <hr>
+                                <h3 class="totalAmountCartAdmin">Tổng tiền: 0</h3>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="closeCartBtn btn btn-secondary">Cancel</button>
@@ -355,21 +368,25 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                 if (isPost()) {
                     $filterAll = filter();
 
-                    if (isset($filterAll['productId']) && isset($filterAll['productSize']) && isset($filterAll['productQuantity']) && isset($filterAll['importBtn'])) {
+                    if (isset($filterAll['productId']) && isset($filterAll['productSize']) && isset($filterAll['productQuantity']) && isset($filterAll['importBtn']) && isset($filterAll['productPrice'])) {
                         $productId = $filterAll['productId'];
                         $productSize = $filterAll['productSize'];
                         $productQuantity = $filterAll['productQuantity'];
-
+                        $productPrice = $filterAll['productPrice'];
 
                         $tokenLogin = session::getInstance()->getSession('tokenLogin');
                         $userId = TokenLoginBUS::getInstance()->getModelByToken($tokenLogin)->getUserId();
 
                         if (CartsBUS::getInstance()->checkDuplicateProductMD($userId, $productId, $productSize)) {
-                            $cartModel = CartsBUS::getInstance()->checkDuplicateProductMD($userId, $productId, $productSize);
-                            $cartModel->setQuantity($cartModel->getQuantity() + $productQuantity);
-                            $result = CartsBUS::getInstance()->updateModel($cartModel);
+                            ob_end_clean();
+                            return jsonResponse('alert', 'Đã tồn tại sản phẩm trong giỏ hàng, thay đổi giá nhập không?');
+                            // $cartModel = CartsBUS::getInstance()->checkDuplicateProductMD($userId, $productId, $productSize);
+                            // if ($cartModel) {
+                            //     $cartModel->setQuantity($cartModel->getQuantity() + $productQuantity);
+                            //     $result = CartsBUS::getInstance()->updateModel($cartModel);
+                            // }
                         } else {
-                            $cartModel = new CartsModel(null, $userId, $productId, $productQuantity, $productSize);
+                            $cartModel = new CartsModel(null, $userId, $productId, $productQuantity, $productSize, $productPrice);
                             $result = CartsBUS::getInstance()->addModel($cartModel);
                         }
                         if ($result) {
@@ -378,6 +395,32 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                         } else {
                             ob_end_clean();
                             return jsonResponse('error', 'Thêm vào giỏ hàng thất bại!');
+                        }
+                    }
+                }
+
+                if (isPost()) {
+                    $filterAll = filter();
+                    if (isset($filterAll['productId']) && isset($filterAll['productSize']) && isset($filterAll['productQuantity']) && isset($filterAll['changeImportPrice']) && isset($filterAll['productPrice'])) {
+                        $productId = $filterAll['productId'];
+                        $productSize = $filterAll['productSize'];
+                        $productQuantity = $filterAll['productQuantity'];
+                        $productPrice = $filterAll['productPrice'];
+
+                        $tokenLogin = session::getInstance()->getSession('tokenLogin');
+                        $userId = TokenLoginBUS::getInstance()->getModelByToken($tokenLogin)->getUserId();
+                        $cartModel = CartsBUS::getInstance()->checkDuplicateProductMD($userId, $productId, $productSize);
+                        $cartModel->setImportPrice($productPrice);
+                        if ($cartModel) {
+                            $cartModel->setQuantity($cartModel->getQuantity() + $productQuantity);
+                            $result = CartsBUS::getInstance()->updateModel($cartModel);
+                            if ($result) {
+                                ob_end_clean();
+                                return jsonResponse('success', 'Thêm vào giỏ hàng thành công!');
+                            } else {
+                                ob_end_clean();
+                                return jsonResponse('error', 'Thêm vào giỏ hàng thất bại!');
+                            }
                         }
                     }
                 }
@@ -441,22 +484,20 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
 
                         $userCartItems = CartsBUS::getInstance()->getModelByUserId($userId);
                         $totalAmount = 0;
+
                         foreach ($userCartItems as $userCartItem) {
-                            $productModel = ProductBUS::getInstance()->getModelById($userCartItem->getProductId());
-                            $totalAmount += $productModel->getGiaNhap() * $userCartItem->getQuantity();
+                            $totalAmount += $userCartItem->getImportPrice() * $userCartItem->getQuantity();
                         }
-                        $phieuNhapNew = new PhieuNhapModel($maPhieuNhapNew, $userId, $currentTime, $totalAmount, $maNCC, 0);
+
+                        $phieuNhapNew = new PhieuNhapModel(null, $userId, $currentTime, $totalAmount, $maNCC, 0);
                         $result = PhieuNhapBUS::getInstance()->addModel($phieuNhapNew);
-                        $maPhieuNhapNew = (int)PhieuNhapBUS::getInstance()->getMaxPhieuNhapId();
+                        $maPhieuNhapNew = (int) PhieuNhapBUS::getInstance()->getMaxPhieuNhapId();
                         if (!$result) {
                             ob_end_clean();
                             return jsonResponse('error', 'Có lỗi xảy ra khi tạo mới phiếu nhập!');
                         }
                         foreach ($userCartItems as $userCartItem) {
-                            $productModel = ProductBUS::getInstance()->getModelById($userCartItem->getProductId());
-                            $price = $productModel->getGiaNhap() * $userCartItem->getQuantity();
-                            $chiTietPhieuNhapNew = new ChiTietPhieuNhapModel(null, $maPhieuNhapNew, $userCartItem->getProductId(), $userCartItem->getSizeId(), $userCartItem->getQuantity(), $price);
-
+                            $chiTietPhieuNhapNew = new ChiTietPhieuNhapModel(null, $maPhieuNhapNew, $userCartItem->getProductId(), $userCartItem->getSizeId(), $userCartItem->getQuantity(), $userCartItem->getImportPrice());
                             $result = ChiTietPhieuNhapBUS::getInstance()->addModel($chiTietPhieuNhapNew);
 
                             if (!$result) {
@@ -519,7 +560,7 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
 
 
                 <script>
-                    document.addEventListener('DOMContentLoaded', function() {
+                    document.addEventListener('DOMContentLoaded', function () {
 
                         // Pagination and filter
                         let thisPage = 1;
@@ -534,18 +575,19 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                         let filterPriceFrom = "";
                         let filterPriceTo = "";
 
+                        let totalAmountCartAdmin = document.querySelector('.totalAmountCartAdmin');
                         function loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo) {
                             fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=nhaphang.view', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/x-www-form-urlencoded',
-                                    },
-                                    body: 'thisPage=' + thisPage + '&limit=' + limit + '&filterName=' + filterName + '&filterCategory=' + filterCategory + '&filterGender=' + filterGender + '&filterPriceFrom=' + filterPriceFrom + '&filterPriceTo=' + filterPriceTo
-                                })
-                                .then(function(response) {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                body: 'thisPage=' + thisPage + '&limit=' + limit + '&filterName=' + filterName + '&filterCategory=' + filterCategory + '&filterGender=' + filterGender + '&filterPriceFrom=' + filterPriceFrom + '&filterPriceTo=' + filterPriceTo
+                            })
+                                .then(function (response) {
                                     return response.json();
                                 })
-                                .then(function(data) {
+                                .then(function (data) {
                                     areaProduct.innerHTML = toHTMLProductList(data.listProducts);
                                     areaPagination.innerHTML = toHTMLPagination(data.totalQuantity, data.thisPage, data.limit);
                                     totalPage = Math.ceil(data.totalQuantity / data.limit);
@@ -566,8 +608,6 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                                     <td class="product_name">${product.name}</td>
                                     <td class="product_category_name">${product.categoryName}</td>
                                     <td class="product_description">${product.description}</td>
-                                    <td class='text-center'>${product.price}</td>
-                                    <td class='text-center'>${product.giaNhap}</td>
                                     <td class='text-center'>
                                         <div>
                                         <button type="button" class="addToCartBtn btn btn-sm btn-success align-middle" data-bs-toggle="modal" data-bs-target="#chooseSizeModal">
@@ -619,18 +659,18 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                                     document.getElementById('nextPage').classList.remove('hideBtn');
                                 }
 
-                                document.getElementById('prevPage').addEventListener('click', function() {
+                                document.getElementById('prevPage').addEventListener('click', function () {
                                     thisPage--;
                                     loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
                                 })
 
-                                document.getElementById('nextPage').addEventListener('click', function() {
+                                document.getElementById('nextPage').addEventListener('click', function () {
                                     thisPage++;
                                     loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
                                 })
 
-                                pageIndexButtons.forEach(function(button) {
-                                    button.addEventListener('click', function() {
+                                pageIndexButtons.forEach(function (button) {
+                                    button.addEventListener('click', function () {
                                         thisPage = parseInt(this.textContent);
                                         loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
                                     });
@@ -644,7 +684,7 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                             }
                         }
 
-                        searchInput.addEventListener('input', function() {
+                        searchInput.addEventListener('input', function () {
                             filterName = searchInput.value;
                             thisPage = 1;
                             loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
@@ -666,8 +706,8 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
 
                         function addEventToAddToCartBtn(listProducts) {
                             let addToCartBtns = document.querySelectorAll('.addToCartBtn');
-                            addToCartBtns.forEach(function(addToCartBtn) {
-                                addToCartBtn.addEventListener('click', function() {
+                            addToCartBtns.forEach(function (addToCartBtn) {
+                                addToCartBtn.addEventListener('click', function () {
                                     let row = this.closest('tr');
                                     let productId = row.querySelector('.product_id').innerText;
                                     let productChosen = null;
@@ -677,10 +717,11 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                                         }
                                     }
 
+                                    console.log(productChosen)
+
                                     productIdCS.value = productChosen.id;
                                     productNameCS.value = productChosen.name;
                                     productCateCS.value = productChosen.categoryName;
-                                    productPriceCS.value = productChosen.price;
                                     productGenderCS.value = productChosen.gender == 1 ? 'Male' : 'Female';
                                     productQuantityCS.value = "";
                                 })
@@ -688,11 +729,12 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                         }
 
                         let importBtn = document.getElementById('importBtn');
-                        importBtn.addEventListener('click', function(e) {
+                        importBtn.addEventListener('click', function (e) {
                             e.preventDefault();
                             let productId = productIdCS.value;
                             let productSize = productSizeCS.value;
                             let productQuantity = productQuantityCS.value;
+                            let productPrice = productPriceCS.value;
 
                             if (productQuantity.trim() === '') {
                                 console.log(productQuantity);
@@ -713,20 +755,55 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                                 return;
                             }
 
+                            if (isNaN(productPrice)) {
+                                console.log(productPrice);
+                                alert('Giá nhập phải là một số!');
+                                return;
+                            }
+
+                            if (productPrice <= 0) {
+                                console.log(productPrice);
+                                alert('Giá nhập phải lớn hơn 0!');
+                                return;
+                            }
 
                             fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=nhaphang.view', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/x-www-form-urlencoded',
-                                    },
-                                    body: 'productId=' + productId + '&productSize=' + productSize + '&productQuantity=' + productQuantity + '&importBtn=' + true
-                                })
-                                .then(function(response) {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                body: 'productId=' + productId + '&productSize=' + productSize + '&productQuantity=' + productQuantity + '&importBtn=' + true + '&productPrice=' + productPrice
+                            })
+                                .then(function (response) {
                                     return response.json();
                                 })
-                                .then(function(data) {
-                                    alert(data.message);
-                                    document.querySelector('.closeChooseSizeIcon').click();
+                                .then(function (data) {
+                                    if (data.status == 'alert') {
+                                        if (confirm(data.message) == true) {
+                                            fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=nhaphang.view', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                                },
+                                                body: 'productId=' + productId + '&productSize=' + productSize + '&productQuantity=' + productQuantity + '&productPrice=' + productPrice + '&changeImportPrice=' + true
+                                            })
+                                                .then(function (response) {
+                                                    return response.json();
+                                                })
+                                                .then(function (data) {
+                                                    alert(data.message);
+                                                    productPriceCS.value = "";
+                                                    document.querySelector('.closeChooseSizeIcon').click();
+                                                });
+                                        } else {
+                                            productPriceCS.value = "";
+                                            document.querySelector('.closeChooseSizeIcon').click();
+                                        }
+                                    } else {
+                                        alert(data.message);
+                                        productPriceCS.value = "";
+                                        document.querySelector('.closeChooseSizeIcon').click();
+                                    }
                                 });
                         });
 
@@ -750,28 +827,38 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                             cartModal.style.backgroundColor = 'rgba(0,0,0,0.4)';
                         }
 
-                        closeCartIcon.addEventListener('click', function() {
+                        closeCartIcon.addEventListener('click', function () {
                             hideCartModal();
                         })
 
-                        closeCartBtn.addEventListener('click', function() {
+                        closeCartBtn.addEventListener('click', function () {
                             hideCartModal();
                         })
 
                         let areaCartItems = document.getElementById('areaCartItems');
 
+                        function totalAmountHandler(userCartItems) {
+                            let sum = 0;
+                            userCartItems.forEach(function (userCartItem) {
+                                sum += userCartItem.import_price * userCartItem.cart_quantity;
+                            })
+                            return sum;
+                        }
+
                         function loadDataCart() {
                             fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=nhaphang.view', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/x-www-form-urlencoded',
-                                    },
-                                    body: 'loadDataCart=' + true
-                                })
-                                .then(function(response) {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                body: 'loadDataCart=' + true
+                            })
+                                .then(function (response) {
                                     return response.json();
                                 })
-                                .then(function(data) {
+                                .then(function (data) {
+                                    console.log(data.userCartItems)
+                                    totalAmountCartAdmin.innerHTML = "Tổng tiền: " + totalAmountHandler(data.userCartItems);
                                     areaCartItems.innerHTML = toHTMLCartItems(data.userCartItems);
                                     addEventToMinusBtn(data.userCartItems);
                                     addEventToPlusBtn(data.userCartItems);
@@ -781,13 +868,13 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
 
                         function toHTMLCartItems(userCartItems) {
                             let html = '';
-                            userCartItems.forEach(function(userCartItem) {
+                            userCartItems.forEach(function (userCartItem) {
                                 html += `
                                 <tr>
                                     <td><img src='${userCartItem.product_image}' alt='' class='rounded float-start'></td>
                                     <td class="text-center cartId">${userCartItem.cart_id}</td>
                                     <td class="col-3">${userCartItem.product_name}</td>
-                                    <td class="col-2 text-center">${userCartItem.product_giaNhap}</td>
+                                    <td class="col-2 text-center">${userCartItem.import_price}</td>
                                     <td class="col-3 text-center">
                                     <button class="importButton minusProductQuantity">-</button>
                                     <span class="productInCartQuantity">${userCartItem.cart_quantity}</span>
@@ -805,21 +892,21 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
 
                         function addEventToMinusBtn(userCartItems) {
                             let minusProductQuantitys = document.querySelectorAll('.minusProductQuantity');
-                            minusProductQuantitys.forEach(function(minusProductQuantity) {
-                                minusProductQuantity.addEventListener('click', function() {
+                            minusProductQuantitys.forEach(function (minusProductQuantity) {
+                                minusProductQuantity.addEventListener('click', function () {
                                     let row = this.closest('tr');
                                     let cartId = row.querySelector('.cartId').innerHTML;
                                     fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=nhaphang.view', {
-                                            method: 'POST',
-                                            headers: {
-                                                'Content-Type': 'application/x-www-form-urlencoded',
-                                            },
-                                            body: 'minusProductQuantity=' + true + '&cartId=' + cartId
-                                        })
-                                        .then(function(response) {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/x-www-form-urlencoded',
+                                        },
+                                        body: 'minusProductQuantity=' + true + '&cartId=' + cartId
+                                    })
+                                        .then(function (response) {
                                             return response.json();
                                         })
-                                        .then(function(data) {
+                                        .then(function (data) {
                                             if (data.status == 'success') {
                                                 alert(data.message);
                                             }
@@ -831,21 +918,21 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
 
                         function addEventToPlusBtn(userCartItems) {
                             let plusProductQuantitys = document.querySelectorAll('.plusProductQuantity');
-                            plusProductQuantitys.forEach(function(plusProductQuantity) {
-                                plusProductQuantity.addEventListener('click', function() {
+                            plusProductQuantitys.forEach(function (plusProductQuantity) {
+                                plusProductQuantity.addEventListener('click', function () {
                                     let row = this.closest('tr');
                                     let cartId = row.querySelector('.cartId').innerHTML;
                                     fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=nhaphang.view', {
-                                            method: 'POST',
-                                            headers: {
-                                                'Content-Type': 'application/x-www-form-urlencoded',
-                                            },
-                                            body: 'plusProductQuantity=' + true + '&cartId=' + cartId
-                                        })
-                                        .then(function(response) {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/x-www-form-urlencoded',
+                                        },
+                                        body: 'plusProductQuantity=' + true + '&cartId=' + cartId
+                                    })
+                                        .then(function (response) {
                                             return response.json();
                                         })
-                                        .then(function(data) {
+                                        .then(function (data) {
                                             if (data.status == 'success') {
                                                 alert(data.message);
                                             }
@@ -857,21 +944,21 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
 
                         function addEventToDeleteItemInCartBtn() {
                             let deleteItemInCartBtns = document.querySelectorAll('.deleteItemInCart');
-                            deleteItemInCartBtns.forEach(function(btn) {
-                                btn.addEventListener('click', function() {
+                            deleteItemInCartBtns.forEach(function (btn) {
+                                btn.addEventListener('click', function () {
                                     let row = this.closest('tr');
                                     let cartId = row.querySelector('.cartId').innerHTML;
                                     fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=nhaphang.view', {
-                                            method: 'POST',
-                                            headers: {
-                                                'Content-Type': 'application/x-www-form-urlencoded',
-                                            },
-                                            body: 'deleteItemInCart=' + true + '&cartId=' + cartId
-                                        })
-                                        .then(function(response) {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/x-www-form-urlencoded',
+                                        },
+                                        body: 'deleteItemInCart=' + true + '&cartId=' + cartId
+                                    })
+                                        .then(function (response) {
                                             return response.json();
                                         })
-                                        .then(function(data) {
+                                        .then(function (data) {
                                             if (data.status == 'success') {
                                                 alert(data.message);
                                             }
@@ -882,20 +969,20 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                         }
 
                         let nhapHangBtn = document.getElementById('nhapHangBtn');
-                        nhapHangBtn.addEventListener('click', function() {
+                        nhapHangBtn.addEventListener('click', function () {
                             if (confirm('Bạn có chắc muốn nhập hàng không?')) {
                                 let nhaCungCap = document.getElementById('nhaCungCap');
                                 fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=nhaphang.view', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/x-www-form-urlencoded',
-                                        },
-                                        body: 'nhapHang=' + true + '&nhaCungCap=' + nhaCungCap.value
-                                    })
-                                    .then(function(response) {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded',
+                                    },
+                                    body: 'nhapHang=' + true + '&nhaCungCap=' + nhaCungCap.value
+                                })
+                                    .then(function (response) {
                                         return response.json();
                                     })
-                                    .then(function(data) {
+                                    .then(function (data) {
                                         alert(data.message);
                                         areaCartItems.innerHTML = '';
                                         closeCartBtn.click();
@@ -904,7 +991,7 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                         });
 
                         let cartProduct = document.getElementById('cartProduct');
-                        cartProduct.addEventListener('click', function() {
+                        cartProduct.addEventListener('click', function () {
                             showCartModal();
                             loadDataCart();
                         })

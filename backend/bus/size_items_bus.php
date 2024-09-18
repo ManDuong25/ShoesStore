@@ -85,6 +85,9 @@ class SizeItemsBUS implements BUSInterface
         if ($sizeItemsModel->getQuantity() < 0) {
             throw new Exception("Invalid quantity value");
         }
+        if ($sizeItemsModel->getImportPrice() < 0) {
+            throw new Exception("Invalid import price value");
+        }
     }
 
     public function getModelBySizeIdAndProductId($sizeId, $productId)
@@ -97,6 +100,12 @@ class SizeItemsBUS implements BUSInterface
         return null;
     }
 
+    public function getAllModelBySizeIdAndProductId(int $sizeId, int $productId): array
+    {
+        return SizeItemsDAO::getInstance()->getAllBySizeIdAndProductId($sizeId, $productId);
+    }
+
+
     public function getModelByProductId($productId)
     {
         $result = [];
@@ -107,20 +116,30 @@ class SizeItemsBUS implements BUSInterface
         }
         return $result;
     }
-    
-    public function countAllModels() {
+
+    public function countAllModels()
+    {
         return SizeItemsDAO::getInstance()->countAllModels();
     }
 
-    public function paginationTech($from, $limit) {
+    public function paginationTech($from, $limit)
+    {
         return SizeItemsDAO::getInstance()->paginationTech($from, $limit);
     }
 
-    public function filterByName($from, $limit, $name) {
+    public function filterByName($from, $limit, $name)
+    {
         return SizeItemsDAO::getInstance()->filterByName($from, $limit, $name);
     }
-    
-    public function countFilterByName($name) {
+
+    public function countFilterByName($name)
+    {
         return SizeItemsDAO::getInstance()->countFilterByName($name);
+    }
+
+    // update(1) solving change import price problems
+    public function getHighestImportPriceByProductId(int $productId)
+    {
+        return SizeItemsDAO::getInstance()->getHighestImportPriceByProductId($productId);
     }
 }

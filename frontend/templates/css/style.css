@@ -65,8 +65,10 @@ ul {
 .header__logo img {
     width: 100%;
     /*chỉnh*/
-    max-width: 99px;
+    /* max-width: 99px; */
     height: 100%;
+    width: 58px;
+    height: 58px
 }
 
 .header__content {

@@ -21,6 +21,7 @@ if (isPost()) {
         $email = $filterAll['email'];
         $password = $filterAll['password'];
         $userQuery = UserBUS::getInstance()->getModelByEmail($email);
+        // die(1);
         if (!empty($userQuery)) {
             $passwordHash = $userQuery->getPassword();
             // Kiểm tra password verify
@@ -30,6 +31,8 @@ if (isPost()) {
 
                 $loginTkn = new TokenLoginModel(0, $userQuery->getId(), $tokenLogin, date("Y-m-d H:i:s"));
                 $insertTokenLoginStatus = TokenLoginBUS::getInstance()->addModel($loginTkn);
+
+                
 
                 if ($insertTokenLoginStatus) {
                     $status = $userQuery->getStatus();

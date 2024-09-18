@@ -59,8 +59,10 @@ include(__DIR__ . '/../inc/head.php');
                 <div class="col-lg-10 col-xl-8">
                     <div class="card" style="border-radius: 10px;">
                         <div class="card-header px-2 py-3 d-flex justify-content-between align-items-center">
-                            <h6 class="text-muted mb-0">Order from: <span style="color: #a8729a;"><?php echo $userModel->getName() ?></span>!</h6>
-                            <h6 class="text-muted mb-0">Back to <a href="?module=dashboard&view=order.view" style="color: #a8729a;">Customer Order List</a></h6>
+                            <h6 class="text-muted mb-0">Order from: <span
+                                    style="color: #a8729a;"><?php echo $userModel->getName() ?></span>!</h6>
+                            <h6 class="text-muted mb-0">Back to <a href="?module=dashboard&view=order.view"
+                                    style="color: #a8729a;">Customer Order List</a></h6>
                         </div>
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -150,7 +152,7 @@ include(__DIR__ . '/../inc/head.php');
                     <p class="text-muted mb-0 small">Qty: ' . $orderItem->getQuantity() . '</p>
                 </div>
                 <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                    <p class="text-muted mb-0 small">$ ' . ProductBUS::getInstance()->getModelById($orderItem->getProductId())->getPrice() . '</p>
+                    <p class="text-muted mb-0 small">$ ' . $orderItem->getPrice() . '</p>
                 </div>
             </div>
         </div>
@@ -162,22 +164,12 @@ include(__DIR__ . '/../inc/head.php');
                             <div class="d-flex justify-content-between pt-2">
                                 <p class="fw-bold mb-0">Order Details</p>
                                 <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> $<?php
-                                                                                                    $totalPrice = 0;
-                                                                                                    foreach ($orderItemsListBasedOnOrderFromUser as $orderItem) {
-                                                                                                        $totalPrice += $orderItem->getPrice();
-                                                                                                    }
-                                                                                                    echo $totalPrice;
-                                                                                                    ?></p>
-                            </div>
-
-                            <div class="d-flex justify-content-between pt-2">
-                                <p class="text-muted mb-0">Invoice Number : <?php echo $order->getId() ?> </p>
-                                <p class="text-muted mb-0"><span class="fw-bold me-4">Discount </span>
-                                    <?php
-                                    $discountedPrice = $totalPrice - $order->getTotalAmount();
-                                    echo '$' . $discountedPrice;
-                                    ?>
-                                </p>
+                                $totalPrice = 0;
+                                foreach ($orderItemsListBasedOnOrderFromUser as $orderItem) {
+                                    $totalPrice += $orderItem->getPrice() * $orderItem->getQuantity();
+                                }
+                                echo $totalPrice;
+                                ?></p>
                             </div>
 
                             <div class="d-flex justify-content-between">
@@ -185,7 +177,8 @@ include(__DIR__ . '/../inc/head.php');
                             </div>
 
                         </div>
-                        <div class="card-footer border-0 px-2 py-3" style="background-color: #a8729a; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                        <div class="card-footer border-0 px-2 py-3"
+                            style="background-color: #a8729a; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
                             <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">
                                 Total paid: <span class="h4 mb-0 ms-2">$<?php echo $order->getTotalAmount() ?></span>
                             </h5>

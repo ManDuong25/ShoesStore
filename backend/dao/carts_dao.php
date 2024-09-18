@@ -35,7 +35,8 @@ class CartsDAO implements DAOInterface
         $productId = $rs['product_id'];
         $quantity = $rs['quantity'];
         $sizeId = $rs['size_id'];
-        return new CartsModel($id, $userId, $productId, $quantity, $sizeId);
+        $importPrice = $rs['import_price'];
+        return new CartsModel($id, $userId, $productId, $quantity, $sizeId, $importPrice);
     }
     public function getAll(): array
     {
@@ -63,15 +64,15 @@ class CartsDAO implements DAOInterface
 
     public function insert($cartsModel): int
     {
-        $query = "INSERT INTO carts (user_id, product_id, quantity, size_id) VALUES (?, ?, ?, ?)";
-        $args = [$cartsModel->getUserId(), $cartsModel->getProductId(), $cartsModel->getQuantity(), $cartsModel->getSizeId()];
+        $query = "INSERT INTO carts (user_id, product_id, quantity, size_id, import_price) VALUES (?, ?, ?, ?, ?)";
+        $args = [$cartsModel->getUserId(), $cartsModel->getProductId(), $cartsModel->getQuantity(), $cartsModel->getSizeId(), $cartsModel->getImportPrice()];
         return DatabaseConnection::executeUpdate($query, ...$args);
     }
 
     public function update($cartsModel): int
     {
-        $query = "UPDATE carts SET user_id = ?, product_id = ?, quantity = ?, size_id = ? WHERE id = ?";
-        $args = [$cartsModel->getUserId(), $cartsModel->getProductId(), $cartsModel->getQuantity(), $cartsModel->getSizeId(), $cartsModel->getId()];
+        $query = "UPDATE carts SET user_id = ?, product_id = ?, quantity = ?, size_id = ?, import_price = ? WHERE id = ?";
+        $args = [$cartsModel->getUserId(), $cartsModel->getProductId(), $cartsModel->getQuantity(), $cartsModel->getSizeId(), $cartsModel->getImportPrice(), $cartsModel->getId()];
         return DatabaseConnection::executeUpdate($query, ...$args);
     }
 
@@ -119,7 +120,7 @@ class CartsDAO implements DAOInterface
                 products.id AS product_id, 
                 products.image, 
                 products.name, 
-                products.giaNhap, 
+                carts.import_price, 
                 carts.quantity, 
                 sizes.id AS size_id,
                 sizes.name AS size_name 
@@ -137,7 +138,7 @@ class CartsDAO implements DAOInterface
                 'product_id' => $row['product_id'],
                 'product_image' => $row['image'],
                 'product_name' => $row['name'],
-                'product_giaNhap' => $row['giaNhap'],
+                'import_price' => $row['import_price'],
                 'cart_quantity' => $row['quantity'],
                 'size_id' => $row['size_id'],
                 'size_name' => $row['size_name']

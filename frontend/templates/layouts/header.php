@@ -21,6 +21,7 @@ if (!defined('_CODE')) {
     <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATE ?>/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATE ?>/css/style.css?ver=1">
     <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATE ?>/css/grid.css?ver=1">
+    <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATE ?>/css/custom-alert.css?ver=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -35,8 +36,7 @@ if (!defined('_CODE')) {
 <body>
     <div class="header__logo">
         <a href="?module=indexphp">
-            <img src="<?php echo _WEB_HOST_TEMPLATE ?>/images/logoShoes.jpg" alt="Wait a minute!!"
-                style="width: 50px; height: 50px;">
+            <img src="<?php echo _WEB_HOST_TEMPLATE ?>/images/logoShoes.jpg" alt="Wait a minute!!">
         </a>
     </div>
     <div class="header__content">

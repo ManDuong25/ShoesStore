@@ -46,7 +46,7 @@ class ProductBUS implements BUSInterface
 
     public function addModel($productModel)
     {
-        $this->validateModel($productModel);
+        // $this->validateModel($productModel);
         $newProduct = ProductDAO::getInstance()->insert($productModel);
         if ($newProduct) {
             $this->productList[] = $productModel;
@@ -226,5 +226,9 @@ class ProductBUS implements BUSInterface
 
     public function countFilteredProductsUser($filterName, $filterCategory, $filterGender, $filterPriceFrom, $filterPriceTo) {
         return ProductDAO::getInstance()->countFilteredProductsUser($filterName, $filterCategory, $filterGender, $filterPriceFrom, $filterPriceTo);
+    }
+
+    public function getQuantityProductsWithCategoryId($categoryId) {
+        return ProductDAO::getInstance()->getQuantityProductsWithCategoryId($categoryId);
     }
 }

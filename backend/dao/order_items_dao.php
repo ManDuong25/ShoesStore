@@ -36,7 +36,8 @@ class OrderItemsDAO implements DAOInterface
         $sizeId = $rs['size_id'];
         $quantity = $rs['quantity'];
         $price = $rs['price'];
-        return new OrderItemsModel($id, $orderId, $productId, $sizeId, $quantity, $price);
+        $importPrice = $rs['import_price'];
+        return new OrderItemsModel($id, $orderId, $productId, $sizeId, $quantity, $price, $importPrice);
     }
 
     public function getAll(): array
@@ -89,15 +90,15 @@ class OrderItemsDAO implements DAOInterface
 
     public function insert($orderItemsModel): int
     {
-        $query = "INSERT INTO order_items (order_id, product_id, size_id, quantity, price) VALUES (?, ?, ?, ?, ?)";
-        $args = [$orderItemsModel->getOrderId(), $orderItemsModel->getProductId(), $orderItemsModel->getSizeId(), $orderItemsModel->getQuantity(), $orderItemsModel->getPrice()];
+        $query = "INSERT INTO order_items (order_id, product_id, size_id, quantity, price, import_price) VALUES (?, ?, ?, ?, ?, ?)";
+        $args = [$orderItemsModel->getOrderId(), $orderItemsModel->getProductId(), $orderItemsModel->getSizeId(), $orderItemsModel->getQuantity(), $orderItemsModel->getPrice(), $orderItemsModel->getImportPrice()];
         return DatabaseConnection::executeUpdate($query, ...$args);
     }
 
     public function update($orderItemsModel): int
     {
-        $query = "UPDATE order_items SET order_id = ?, product_id = ?, size_id = ?, quantity = ?, price = ? WHERE id = ?";
-        $args = [$orderItemsModel->getOrderId(), $orderItemsModel->getProductId(), $orderItemsModel->getSizeId(), $orderItemsModel->getQuantity(), $orderItemsModel->getPrice(), $orderItemsModel->getId()];
+        $query = "UPDATE order_items SET order_id = ?, product_id = ?, size_id = ?, quantity = ?, price = ?, import_price = ? WHERE id = ?";
+        $args = [$orderItemsModel->getOrderId(), $orderItemsModel->getProductId(), $orderItemsModel->getSizeId(), $orderItemsModel->getQuantity(), $orderItemsModel->getPrice(), $orderItemsModel->getImportPrice(), $orderItemsModel->getId()];
         return DatabaseConnection::executeUpdate($query, ...$args);
     }
 

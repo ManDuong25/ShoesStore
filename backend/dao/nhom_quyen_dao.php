@@ -39,7 +39,7 @@ class NhomQuyenDAO
     public function getAll(): array
     {
         $nhomQuyenList = [];
-        $rs = DatabaseConnection::executeQuery("SELECT * FROM nhomquyen WHERE trangThai = 1 ORDER BY CAST(SUBSTRING(maNhomQuyen, 3) AS UNSIGNED) ASC;");
+        $rs = DatabaseConnection::executeQuery("SELECT * FROM nhomquyen ORDER BY CAST(SUBSTRING(maNhomQuyen, 3) AS UNSIGNED) ASC;");
         while ($row = $rs->fetch_assoc()) {
             $nhomQuyenModel = $this->createNhomQuyenModel($row);
             array_push($nhomQuyenList, $nhomQuyenModel);

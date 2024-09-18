@@ -53,7 +53,8 @@ $orderListItem = OrderItemsBUS::getInstance();
 
             <!-- MAIN -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">
                         <?= $title ?>
                     </h1>
@@ -63,9 +64,12 @@ $orderListItem = OrderItemsBUS::getInstance();
                 <div class="container-lg d-flex justify-content-start m-0">
                     <form action="" method="POST" class="m-0 col-lg-6">
                         <div class="input-group">
-                            <input type="text" id="filterNameOrder" class="searchInput form-control my-2 rounded-0" placeholder="Search anything here..." style="width: 100%;">
-                            <input type="date" id="dateFromOrder" class="form-control rounded-0" style="width: 120px;" placeholder="Start Date">
-                            <input type="date" id="dateToOrder" class="form-control rounded-0" style="width: 120px;" placeholder="End Date">
+                            <input type="text" id="filterNameOrder" class="searchInput form-control my-2 rounded-0"
+                                placeholder="Search anything here..." style="width: 100%;">
+                            <input type="date" id="dateFromOrder" class="form-control rounded-0" style="width: 120px;"
+                                placeholder="Start Date">
+                            <input type="date" id="dateToOrder" class="form-control rounded-0" style="width: 120px;"
+                                placeholder="End Date">
                         </div>
                         <select class="form-control rounded-0 my-2" name="statusSearchName" id="filterStatusOrder">
                             <option value="">---</option>
@@ -122,6 +126,9 @@ $orderListItem = OrderItemsBUS::getInstance();
                                             $phieuNhapArray = $phieuNhap->toArray();
                                             $phieuNhapArray['userName'] = $userName;
                                             return $phieuNhapArray;
+                                            // $productModel = ProductBUS::getInstance()->getModelById($userCartItem->getProductId());
+                                            // $price = $productModel->getGiaNhap() * $userCartItem->getQuantity();
+                                            // $chiTietPhieuNhapNew = new ChiTietPhieuNhapModel(null, $maPhieuNhapNew, $userCartItem->getProductId(), $userCartItem->getSizeId(), $userCartItem->getQuantity(), $price);
                                         }, $listPhieuNhapItems);
 
 
@@ -170,12 +177,13 @@ $orderListItem = OrderItemsBUS::getInstance();
                                 <table class="table align-middle table-borderless table-hover">
                                     <thead class="table-light">
                                         <tr class="align-middle">
-                                            <th class=''>ID</th>
-                                            <th class='col-3'>maPhieuNhap</th>
+                                            <th class='col-1'>ID</th>
+                                            <th class='col-2'>maPhieuNhap</th>
+                                            <th class='col-2'>Product ID</th>
                                             <th class='col-3 text-center'>Product Name</th>
                                             <th class='col-2 text-center'>Size</th>
                                             <th class='col-2 text-center'>Quantity</th>
-                                            <th class='col-2 text-center'>Total price</th>
+                                            <th class='col-2 text-center'>Import price</th>
                                         </tr>
                                     </thead>
                                     <tbody id="areaCTPNItems">
@@ -210,6 +218,8 @@ $orderListItem = OrderItemsBUS::getInstance();
                                         ?>
                                     </tbody>
                                 </table>
+                                <hr>
+                                <h3 class="finalPriceCtpnView"></h3>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="closeCTPNBtn btn btn-secondary">Cancel</button>
@@ -229,22 +239,48 @@ $orderListItem = OrderItemsBUS::getInstance();
                         $phieuNhapModel = PhieuNhapBUS::getInstance()->getModelById($maPhieuNhap);
 
                         $chiTietPhieuNhapList = ChiTietPhieuNhapBUS::getInstance()->getModelByIdPhieuNhap($maPhieuNhap);
-
+                        $productsImportPriceHigher = [];
+                        $flag = 0;
                         foreach ($chiTietPhieuNhapList as $ctpn) {
-                            $itemInInventory = SizeItemsBUS::getInstance()->getModelBySizeIdAndProductId($ctpn->getSizeId(), $ctpn->getProductId());
-                            if (isset($itemInInventory)) {
-                                $itemInInventory->setQuantity($itemInInventory->getQuantity() + $ctpn->getQuantity());
-                                $result = SizeItemsBUS::getInstance()->updateModel($itemInInventory);
-                                if (!$result) {
-                                    ob_end_clean();
-                                    return jsonResponse('error', 'Có lỗi xảy ra khi cập nhật kho!');
-                                }
-                            } else {
-                                $itemInInventory = new SizeItemsModel(null, $ctpn->getProductId(), $ctpn->getSizeId(), $ctpn->getQuantity());
-                                $result = SizeItemsBUS::getInstance()->addModel($itemInInventory);
-                                if (!$result) {
-                                    ob_end_clean();
-                                    return jsonResponse('error', 'Có lỗi xảy ra khi thêm mới vào kho!');
+                            $productModel = ProductBUS::getInstance()->getModelById($ctpn->getProductId());
+                            if ($productModel->getPrice() < $ctpn->getPrice()) {
+                                $productsImportPriceHigher[] = $productModel->toArray();
+                                $flag = 1;
+                            }
+                        }
+
+
+                        if ($flag == 1) {
+                            ob_end_clean();
+                            header('Content-Type: application/json');
+                            echo json_encode(['status' => 'alert', 'productsImportPriceHigher' => $productsImportPriceHigher]);
+                            exit;
+                        } else {
+                            foreach ($chiTietPhieuNhapList as $ctpn) {
+                                $itemInInventory = SizeItemsBUS::getInstance()->getModelBySizeIdAndProductId($ctpn->getSizeId(), $ctpn->getProductId());
+                                if (isset($itemInInventory)) {
+                                    if ($itemInInventory->getImportPrice() != $ctpn->getPrice()) {
+                                        $itemInInventory = new SizeItemsModel(null, $ctpn->getProductId(), $ctpn->getSizeId(), $ctpn->getQuantity(), $ctpn->getPrice());
+                                        $result = SizeItemsBUS::getInstance()->addModel($itemInInventory);
+                                        if (!$result) {
+                                            ob_end_clean();
+                                            return jsonResponse('error', 'Có lỗi xảy ra khi thêm mới vào kho!');
+                                        }
+                                    } else {
+                                        $itemInInventory->setQuantity($itemInInventory->getQuantity() + $ctpn->getQuantity());
+                                        $result = SizeItemsBUS::getInstance()->updateModel($itemInInventory);
+                                        if (!$result) {
+                                            ob_end_clean();
+                                            return jsonResponse('error', 'Có lỗi xảy ra khi cập nhật kho!');
+                                        }
+                                    }
+                                } else {
+                                    $itemInInventory = new SizeItemsModel(null, $ctpn->getProductId(), $ctpn->getSizeId(), $ctpn->getQuantity(), $ctpn->getPrice());
+                                    $result = SizeItemsBUS::getInstance()->addModel($itemInInventory);
+                                    if (!$result) {
+                                        ob_end_clean();
+                                        return jsonResponse('error', 'Có lỗi xảy ra khi thêm mới vào kho!');
+                                    }
                                 }
                             }
                         }
@@ -254,6 +290,103 @@ $orderListItem = OrderItemsBUS::getInstance();
                         if ($result) {
                             ob_end_clean();
                             return jsonResponse('success', 'Xét duyệt phiếu nhập thành công!');
+                        }
+                    }
+                }
+
+                if (isPost()) {
+                    $filterAll = filter();
+                    if (isset($filterAll['acceptPhieuNhapFlag1']) && isset($filterAll['maPhieuNhap']) && isset($filterAll['productsIdSetToInactive'])) {
+                        $maPhieuNhap = $filterAll['maPhieuNhap'];
+                        $phieuNhapModel = PhieuNhapBUS::getInstance()->getModelById($maPhieuNhap);
+                        $idProductsToSetInactiveString = $filterAll['productsIdSetToInactive'];
+                        $chiTietPhieuNhapList = ChiTietPhieuNhapBUS::getInstance()->getModelByIdPhieuNhap($maPhieuNhap);
+                        $idProductsToSetInactiveArray = array_map('intval', explode(',', $idProductsToSetInactiveString));
+
+                        foreach ($idProductsToSetInactiveArray as $idProductToSetInactive) {
+                            $idProduct = $idProductToSetInactive;
+                            $productToSetInactive = ProductBUS::getInstance()->getModelById($idProduct);
+                            if ($productToSetInactive->getStatus() === 'inactive') {
+                                // Bỏ qua sản phẩm đã có trạng thái 'inactive'
+                                continue;
+                            }
+                            $productToSetInactive->setStatus('inactive');
+                            $result = ProductBUS::getInstance()->updateModel($productToSetInactive);
+                            if (!$result) {
+                                ob_end_clean();
+                                return jsonResponse('error', 'Có lỗi xảy ra khi inactive sản phẩm!');
+                            }
+                        }
+                        foreach ($chiTietPhieuNhapList as $ctpn) {
+                            $itemInInventory = SizeItemsBUS::getInstance()->getModelBySizeIdAndProductId($ctpn->getSizeId(), $ctpn->getProductId());
+                            if (isset($itemInInventory)) {
+                                if ($itemInInventory->getImportPrice() != $ctpn->getPrice()) {
+                                    $itemInInventory = new SizeItemsModel(null, $ctpn->getProductId(), $ctpn->getSizeId(), $ctpn->getQuantity(), $ctpn->getPrice());
+                                    $result = SizeItemsBUS::getInstance()->addModel($itemInInventory);
+                                    if (!$result) {
+                                        ob_end_clean();
+                                        return jsonResponse('error', 'Có lỗi xảy ra khi thêm mới vào kho!');
+                                    }
+                                } else {
+                                    $itemInInventory->setQuantity($itemInInventory->getQuantity() + $ctpn->getQuantity());
+                                    $result = SizeItemsBUS::getInstance()->updateModel($itemInInventory);
+                                    if (!$result) {
+                                        ob_end_clean();
+                                        return jsonResponse('error', 'Có lỗi xảy ra khi cập nhật kho!');
+                                    }
+                                }
+                            } else {
+                                $itemInInventory = new SizeItemsModel(null, $ctpn->getProductId(), $ctpn->getSizeId(), $ctpn->getQuantity(), $ctpn->getPrice());
+                                $result = SizeItemsBUS::getInstance()->addModel($itemInInventory);
+                                if (!$result) {
+                                    ob_end_clean();
+                                    return jsonResponse('error', 'Có lỗi xảy ra khi thêm mới vào kho!');
+                                }
+                            }
+                        }
+
+                        $phieuNhapModel->setTrangThai(1);
+                        $result = PhieuNhapBUS::getInstance()->updateModel($phieuNhapModel);
+
+                        if ($result) {
+                            ob_end_clean();
+                            return jsonResponse('success', 'Xét duyệt phiếu nhập thành công!');
+                        }
+                    }
+                }
+
+                if (isPost()) {
+                    $filterAll = filter();
+                    if (isset($filterAll['setInactive']) && isset($filterAll['maPhieuNhap'])) {
+                        $maPhieuNhap = $filterAll['maPhieuNhap'];
+                        $phieuNhapModel = PhieuNhapBUS::getInstance()->getModelById($maPhieuNhap);
+                        $chiTietPhieuNhapList = ChiTietPhieuNhapBUS::getInstance()->getModelByIdPhieuNhap($maPhieuNhap);
+                        foreach ($chiTietPhieuNhapList as $ctpn) {
+                            $itemInInventory = SizeItemsBUS::getInstance()->getModelBySizeIdAndProductId($ctpn->getSizeId(), $ctpn->getProductId());
+                            if (isset($itemInInventory)) {
+                                if ($itemInInventory->getImportPrice() != $ctpn->getPrice()) {
+                                    $itemInInventory = new SizeItemsModel(null, $ctpn->getProductId(), $ctpn->getSizeId(), $ctpn->getQuantity(), $ctpn->getPrice());
+                                    $result = SizeItemsBUS::getInstance()->addModel($itemInInventory);
+                                    if (!$result) {
+                                        ob_end_clean();
+                                        return jsonResponse('error', 'Có lỗi xảy ra khi thêm mới vào kho!');
+                                    }
+                                } else {
+                                    $itemInInventory->setQuantity($itemInInventory->getQuantity() + $ctpn->getQuantity());
+                                    $result = SizeItemsBUS::getInstance()->updateModel($itemInInventory);
+                                    if (!$result) {
+                                        ob_end_clean();
+                                        return jsonResponse('error', 'Có lỗi xảy ra khi cập nhật kho!');
+                                    }
+                                }
+                            } else {
+                                $itemInInventory = new SizeItemsModel(null, $ctpn->getProductId(), $ctpn->getSizeId(), $ctpn->getQuantity(), $ctpn->getPrice());
+                                $result = SizeItemsBUS::getInstance()->addModel($itemInInventory);
+                                if (!$result) {
+                                    ob_end_clean();
+                                    return jsonResponse('error', 'Có lỗi xảy ra khi thêm mới vào kho!');
+                                }
+                            }
                         }
                     }
                 }
@@ -281,16 +414,16 @@ $orderListItem = OrderItemsBUS::getInstance();
 
                 function loadData(thisPage, limit, filterName, dateFrom, dateTo, filterStatus) {
                     fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=phieunhap.view', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: 'thisPage=' + thisPage + '&limit=' + limit + '&filterName=' + filterName + '&dateFrom=' + dateFrom + '&dateTo=' + dateTo + '&filterStatus=' + filterStatus
-                        })
-                        .then(function(response) {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: 'thisPage=' + thisPage + '&limit=' + limit + '&filterName=' + filterName + '&dateFrom=' + dateFrom + '&dateTo=' + dateTo + '&filterStatus=' + filterStatus
+                    })
+                        .then(function (response) {
                             return response.json();
                         })
-                        .then(function(data) {
+                        .then(function (data) {
                             console.log(data);
                             areaPhieuNhapItems.innerHTML = toHTMLPhieuNhapItem(data.listPhieuNhapItems);
                             areaPagination.innerHTML = toHTMLPagination(data.totalQuantity, data.thisPage, data.limit);
@@ -303,7 +436,7 @@ $orderListItem = OrderItemsBUS::getInstance();
 
                 function toHTMLPhieuNhapItem(listPhieuNhapItems) {
                     let html = '';
-                    listPhieuNhapItems.forEach(function(phieuNhapItem) {
+                    listPhieuNhapItems.forEach(function (phieuNhapItem) {
                         html += `
                                 <tr class="align-middle">
                                     <td class="phieuNhapId" id="${phieuNhapItem.maPhieuNhap}">
@@ -394,18 +527,18 @@ $orderListItem = OrderItemsBUS::getInstance();
                             document.getElementById('nextPage').classList.remove('hideBtn');
                         }
 
-                        document.getElementById('prevPage').addEventListener('click', function() {
+                        document.getElementById('prevPage').addEventListener('click', function () {
                             thisPage--;
                             loadData(thisPage, limit, filterName, dateFrom, dateTo, filterStatus);
                         })
 
-                        document.getElementById('nextPage').addEventListener('click', function() {
+                        document.getElementById('nextPage').addEventListener('click', function () {
                             thisPage++;
                             loadData(thisPage, limit, filterName, dateFrom, dateTo, filterStatus);
                         })
 
-                        pageIndexButtons.forEach(function(button) {
-                            button.addEventListener('click', function() {
+                        pageIndexButtons.forEach(function (button) {
+                            button.addEventListener('click', function () {
                                 if (this.textContent != "...") {
                                     thisPage = parseInt(this.textContent);
                                 }
@@ -440,26 +573,32 @@ $orderListItem = OrderItemsBUS::getInstance();
                     ctpnModal.style.backgroundColor = 'rgba(0,0,0,0.4)';
                 }
 
-                closeCTPNIcon.addEventListener('click', function() {
+                closeCTPNIcon.addEventListener('click', function () {
                     hideCartModal();
                 })
 
-                closeCTPNBtn.addEventListener('click', function() {
+                closeCTPNBtn.addEventListener('click', function () {
                     hideCartModal();
                 })
 
                 function loadDataCTPN(maPhieuNhap) {
                     fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=phieunhap.view', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: 'loadDataCTPN=' + true + '&maPhieuNhap=' + maPhieuNhap
-                        })
-                        .then(function(response) {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: 'loadDataCTPN=' + true + '&maPhieuNhap=' + maPhieuNhap
+                    })
+                        .then(function (response) {
                             return response.json();
                         })
-                        .then(function(data) {
+                        .then(function (data) {
+                            console.log(data);
+                            let totalAmount = 0;
+                            data.ctpnList.forEach(function (ctpn) {
+                                totalAmount += ctpn.price * ctpn.quantity;
+                            })
+                            document.querySelector('.finalPriceCtpnView').innerHTML = "Tổng tiền: " + totalAmount;
                             areaCTPNItems.innerHTML = toHTMLCTPNList(data.ctpnList);
                             if (document.querySelector('.acceptPNBtn')) {
                                 if (Array.isArray(data.ctpnList) && data.ctpnList.length > 0 && data.ctpnList[0].trangThai == 0) {
@@ -475,11 +614,12 @@ $orderListItem = OrderItemsBUS::getInstance();
 
                 function toHTMLCTPNList(ctpnList) {
                     let html = '';
-                    ctpnList.forEach(function(ctpn) {
+                    ctpnList.forEach(function (ctpn) {
                         html += `
                             <tr>
                                 <td>${ctpn.maCTPN}</td>
-                                <td class='maPhieuNhapInList'>${ctpn.maPhieuNhap}</td>
+                                <td class='text-center maPhieuNhapInList'>${ctpn.maPhieuNhap}</td>
+                                <td class='text-center'>${ctpn.productId}</td>
                                 <td class='text-center'>${ctpn.productName}</td>
                                 <td class='text-center'>${ctpn.sizeName}</td>
                                 <td class='text-center'>${ctpn.quantity}</td>
@@ -492,8 +632,8 @@ $orderListItem = OrderItemsBUS::getInstance();
 
                 function addEventToSeeDetailPhieuNhapBtns() {
                     seeDetailPNBtns = document.querySelectorAll('.seeDetailPhieuNhapBtn');
-                    seeDetailPNBtns.forEach(function(btn) {
-                        btn.addEventListener('click', function() {
+                    seeDetailPNBtns.forEach(function (btn) {
+                        btn.addEventListener('click', function () {
                             let row = this.closest('tr');
                             let maPhieuNhap = row.querySelector('.phieuNhapId').id;
                             showCartModal();
@@ -506,17 +646,34 @@ $orderListItem = OrderItemsBUS::getInstance();
                     if (confirm('Bạn có chắc chắn muốn duyệt phiếu nhập này không?')) {
                         let maPhieuNhap = document.querySelector('.maPhieuNhapInList').innerHTML;
                         fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=phieunhap.view', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                },
-                                body: 'acceptPhieuNhap=' + true + '&maPhieuNhap=' + maPhieuNhap
-                            })
-                            .then(function(response) {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: 'acceptPhieuNhap=' + true + '&maPhieuNhap=' + maPhieuNhap
+                        })
+                            .then(function (response) {
                                 return response.json();
                             })
-                            .then(function(data) {
-                                if (data.status == 'success') {
+                            .then(function (data) {
+                                if (data.status == 'alert') {
+                                    let html = data.productsImportPriceHigher.map(product => product.id).join(', ');
+                                    if (confirm("Những sản phẩm có id: " + html + " có giá nhập lớn hơn giá bán hiện tại, Sau khi duyệt sẽ chuyển trạng thái về Inactive. Bạn có muốn duyệt không?")) {
+                                        fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=phieunhap.view', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/x-www-form-urlencoded',
+                                            },
+                                            body: 'acceptPhieuNhapFlag1=' + true + '&maPhieuNhap=' + maPhieuNhap + '&productsIdSetToInactive=' + html
+                                        })
+                                            .then(function (response) {
+                                                return response.json();
+                                            })
+                                            .then(function (data) {
+                                                alert(data.message);
+                                            });
+                                    }
+                                } else {
                                     alert(data.message);
                                 }
                                 hideCartModal();
@@ -526,22 +683,22 @@ $orderListItem = OrderItemsBUS::getInstance();
                 }
 
 
-                filterNameOrder.addEventListener('input', function() {
+                filterNameOrder.addEventListener('input', function () {
                     filterName = filterNameOrder.value;
                     loadData(thisPage, limit, filterName, dateFrom, dateTo, filterStatus);
                 })
 
-                dateFromOrder.addEventListener('change', function() {
+                dateFromOrder.addEventListener('change', function () {
                     dateFrom = dateFromOrder.value;
                     loadData(thisPage, limit, filterName, dateFrom, dateTo, filterStatus);
                 })
 
-                dateToOrder.addEventListener('change', function() {
+                dateToOrder.addEventListener('change', function () {
                     dateTo = dateToOrder.value;
                     loadData(thisPage, limit, filterName, dateFrom, dateTo, filterStatus);
                 })
 
-                filterStatusOrder.addEventListener('change', function() {
+                filterStatusOrder.addEventListener('change', function () {
                     filterStatus = filterStatusOrder.value;
                     loadData(thisPage, limit, filterName, dateFrom, dateTo, filterStatus);
                 })

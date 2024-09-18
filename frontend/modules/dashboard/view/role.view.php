@@ -1,9 +1,12 @@
 <?php
 ob_start();
 
+use backend\bus\UserBUS;
 use backend\bus\NhomQuyenBUS;
 use backend\bus\ChucNangBUS;
 use backend\bus\QuyenBUS;
+use backend\services\session;
+use backend\bus\TokenLoginBUS;
 
 $title = 'Roles Setup';
 if (!defined('_CODE')) {
@@ -23,10 +26,43 @@ include(__DIR__ . '/../inc/head.php');
 $chucNangList = ChucNangBUS::getInstance()->getAllModels();
 $quyenList = QuyenBUS::getInstance()->getAllModels();
 
+$tokenLoginTemp = session::getInstance()->getSession('tokenLogin');
+$userIdTemp = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginTemp)->getUserId();
+$userLoginRightNow = UserBUS::getInstance()->getModelById($userIdTemp);
+
+
+
 if (isPost()) {
     $filterAll = filter();
     if (isset($filterAll['roleId']) && isset($filterAll['hide'])) {
         $roleId = $filterAll['roleId'];
+        if ($roleId == 'NQ1') {
+            ob_end_clean();
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'error', 'message' => 'Không thể xóa nhóm quyền Admin!']);
+            exit;
+        }
+
+        if ($roleId == $userLoginRightNow->getMaNhomQuyen()) {
+            ob_end_clean();
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'error', 'message' => 'Không thể xóa nhóm quyền của chính mình!']);
+            exit;
+        }
+
+        if ($roleId == 'NQ4') {
+            ob_end_clean();
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'error', 'message' => 'Không thể xóa nhóm quyền Customer!']);
+            exit;
+        }
+
+        $userHaveThisMNQ = UserBUS::getInstance()->getByMaNhomQuyen($roleId);
+        foreach($userHaveThisMNQ as $user) {
+            $user->setStatus('banned');
+            UserBUS::getInstance()->updateModel($user);
+        }
+
         $result = NhomQuyenBUS::getInstance()->deleteModel($roleId);
         if ($result) {
             ob_end_clean();
@@ -185,7 +221,8 @@ if (isPost()) {
                         let row = hideRoleBtn.closest('tr');
                         let roleIdCol = row.querySelector('.maNhomQuyenCol');
                         roleId = roleIdCol.innerHTML;
-                        fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=role.view', {
+                        if (confirm('Are you sure want to delete this role?')) {
+                            fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=role.view', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -199,6 +236,7 @@ if (isPost()) {
                                 alert(data.message);
                                 loadData();
                             });
+                        }
                     });
                 })
             }

@@ -66,7 +66,7 @@ if ($userModel->getMaNhomQuyen() == 1 || $userModel->getMaNhomQuyen() == 2 || $u
                     <div class="text-group">
                         <label class="cart-header-label" for="cart-total">Total:</label>
                         <div id="cartTotalAll">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -131,7 +131,7 @@ if ($userModel->getMaNhomQuyen() == 1 || $userModel->getMaNhomQuyen() == 2 || $u
                             $productImage = $productModel->getImage();
                             $productName = $productModel->getName();
                             $productPrice = $productModel->getPrice();
-                            $totaPrice = (float)$productModel->getPrice() * (float)$cart->getQuantity();
+                            $totaPrice = (float) $productModel->getPrice() * (float) $cart->getQuantity();
                             $cartArray['productImage'] = $productImage;
                             $cartArray['productName'] = $productName;
                             $cartArray['productPrice'] = $productPrice;
@@ -156,13 +156,27 @@ if ($userModel->getMaNhomQuyen() == 1 || $userModel->getMaNhomQuyen() == 2 || $u
         if (isset($filterAll['plusBtn']) && isset($filterAll['cartId'])) {
             $cartId = $filterAll['cartId'];
             $cart = CartsBUS::getInstance()->getModelById($cartId);
-            $cart->setQuantity($cart->getQuantity() + 1);
-            CartsBUS::getInstance()->updateModel($cart);
-            CartsBUS::getInstance()->refreshData();
-            ob_end_clean();
-            header('Content-Type: application/json');
-            echo json_encode(['status' => 'success']);
-            exit;
+
+            $productId = $cart->getProductId();
+            $sizeId = $cart->getSizeId();
+            $sizeItems = SizeItemsBUS::getInstance()->getAllModelBySizeIdAndProductId($sizeId, $productId);
+            $quantityInventory = 0;
+            foreach ($sizeItems as $sizeItem) {
+                $quantityInventory += $sizeItem->getQuantity();
+            }
+
+            if ($cart->getQuantity() + 1 > $quantityInventory) {
+                ob_end_clean();
+                return jsonResponse('error', 'The quantity of the product in the cart can\'t exceeds the remaining quantity of the product');
+            } else {
+                $cart->setQuantity($cart->getQuantity() + 1);
+                CartsBUS::getInstance()->updateModel($cart);
+                CartsBUS::getInstance()->refreshData();
+                ob_end_clean();
+                header('Content-Type: application/json');
+                echo json_encode(['status' => 'success']);
+                exit;
+            }
         }
     }
 
@@ -202,27 +216,68 @@ if ($userModel->getMaNhomQuyen() == 1 || $userModel->getMaNhomQuyen() == 2 || $u
             exit;
         }
     }
+
+    if (isPost()) {
+        $filterAll = filter();
+        if (isset($filterAll['orderThisCart'])) {
+            $productMustBeDeleted = [];
+            $productMustBeDeletedCartId = [];
+            $cartOfUser = CartsBUS::getInstance()->getModelByUserId($userModel->getId());
+            foreach ($cartOfUser as $cartItem) {
+                $productId = $cartItem->getProductId();
+                $sizeId = $cartItem->getSizeId();
+                $sizeItems = SizeItemsBUS::getInstance()->getAllModelBySizeIdAndProductId($sizeId, $productId);
+                $productName = ProductBUS::getInstance()->getModelById($productId)->getName();
+
+                $quantityInventory = 0;
+                foreach ($sizeItems as $sizeItem) {
+                    $quantityInventory += $sizeItem->getQuantity();
+                }
+
+                if ($cartItem->getQuantity() > $quantityInventory) {
+                    $productMustBeDeleted[] = $productName;
+                    $productMustBeDeletedCartId[] = $cartItem->getId();
+                }
+            }
+
+            if (!empty($productMustBeDeleted)) {
+                foreach ($productMustBeDeletedCartId as $cartItemId) {
+                    CartsBUS::getInstance()->deleteModel($cartItemId);
+                }
+                ob_end_clean();
+                header('Content-Type: application/json');
+                echo json_encode(['status' => 'error', 'productMustBeDeleted' => $productMustBeDeleted]);
+                exit;
+            } else {
+                ob_end_clean();
+                header('Content-Type: application/json');
+                echo json_encode(['status' => 'success']);
+                exit;
+            }
+        }
+    }
+
     ?>
 </body>
 <!--Footer-->
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         let areaCartItems = document.querySelector('.areaCartItems');
         let cartTotalAll = document.getElementById('cartTotalAll');
 
         function loadData() {
             fetch('http://localhost/ShoesStore/frontend/?module=cartsection&action=cart', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: 'loadData=' + true
-                })
-                .then(function(response) {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'loadData=' + true
+            })
+                .then(function (response) {
                     return response.json();
                 })
-                .then(function(data) {
+                .then(function (data) {
                     console.log(data);
                     areaCartItems.innerHTML = toHTMLCartList(data.cartList);
                     cartTotalAll.innerHTML = countTotalAll(data.cartList);
@@ -236,7 +291,7 @@ if ($userModel->getMaNhomQuyen() == 1 || $userModel->getMaNhomQuyen() == 2 || $u
 
         function toHTMLCartList(cartList) {
             let html = '';
-            cartList.forEach(function(cart) {
+            cartList.forEach(function (cart) {
                 html += `
                 <div id="${cart.id}" class="item-container" name="itemContainer">
                     <div class="cart-item cart-product" name="cartProduct">
@@ -264,7 +319,7 @@ if ($userModel->getMaNhomQuyen() == 1 || $userModel->getMaNhomQuyen() == 2 || $u
 
         function countTotalAll(cartList) {
             let total = 0;
-            cartList.forEach(function(cart) {
+            cartList.forEach(function (cart) {
                 total += cart.totalPrice;
             })
             return total;
@@ -272,23 +327,25 @@ if ($userModel->getMaNhomQuyen() == 1 || $userModel->getMaNhomQuyen() == 2 || $u
 
         function addEventToPlusBtn() {
             let plusBtns = document.querySelectorAll('.plusBtn');
-            plusBtns.forEach(function(plusBtn) {
-                plusBtn.addEventListener('click', function() {
+            plusBtns.forEach(function (plusBtn) {
+                plusBtn.addEventListener('click', function () {
                     row = this.closest('.item-container');
                     let cartId = row.id;
                     fetch('http://localhost/ShoesStore/frontend/?module=cartsection&action=cart', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: 'plusBtn=' + true + '&cartId=' + cartId
-                        })
-                        .then(function(response) {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: 'plusBtn=' + true + '&cartId=' + cartId
+                    })
+                        .then(function (response) {
                             return response.json();
                         })
-                        .then(function(data) {
+                        .then(function (data) {
                             if (data.status == 'success') {
                                 loadData();
+                            } else {
+                                alert(data.message);
                             }
                         });
                 });
@@ -297,21 +354,21 @@ if ($userModel->getMaNhomQuyen() == 1 || $userModel->getMaNhomQuyen() == 2 || $u
 
         function addEventToMinusBtn() {
             let minusBtns = document.querySelectorAll('.minusBtn');
-            minusBtns.forEach(function(minusBtn) {
-                minusBtn.addEventListener('click', function() {
+            minusBtns.forEach(function (minusBtn) {
+                minusBtn.addEventListener('click', function () {
                     row = this.closest('.item-container');
                     let cartId = row.id;
                     fetch('http://localhost/ShoesStore/frontend/?module=cartsection&action=cart', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: 'minusBtn=' + true + '&cartId=' + cartId
-                        })
-                        .then(function(response) {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: 'minusBtn=' + true + '&cartId=' + cartId
+                    })
+                        .then(function (response) {
                             return response.json();
                         })
-                        .then(function(data) {
+                        .then(function (data) {
                             if (data.status == 'success') {
                                 loadData();
                             }
@@ -322,21 +379,21 @@ if ($userModel->getMaNhomQuyen() == 1 || $userModel->getMaNhomQuyen() == 2 || $u
 
         function addEventToDeleteBtn() {
             let deleteItemInCartBtns = document.querySelectorAll('.deleteItemInCartBtn');
-            deleteItemInCartBtns.forEach(function(deleteItemInCartBtn) {
-                deleteItemInCartBtn.addEventListener('click', function() {
+            deleteItemInCartBtns.forEach(function (deleteItemInCartBtn) {
+                deleteItemInCartBtn.addEventListener('click', function () {
                     row = this.closest('.item-container');
                     let cartId = row.id;
                     fetch('http://localhost/ShoesStore/frontend/?module=cartsection&action=cart', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: 'deleteItemInCartBtn=' + true + '&cartId=' + cartId
-                        })
-                        .then(function(response) {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: 'deleteItemInCartBtn=' + true + '&cartId=' + cartId
+                    })
+                        .then(function (response) {
                             return response.json();
                         })
-                        .then(function(data) {
+                        .then(function (data) {
                             if (data.status == 'success') {
                                 loadData();
                             }
@@ -346,8 +403,26 @@ if ($userModel->getMaNhomQuyen() == 1 || $userModel->getMaNhomQuyen() == 2 || $u
         }
 
         let orderContinue = document.getElementById('order-continue');
-        orderContinue.addEventListener('click', function() {
-            window.location.href = 'http://localhost/ShoesStore/frontend/?module=cartsection&action=order';
+        orderContinue.addEventListener('click', function () {
+            fetch('http://localhost/ShoesStore/frontend/?module=cartsection&action=cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'orderThisCart=' + true
+            })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    if (data.status == 'success') {
+                        window.location.href = 'http://localhost/ShoesStore/frontend/?module=cartsection&action=order';
+                    } else {
+                        let productMustBeDeletedString = data.productMustBeDeleted.join(', ');
+                        alert('Product must be deleted from cart because of running out of stocks: ' + productMustBeDeletedString + '. Please reorder later!');
+                        loadData();
+                    }
+                });
         })
     });
 </script>

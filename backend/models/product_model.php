@@ -4,7 +4,7 @@ namespace backend\models;
 
 class ProductModel
 {
-    private $id, $name, $categoryId, $price, $description, $image, $gender, $status, $giaNhap;
+    private $id, $name, $categoryId, $price, $description, $image, $gender, $status;
 
     public function __construct(
         $id,
@@ -14,8 +14,7 @@ class ProductModel
         $description,
         $image,
         $gender,
-        $status,
-        $giaNhap
+        $status
     ) {
         $this->id = $id;
         $this->name = $name;
@@ -25,7 +24,6 @@ class ProductModel
         $this->image = $image;
         $this->gender = $gender;
         $this->status = $status;
-        $this->giaNhap = $giaNhap;
     }
 
     public function getId()
@@ -108,14 +106,6 @@ class ProductModel
         $this->status = $status;
     }
 
-    public function getGiaNhap() {
-        return $this->giaNhap;
-    }
-
-    public function setGiaNhap($giaNhap) {
-        $this->giaNhap = $giaNhap;
-    }
-
     public function toArray()
     {
         return [
@@ -127,7 +117,6 @@ class ProductModel
             'image' => $this->image,
             'gender' => $this->gender,
             'status' => $this->status,
-            'giaNhap' => $this->giaNhap,
         ];
     }
 
@@ -142,7 +131,6 @@ class ProductModel
             'image' => $this->image,
             'gender' => $this->gender,
             'status' => $this->status,
-            'giaNhap' => $this->giaNhap,
         ];
     }
 }

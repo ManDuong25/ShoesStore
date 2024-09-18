@@ -57,7 +57,7 @@ $orderItemsListBasedOnOrderFromUser = OrderItemsBUS::getInstance()->getOrderItem
 
 <body>
     <section class="h-100 gradient-custom width:100%">
-        <div class="container py-5 h-100">
+        <div class="container py-5 h-100" style="width: 100%;margin: auto;">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-lg-10 col-xl-8">
                     <div class="card" style="border-radius: 10px;">
@@ -138,30 +138,61 @@ $orderItemsListBasedOnOrderFromUser = OrderItemsBUS::getInstance()->getOrderItem
                             </div>
                             <?php
                             echo '<div style="height: 300px; overflow-y: auto;">'; // Adjust the height as needed
-                            foreach ($orderItemsListBasedOnOrderFromUser as $orderItem) {
-                                echo '<div class="card shadow-0 border mb-4">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-2">
-                    <img src="' . ProductBUS::getInstance()->getModelById($orderItem->getProductId())->getImage() . '" class="img-fluid" alt="Shoes">
-                </div>
-                <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                    <p class="text-muted mb-0">' . ProductBUS::getInstance()->getModelById($orderItem->getProductId())->getName() . '</p>
-                </div>
-                <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                    <p class="text-muted mb-0 small">Size: ' . $orderItem->getSizeId() . '</p>
-                </div>
-                <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                    <p class="text-muted mb-0 small">Qty: ' . $orderItem->getQuantity() . '</p>
-                </div>
-                <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                    <p class="text-muted mb-0 small">$ ' . ProductBUS::getInstance()->getModelById($orderItem->getProductId())->getPrice() . '</p>
-                </div>
-            </div>
-        </div>
-    </div>';
+                            $productCalculated = [];
+
+                            for ($i = 0; $i < count($orderItemsListBasedOnOrderFromUser); $i++) {
+                                $orderItem = $orderItemsListBasedOnOrderFromUser[$i];
+                                $orderProductId = $orderItem->getProductId();
+                                $orderSizeId = $orderItem->getSizeId();
+                                $orderQuantity = $orderItem->getQuantity();
+
+                                // Tạo một key để nhận diện sản phẩm bằng `productId` và `sizeId`
+                                $productKey = $orderProductId . '-' . $orderSizeId;
+
+                                // Nếu sản phẩm với key này đã được xét trước đó, cộng dồn số lượng
+                                if (isset($productCalculated[$productKey])) {
+                                    $productCalculated[$productKey]['quantity'] += $orderQuantity;
+                                } else {
+                                    // Nếu chưa được xét, lưu sản phẩm vào mảng $productCalculated
+                                    $productCalculated[$productKey] = [
+                                        'productId' => $orderProductId,
+                                        'sizeId' => $orderSizeId,
+                                        'quantity' => $orderQuantity,
+                                        'image' => ProductBUS::getInstance()->getModelById($orderProductId)->getImage(),
+                                        'name' => ProductBUS::getInstance()->getModelById($orderProductId)->getName(),
+                                        'price' => ProductBUS::getInstance()->getModelById($orderProductId)->getPrice()
+                                    ];
+                                }
                             }
+
+                            // Sau khi đã cộng dồn số lượng, in ra các sản phẩm
+                            foreach ($productCalculated as $calculatedProduct) {
+                                echo '<div class="card shadow-0 border mb-4">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <img src="' . $calculatedProduct['image'] . '" class="img-fluid" alt="Shoes">
+                                            </div>
+                                            <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                <p class="text-muted mb-0">' . $calculatedProduct['name'] . '</p>
+                                            </div>
+                                            <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                <p class="text-muted mb-0 small">Size: ' . $calculatedProduct['sizeId'] . '</p>
+                                            </div>
+                                            <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                <p class="text-muted mb-0 small">Qty: ' . $calculatedProduct['quantity'] . '</p>
+                                            </div>
+                                            <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                <p class="text-muted mb-0 small">$ ' . $calculatedProduct['price'] . '</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>';
+                            }
+
                             echo '</div>';
+
+
                             ?>
 
                             <div class="d-flex justify-content-between pt-2">
@@ -169,21 +200,13 @@ $orderItemsListBasedOnOrderFromUser = OrderItemsBUS::getInstance()->getOrderItem
                                 <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> $<?php
                                 $totalPrice = 0;
                                 foreach ($orderItemsListBasedOnOrderFromUser as $orderItem) {
-                                    $totalPrice += $orderItem->getPrice();
+                                    $totalPrice += $orderItem->getPrice() * $orderItem->getQuantity();
                                 }
                                 echo $totalPrice;
                                 ?></p>
                             </div>
 
-                            <div class="d-flex justify-content-between pt-2">
-                                <p class="text-muted mb-0">Invoice Number : <?php echo $order->getId() ?> </p>
-                                <p class="text-muted mb-0"><span class="fw-bold me-4">Discount </span>
-                                    <?php
-                                    $discountedPrice = $totalPrice - $order->getTotalAmount();
-                                    echo '$' . $discountedPrice;
-                                    ?>
-                                </p>
-                            </div>
+
 
                             <div class="d-flex justify-content-between">
                                 <php class="text-muted mb-0">Invoice Date : <?php echo $order->getOrderDate() ?></p>

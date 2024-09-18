@@ -41,8 +41,7 @@ class ProductDAO implements DAOInterface
         $image = $rs['image'];
         $gender = $rs['gender'];
         $status = $rs['status'];
-        $giaNhap = $rs['giaNhap'];
-        return new ProductModel($id, $name, $categoryId, $price, $description, $image, $gender, $status, $giaNhap);
+        return new ProductModel($id, $name, $categoryId, $price, $description, $image, $gender, $status);
     }
 
     public function getAll(): array
@@ -83,7 +82,7 @@ class ProductDAO implements DAOInterface
 
     public function insert($data): int
     {
-        $query = "INSERT INTO products (name, category_id, price, description, image, gender, status, giaNhap) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO products (name, category_id, price, description, image, gender, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $args = [
             $data->getName(),
             $data->getCategoryId(),
@@ -92,14 +91,13 @@ class ProductDAO implements DAOInterface
             $data->getImage(),
             $data->getGender(),
             $data->getStatus(),
-            $data->getGiaNhap()
         ];
         return DatabaseConnection::executeUpdate($query, ...$args);
     }
 
     public function update($data): int
     {
-        $query = "UPDATE products SET name = ?, category_id = ?, price = ?, description = ?, image = ?, gender = ?, status = ?, giaNhap = ? WHERE id = ?";
+        $query = "UPDATE products SET name = ?, category_id = ?, price = ?, description = ?, image = ?, gender = ?, status = ? WHERE id = ?";
         $args = [
             $data->getName(),
             $data->getCategoryId(),
@@ -108,11 +106,26 @@ class ProductDAO implements DAOInterface
             $data->getImage(),
             $data->getGender(),
             $data->getStatus(),
-            $data->getGiaNhap(),
             $data->getId(),
         ];
         return DatabaseConnection::executeUpdate($query, ...$args);
     }
+
+    public function checkDuplicateNameAndCategory($name, $categoryId): bool
+    {
+        $query = "SELECT COUNT(*) AS total FROM products WHERE LOWER(name) = LOWER(?) AND category_id = ?";
+        $args = [
+            $name,
+            $categoryId
+        ];
+
+        $rs = DatabaseConnection::executeQuery($query, ...$args);
+        $row = $rs->fetch_assoc();
+
+        // Nếu có sản phẩm trùng tên và category, trả về true, ngược lại trả về false
+        return $row['total'] > 0;
+    }
+
 
     public function delete(int $id): int
     {
@@ -203,14 +216,14 @@ class ProductDAO implements DAOInterface
             $args[] = '%' . strtolower($filterName) . '%';
         }
         if (!empty($filterCategory)) {
-            $filterCategory = (int)$filterCategory;
+            $filterCategory = (int) $filterCategory;
             if ($filterCategory != 0) {
                 $query .= " AND category_id = ?";
                 $args[] = $filterCategory;
             }
         }
         if ($filterGender != "") {
-            $filterGender = (int)$filterGender;
+            $filterGender = (int) $filterGender;
             if ($filterGender != -1) {
                 $query .= " AND gender = ?";
                 $args[] = $filterGender;
@@ -258,7 +271,7 @@ class ProductDAO implements DAOInterface
             $args[] = $filterCategory;
         }
         if ($filterGender != "") {
-            $filterGender = (int)$filterGender;
+            $filterGender = (int) $filterGender;
             if ($filterGender != -1) {
                 $query .= " AND gender = ?";
                 $args[] = $filterGender;
@@ -327,14 +340,14 @@ class ProductDAO implements DAOInterface
             $args[] = '%' . strtolower($filterName) . '%';
         }
         if (!empty($filterCategory)) {
-            $filterCategory = (int)$filterCategory;
+            $filterCategory = (int) $filterCategory;
             if ($filterCategory != 0) {
                 $query .= " AND category_id = ?";
                 $args[] = $filterCategory;
             }
         }
         if ($filterGender != "") {
-            $filterGender = (int)$filterGender;
+            $filterGender = (int) $filterGender;
             if ($filterGender != -1) {
                 $query .= " AND gender = ?";
                 $args[] = $filterGender;
@@ -382,7 +395,7 @@ class ProductDAO implements DAOInterface
             $args[] = $filterCategory;
         }
         if ($filterGender != "") {
-            $filterGender = (int)$filterGender;
+            $filterGender = (int) $filterGender;
             if ($filterGender != -1) {
                 $query .= " AND gender = ?";
                 $args[] = $filterGender;
@@ -404,6 +417,15 @@ class ProductDAO implements DAOInterface
 
         $rs = DatabaseConnection::executeQuery($query, ...$args);
         $row = $rs->fetch_assoc();
+        return $row['total'];
+    }
+
+    public function getQuantityProductsWithCategoryId($categoryId)
+    {
+        $query = "SELECT COUNT(*) AS total FROM products WHERE category_id = ?";
+        $rs = DatabaseConnection::executeQuery($query, $categoryId);
+        $row = $rs->fetch_assoc();
+
         return $row['total'];
     }
 }

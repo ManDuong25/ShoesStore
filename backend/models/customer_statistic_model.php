@@ -6,12 +6,14 @@ class CustomerStatisticModel
     private $userId;
     private $customerName;
     private $totalPurchaseAmount;
+    private $totalImportPrice;
 
-    public function __construct($userId, $customerName, $totalPurchaseAmount)
+    public function __construct($userId, $customerName, $totalPurchaseAmount, $totalImportPrice)
     {
         $this->userId = $userId;
         $this->customerName = $customerName;
         $this->totalPurchaseAmount = $totalPurchaseAmount;
+        $this->totalImportPrice = $totalImportPrice;
     }
 
     public function getUserId()
@@ -44,12 +46,21 @@ class CustomerStatisticModel
         $this->totalPurchaseAmount = $totalPurchaseAmount;
     }
 
+    public function getTotalImportPrice() {
+        return $this->totalImportPrice;
+    }
+
+    public function setTotalImportPrice($totalImportPrice) {
+        $this->totalImportPrice = $totalImportPrice;
+    }
+
     public function toArray()
     {
         return [
             'userId' => $this->userId,
             'customerName' => $this->customerName,
             'totalPurchaseAmount' => $this->totalPurchaseAmount,
+            'totalImportPrice' => $this->totalImportPrice,
         ];
     }
 }

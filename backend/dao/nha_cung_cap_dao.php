@@ -140,4 +140,51 @@ class NhaCungCapDAO implements DAOInterface
         }
         return $productList;
     }
+
+
+    public function countAllModels()
+    {
+        $query = "SELECT COUNT(*) AS total FROM nhacungcap;";
+        $rs = DatabaseConnection::executeQuery($query);
+        $row = $rs->fetch_assoc();
+        return $row['total'];
+    }
+
+    public function paginationTech($from, $limit)
+    {
+        $userItemsList = [];
+        $query = "SELECT * FROM nhacungcap LIMIT ?, ?;";
+        $args = [
+            $from,
+            $limit
+        ];
+        $rs = DatabaseConnection::executeQuery($query, ...$args);
+        while ($row = $rs->fetch_assoc()) {
+            $userItemModel = $this->createNCCModel($row);
+            array_push($userItemsList, $userItemModel);
+        }
+        return $userItemsList;
+    }
+
+    public function filterByEmail($from, $limit, $email): array
+    {
+        $userList = [];
+        $query = "SELECT * FROM nhacungcap WHERE email LIKE ? LIMIT ?, ?";
+        $args = ["%" . $email . "%", $from, $limit];
+        $rs = DatabaseConnection::executeQuery($query, ...$args);
+        while ($row = $rs->fetch_assoc()) {
+            $userModel = $this->createNCCModel($row);
+            array_push($userList, $userModel);
+        }
+        return $userList;
+    }
+
+    public function countFilterByEmail($email): int
+    {
+        $query = "SELECT COUNT(*) AS total FROM nhacungcap WHERE email LIKE ?";
+        $args = ["%" . $email . "%"];
+        $rs = DatabaseConnection::executeQuery($query, ...$args);
+        $row = $rs->fetch_assoc();
+        return (int) $row['total'];
+    }
 }

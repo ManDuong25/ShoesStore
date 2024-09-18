@@ -36,7 +36,8 @@ CREATE TABLE `carts` (
   `user_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `size_id` int(11) NOT NULL
+  `size_id` int(11) NOT NULL,
+  `import_price` DOUBLE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -93,7 +94,8 @@ CREATE TABLE `order_items` (
   `product_id` int(11) DEFAULT NULL,
   `size_id` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
-  `price` double NOT NULL
+  `price` DOUBLE NOT NULL,
+  `import_price` DOUBLE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -129,8 +131,7 @@ CREATE TABLE `products` (
   `description` text NOT NULL,
   `image` longtext NOT NULL,
   `gender` int(11) NOT NULL DEFAULT 0,
-  `status` enum('active', 'inactive') NOT NULL DEFAULT 'active',
-  `giaNhap` DOUBLE
+  `status` enum('active', 'inactive') NOT NULL DEFAULT 'active'
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = UTF8MB4_GENERAL_CI;
 
 CREATE TABLE `sizes` (
@@ -146,7 +147,8 @@ CREATE TABLE `size_items` (
   `id` int(11) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
   `size_id` int(11) DEFAULT NULL,
-  `quantity` int(11) NOT NULL DEFAULT 0
+  `quantity` int(11) NOT NULL DEFAULT 0,
+  `import_price` DOUBLE DEFAULT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = UTF8MB4_GENERAL_CI;
 
 
@@ -266,7 +268,7 @@ CREATE TABLE IF NOT EXISTS chucnang (
     maChucNang VARCHAR(50) NOT NULL,
     tenChucNang VARCHAR(255),
     PRIMARY KEY (maChucNang)
-);
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = UTF8MB4_GENERAL_CI;
 
 -- Tạo bảng nhomquyen
 CREATE TABLE IF NOT EXISTS nhomquyen (
@@ -274,14 +276,14 @@ CREATE TABLE IF NOT EXISTS nhomquyen (
     tenNhomQuyen VARCHAR(255),
     trangThai BIT NOT NULL DEFAULT 1,
     PRIMARY KEY (maNhomQuyen)
-);
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = UTF8MB4_GENERAL_CI;
 
 -- Tạo bảng quyen
 CREATE TABLE IF NOT EXISTS quyen (
     maQuyen VARCHAR(50) NOT NULL,
     tenQuyen VARCHAR(255),
     PRIMARY KEY (maQuyen)
-);
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = UTF8MB4_GENERAL_CI;
 
 -- Tạo bảng chitietquyen
 CREATE TABLE IF NOT EXISTS chitietquyen (
@@ -289,7 +291,7 @@ CREATE TABLE IF NOT EXISTS chitietquyen (
     maChucNang VARCHAR(50) NOT NULL,
     maQuyen VARCHAR(50) NOT NULL,
     PRIMARY KEY (maNhomQuyen, maChucNang, maQuyen)
-);
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = UTF8MB4_GENERAL_CI;
 
 
 -- Thêm ràng buộc khóa ngoại cho bảng chitietquyen

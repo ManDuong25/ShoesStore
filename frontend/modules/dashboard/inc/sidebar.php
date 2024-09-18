@@ -8,7 +8,7 @@ function isActivePage($currentPage, $pageName)
     if ($currentPage === $pageName) {
         return 'active';
     }
-    return '';
+    return ''; 
 }
 
 $token = session::getInstance()->getSession('tokenLogin');
@@ -93,7 +93,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                 }
                 ?>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <?php
                 if (checkPermission("Q6", "CN1")) {
                     ?>
@@ -105,7 +105,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                 <?php
                 }
                 ?>
-            </li>
+            </li> -->
             <li class="nav-item">
                 <?php
                 if (checkPermission("Q7", "CN1")) {
@@ -143,6 +143,21 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                         href="?module=dashboard&view=role.view">
                         <span data-feather="tool"></span>
                         Roles Setup
+                    </a>
+                </li>
+                <?php
+                }
+                ?>
+            </li>
+            <li class="nav-item">
+                <?php
+                if (checkPermission("Q11", "CN1")) {
+                    ?>
+                <li class="nav-item">
+                    <a class="nav-link <?php echo isActivePage($_GET['view'], 'nhacungcap.view'); ?>"
+                        href="?module=dashboard&view=nhacungcap.view">
+                        <span data-feather="users"></span>
+                        Nhà cung cấp
                     </a>
                 </li>
                 <?php

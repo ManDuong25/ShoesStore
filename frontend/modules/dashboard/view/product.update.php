@@ -2,6 +2,7 @@
 ob_start();
 use backend\bus\CategoriesBUS;
 use backend\bus\ProductBUS;
+use backend\bus\SizeItemsBUS;
 
 $title = 'Product';
 if (!defined('_CODE')) {
@@ -17,7 +18,7 @@ if (!checkPermission("Q3", "CN1") || !checkPermission("Q3", "CN2")) {
     die('Access denied');
 }
 
-include (__DIR__ . '/../inc/head.php');
+include(__DIR__ . '/../inc/head.php');
 
 global $id;
 if (isset($_GET['id'])) {
@@ -42,7 +43,7 @@ if (isset($_GET['id'])) {
 </div>
 
 <body>
-    <?php include (__DIR__ . '/../inc/header.php'); ?>
+    <?php include(__DIR__ . '/../inc/header.php'); ?>
     <!-- Title -->
     <div class="container-fluid">
         <div class="row">
@@ -62,7 +63,7 @@ if (isset($_GET['id'])) {
                     <div class="col">
                         <!-- Name -->
                         <label for="inputProductName" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="inputEditProductName" value="<?php $name = ProductBUS::getInstance()->getModelById($id)->getName();
+                        <input type="text" class="form-control" readonly id="inputEditProductName" value="<?php $name = ProductBUS::getInstance()->getModelById($id)->getName();
                         echo $name;
                         ?>">
                     </div>
@@ -114,12 +115,6 @@ if (isset($_GET['id'])) {
                 <input type="text" class="form-control" id="inputEditPrice" value="<?php $price = ProductBUS::getInstance()->getModelById($id)->getPrice();
                 echo $price; ?>">
             </div>
-
-            <div class="col">
-                <label for="giaNhap" class="form-label">Import Price</label>
-                <input type="text" class="form-control" id="giaNhap" value="<?php $giaNhap = ProductBUS::getInstance()->getModelById($id)->getGiaNhap();
-                echo $giaNhap; ?>">
-            </div>
             <div class="col">
                 <label for="inputPhone" class="form-label">Description</label>
                 <textarea class="form-control" id="w3Editreview" name="w3review" rows="6"
@@ -156,19 +151,27 @@ if (isset($_GET['id'])) {
                 $productName = $_POST['productNameEdit'] ?? '';
                 $productCategory = $_POST['categoryEdit'] ?? '';
                 $productPrice = $_POST['priceEdit'] ?? '';
-                $productGiaNhap = $_POST['giaNhapEdit'] ?? '';
                 $productGender = $_POST['genderEdit'] ?? '';
                 $productDescription = $_POST['descriptionEdit'] ?? '';
+                $importPriceHighestNow = SizeItemsBUS::getInstance()->getHighestImportPriceByProductId($id);
+                if ($importPriceHighestNow) {
+                    $highestImportPrice = $importPriceHighestNow->getImportPrice();
+                    if ($productPrice <= $highestImportPrice) {
+                        ob_end_clean();
+                        return jsonResponse('error', "Product price must be higher than the highest import price (>$highestImportPrice)");
+                    }
+                }
+
                 $productStatus = $_POST['statusEdit'] ?? '';
                 $productUpdate->setCategoryId($productCategory);
                 $productUpdate->setGender($productGender);
                 $productUpdate->setName($productName);
                 $productUpdate->setPrice($productPrice);
-                $productUpdate->setGiaNhap($productGiaNhap);
                 $productUpdate->setDescription($productDescription);
                 $productUpdate->setStatus($productStatus);
                 $data = $_POST['imageEdit'];
                 $productUpdate->setImage($data);
+                ProductBUS::getInstance()->validateModel($productUpdate);
                 ProductBUS::getInstance()->updateModel($productUpdate);
                 ProductBUS::getInstance()->refreshData();
                 ob_end_clean();

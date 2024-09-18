@@ -2,9 +2,9 @@
 namespace backend\models;
 class OrderItemsModel
 {
-    private $id, $orderId, $productId, $sizeId, $quantity, $price;
+    private $id, $orderId, $productId, $sizeId, $quantity, $price, $importPrice;
 
-    public function __construct($id, $orderId, $productId, $sizeId, $quantity, $price)
+    public function __construct($id, $orderId, $productId, $sizeId, $quantity, $price, $importPrice)
     {
         $this->id = $id;
         $this->orderId = $orderId;
@@ -12,6 +12,7 @@ class OrderItemsModel
         $this->sizeId = $sizeId;
         $this->quantity = $quantity;
         $this->price = $price;
+        $this->importPrice = $importPrice;
     }
 
     public function getId()
@@ -72,5 +73,28 @@ class OrderItemsModel
     public function setPrice($price)
     {
         $this->price = $price;
+    }
+
+    public function getImportPrice()
+    {
+        return $this->importPrice;
+    }
+
+    public function setImportPrice($importPrice)
+    {
+        $this->importPrice = $importPrice;
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->id,
+            'orderId' => $this->orderId,
+            'productId' => $this->productId,
+            'sizeId' => $this->sizeId,
+            'quantity' => $this->quantity,
+            'price' => $this->price,
+            'importPrice' => $this->importPrice,
+        ];
     }
 }

@@ -6,13 +6,15 @@ class SizeItemsModel
     private $productId;
     private $sizeId;
     private $quantity;
-    
-    public function __construct($id, $productId, $sizeId, $quantity)
+    private $importPrice;
+
+    public function __construct($id, $productId, $sizeId, $quantity, $importPrice)
     {
         $this->id = $id;
         $this->productId = $productId;
         $this->sizeId = $sizeId;
         $this->quantity = $quantity;
+        $this->importPrice = $importPrice;
     }
 
     public function getId()
@@ -55,6 +57,15 @@ class SizeItemsModel
         $this->quantity = $quantity;
     }
 
+    public function getImportPrice()
+    {
+        return $this->importPrice;
+    }
+
+    public function setImportPrice($importPrice)
+    {
+        return $this->importPrice = $importPrice;
+    }
     public function toArray($productName, $productCategory, $size, $img) {
         return [
             'id' => $this->id,
@@ -62,7 +73,8 @@ class SizeItemsModel
             'category' => $productCategory,
             'size' => $size,
             'quantity' => $this->quantity,
-            'image' => $img
+            'image' => $img,
+            'importPrice' => $this->importPrice,
         ];
     }
 }

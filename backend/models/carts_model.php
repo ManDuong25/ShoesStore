@@ -4,14 +4,15 @@ namespace backend\models;
 
 class CartsModel
 {
-    private $id, $userId, $productId, $quantity, $sizeId;
-    public function __construct($id, $userId, $productId, $quantity, $sizeId)
+    private $id, $userId, $productId, $quantity, $sizeId, $importPrice;
+    public function __construct($id, $userId, $productId, $quantity, $sizeId, $importPrice)
     {
         $this->id = $id;
         $this->userId = $userId;
         $this->productId = $productId;
         $this->quantity = $quantity;
         $this->sizeId = $sizeId;
+        $this->importPrice = $importPrice;
     }
 
     public function getId()
@@ -64,6 +65,16 @@ class CartsModel
         $this->sizeId = $sizeId;
     }
 
+    public function getImportPrice()
+    {
+        return $this->importPrice;
+    }
+
+    public function setImportPrice($importPrice)
+    {
+        $this->importPrice = $importPrice;
+    }
+
     public function toArray()
     {
         return [
@@ -71,7 +82,8 @@ class CartsModel
             'userId' => $this->getUserId(),
             'productId' => $this->getProductId(),
             'quantity' => $this->getQuantity(),
-            'sizeId' => $this->getSizeId()
+            'sizeId' => $this->getSizeId(),
+            'importPrice' => $this->getImportPrice()
         ];
     }
 }

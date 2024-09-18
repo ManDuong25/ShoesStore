@@ -75,7 +75,7 @@ $randomProducts = ProductBUS::getInstance()->getRandomRecommendProducts();
         <div class="wrap">
             <div class="box__area">
                 <div class="box">
-                    <img src="<?php echo _WEB_HOST_TEMPLATE ?> /images/class1.webp" alt>
+                    <img src="<?php echo _WEB_HOST_TEMPLATE ?>/images/class1.webp" alt>
                     <div class="overlay__box">
                         <h3>RUNNING</h3>
                     </div>
@@ -147,7 +147,7 @@ $randomProducts = ProductBUS::getInstance()->getRandomRecommendProducts();
         <span>CONVERSE</span>
     </div>
     <div class="slider__content">
-        <img src="<?php echo _WEB_HOST_TEMPLATE ?> /images/slidercontent.webp" alt>
+        <img src="<?php echo _WEB_HOST_TEMPLATE ?>/images/slidercontent.webp" alt>
         <div class="overlay__content">
             <h2>Makes Yourself Keep Sporty & Stylish</h2>
             <p>
@@ -198,37 +198,37 @@ $randomProducts = ProductBUS::getInstance()->getRandomRecommendProducts();
                     <div class="swiper-wrapper">
                         <!-- Slides -->
                         <div class="swiper-slide">
-                            <img src="<?php echo _WEB_HOST_TEMPLATE ?> /images/img/Fila.jpg" alt="">
+                            <img src="<?php echo _WEB_HOST_TEMPLATE ?>/images/img/Fila.jpg" alt="">
                             <div class="title">
                                 <span>Fila</span>
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="<?php echo _WEB_HOST_TEMPLATE ?> /images/img/Fashion.jpg" alt="">
+                            <img src="<?php echo _WEB_HOST_TEMPLATE ?>/images/img/Fashion.jpg" alt="">
                             <div class="title">
                                 <span>Fashion</span>
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="<?php echo _WEB_HOST_TEMPLATE ?> /images/img/Sneakers.jpg" alt="">
+                            <img src="<?php echo _WEB_HOST_TEMPLATE ?>/images/img/Sneakers.jpg" alt="">
                             <div class="title">
                                 <span>Sneakers</span>
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="<?php echo _WEB_HOST_TEMPLATE ?> /images/img/Naked Wolfe Pink.jpg" alt="">
+                            <img src="<?php echo _WEB_HOST_TEMPLATE ?>/images/img/Naked Wolfe Pink.jpg" alt="">
                             <div class="title">
                                 <span>Naked Wolfe Pink</span>
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="<?php echo _WEB_HOST_TEMPLATE ?> /images/img/Autumn.jpg" alt="">
+                            <img src="<?php echo _WEB_HOST_TEMPLATE ?>/images/img/Autumn.jpg" alt="">
                             <div class="title">
                                 <span>Autumn</span>
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="<?php echo _WEB_HOST_TEMPLATE ?> /images/img/Naked Wolfe.jpg" alt="">
+                            <img src="<?php echo _WEB_HOST_TEMPLATE ?>/images/img/Naked Wolfe.jpg" alt="">
                             <div class="title">
                                 <span>Naked Wolfe</span>
                             </div>

@@ -45,23 +45,27 @@ $productList = ProductBUS::getInstance()->getAllModels();
 
             <!-- MAIN -->
             <main class="col-9 ms-sm-auto col-lg-10 px-4">
-                <div class="d-flex justify-content-between flex-wrap flex-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">
                         <?= $title ?>
                     </h1>
-                    <?php if (checkPermission("Q3", "CN4")) {?>
-                    <div class="btn-toolbar mb-2 mb-0">
-                        <button type="button" class="btn btn-sm btn-success align-middle" data-bs-toggle="modal" data-bs-target="#addModal" id="addProduct" class="addBtn">
-                            <span data-feather="plus"></span>
-                            Add
-                        </button>
-                    </div>
-                    <?php }?>
+                    <?php if (checkPermission("Q3", "CN4")) { ?>
+                        <div class="btn-toolbar mb-2 mb-0">
+                            <button type="button" class="btn btn-sm btn-success align-middle" data-bs-toggle="modal"
+                                data-bs-target="#addModal" id="addProduct" class="addBtn">
+                                <span data-feather="plus"></span>
+                                Add
+                            </button>
+                        </div>
+                    <?php } ?>
                 </div>
 
                 <div class="search-group input-group py-2">
-                    <input type="text" name="productSearch" id="productSearchBar" class="searchInput form-control" placeholder="Search anything here...">
-                    <button type="submit" id="productSearchButton" name="productSearchButtonName" class="btn btn-sm btn-primary align-middle px-3">
+                    <input type="text" name="productSearch" id="productSearchBar" class="searchInput form-control"
+                        placeholder="Search anything here...">
+                    <button type="submit" id="productSearchButton" name="productSearchButtonName"
+                        class="btn btn-sm btn-primary align-middle px-3">
                         <span data-feather="search"></span>
                     </button>
                 </div>
@@ -75,7 +79,6 @@ $productList = ProductBUS::getInstance()->getAllModels();
                             <th class='col-1'>Category</th>
                             <th class='col-4'>Description</th>
                             <th class='col-1 text-center'>Price</th>
-                            <th class='col-1 text-center'>Import price</th>
                             <th class='col-2 text-center'>Action</th>
                             <th class='col-1 text-center'>Status</th>
                         </tr>
@@ -138,18 +141,21 @@ $productList = ProductBUS::getInstance()->getAllModels();
                 </table>
 
                 <!-- Add modal -->
-                <div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                    aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Product</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <form class="row g-3">
                                     <div class="col-7">
                                         <label for="inputProductName" class="form-label">Name</label>
-                                        <input type="text" class="form-control" id="inputProductName" name="productName">
+                                        <input type="text" class="form-control" id="inputProductName"
+                                            name="productName">
                                     </div>
                                     <div class="col-5">
                                         <label for="inputProductCate" class="form-label">Categories</label>
@@ -160,15 +166,7 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                             } ?>
                                         </select>
                                     </div>
-                                    <div class="col-4">
-                                        <label for="inputPrice" class="form-label">Price</label>
-                                        <input type="text" class="form-control" id="inputPrice" name="price">
-                                    </div>
-                                    <div class="col-4">
-                                        <label for="giaNhap" class="form-label">Import Price</label>
-                                        <input type="text" class="form-control" id="giaNhap" name="price">
-                                    </div>
-                                    <div class="col-4">
+                                    <div class="col-6">
                                         <label for="inputGender" class="form-label">Gender</label>
                                         <select id="inputGender" class="form-select" name="gender">
                                             <option value="0" selected>Male</option>
@@ -177,11 +175,13 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                     </div>
                                     <div class="col-7">
                                         <label for="inputDescription" class="form-label">Description</label>
-                                        <textarea class="form-control" id="w3review" name="description" row="1" cols="40"></textarea>
+                                        <textarea class="form-control" id="w3review" name="description" row="1"
+                                            cols="40"></textarea>
                                     </div>
                                     <div class="col-7">
                                         <label for="inputImg">Image (.JPG, .JPEG, .PNG)</label>
-                                        <input type="file" class="form-control" name="image" id="inputImg" accept=".jpg, .jpeg, .png">
+                                        <input type="file" class="form-control" name="image" id="inputImg"
+                                            accept=".jpg, .jpeg, .png">
                                     </div>
                                     <div class="col-5 productImg">
                                         <img id="imgPreview" src="" alt="Preview Image">
@@ -189,20 +189,21 @@ $productList = ProductBUS::getInstance()->getAllModels();
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-primary" id="saveButton" name="saveBtnName">Save</button>
+                                <button type="submit" class="btn btn-primary" id="saveButton"
+                                    name="saveBtnName">Save</button>
                             </div>
                             <?php
                             if (isPost()) {
                                 if (isset($_POST['saveBtn'])) {
                                     error_log('Save button clicked');
+
                                     $productName = $_POST['productName'];
                                     $productCategory = $_POST['category'];
-                                    $productPrice = $_POST['price'];
                                     $productGender = $_POST['gender'];
                                     $productDescription = $_POST['description'];
                                     $data = $_POST['image'];
-                                    $giaNhap = $_POST['giaNhap'];
-                                    $productModel = new ProductModel(null, $productName, $productCategory, $productPrice, $productDescription, $data, $productGender, strtolower(StatusEnums::INACTIVE), $giaNhap);
+                                    $productModel = new ProductModel(null, $productName, $productCategory, 0, $productDescription, $data, $productGender, strtolower(StatusEnums::INACTIVE));
+                                    
                                     ProductBUS::getInstance()->addModel($productModel);
                                     ProductBUS::getInstance()->refreshData();
                                     ob_end_clean();
@@ -235,6 +236,8 @@ $productList = ProductBUS::getInstance()->getAllModels();
                     }
                 }
 
+
+                // Note : Không cho xóa nếu trong inventỏry vẫn còn
                 //Handle completely delete product:
                 if (isPost()) {
                     $fitlerAll = filter();
@@ -242,9 +245,15 @@ $productList = ProductBUS::getInstance()->getAllModels();
                         $productId = $_POST['id'];
                         $productPreparedToDel = ProductBUS::getInstance()->getModelById($productId);
 
+                        $sizeItemProduct = SizeItemsBUS::getInstance()->getModelByProductId($productId);
+                        if (!empty($sizeItemProduct)) {
+                            ob_end_clean();
+                            return jsonResponse('error', 'Product have in Inventory, can not delete!');
+                        }
+
                         //Check for orders that contain the product:
                         $orders = OrderItemsBUS::getInstance()->getOrderItemsListByProductId($productId);
-                        $ctpnListHaveProduct = ChiTietPhieuNhapBUS::getInstance()->getCTPNListByProductId($productId); 
+                        $ctpnListHaveProduct = ChiTietPhieuNhapBUS::getInstance()->getCTPNListByProductId($productId);
                         $cartListHaveProduct = CartsBUS::getInstance()->getCartListByProductId($productId);
                         if (count($orders) > 0 || count($ctpnListHaveProduct) > 0 || count($cartListHaveProduct) > 0) {
                             ob_end_clean();
@@ -266,11 +275,10 @@ $productList = ProductBUS::getInstance()->getAllModels();
                 <?php include(__DIR__ . '/../inc/app/app.php'); ?>
                 <script src="https://kit.fontawesome.com/2a9b643027.js" crossorigin="anonymous"></script>
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                <script src="<?php echo _WEB_HOST_TEMPLATE ?>/js/dashboard/add_product.js"></script>
 
 
                 <script>
-                    document.addEventListener('DOMContentLoaded', function() {
+                    document.addEventListener('DOMContentLoaded', function () {
 
                         // Pagination and filter
                         let thisPage = 1;
@@ -287,16 +295,16 @@ $productList = ProductBUS::getInstance()->getAllModels();
 
                         function loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo) {
                             fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=product.view', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/x-www-form-urlencoded',
-                                    },
-                                    body: 'thisPage=' + thisPage + '&limit=' + limit + '&filterName=' + filterName + '&filterCategory=' + filterCategory + '&filterGender=' + filterGender + '&filterPriceFrom=' + filterPriceFrom + '&filterPriceTo=' + filterPriceTo
-                                })
-                                .then(function(response) {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                body: 'thisPage=' + thisPage + '&limit=' + limit + '&filterName=' + filterName + '&filterCategory=' + filterCategory + '&filterGender=' + filterGender + '&filterPriceFrom=' + filterPriceFrom + '&filterPriceTo=' + filterPriceTo
+                            })
+                                .then(function (response) {
                                     return response.json();
                                 })
-                                .then(function(data) {
+                                .then(function (data) {
                                     areaProduct.innerHTML = toHTMLProductList(data.listProducts);
                                     areaPagination.innerHTML = toHTMLPagination(data.totalQuantity, data.thisPage, data.limit);
                                     totalPage = Math.ceil(data.totalQuantity / data.limit);
@@ -319,24 +327,23 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                     <td class="product_category_name">${product.categoryName}</td>
                                     <td class="product_description">${product.description}</td>
                                     <td class='text-center'>${product.price}</td>
-                                    <td class='text-center'>${product.giaNhap}</td>
                                     <td class='text-center'>
                                         <div>
-                                            <?php if (checkPermission("Q3", "CN2")) {?>
-                                            <a href='http://localhost/ShoesStore/frontend/index.php?module=dashboard&view=product.update&id=${product.id}' class='btn btn-sm btn-warning'>
-                                                <i class='fas fa-edit'></i>
-                                            </a>
+                                            <?php if (checkPermission("Q3", "CN2")) { ?>
+                                                <a href='http://localhost/ShoesStore/frontend/index.php?module=dashboard&view=product.update&id=${product.id}' class='btn btn-sm btn-warning'>
+                                                    <i class='fas fa-edit'></i>
+                                                </a>
                                             <?php } ?>
-                                            <?php if (checkPermission("Q3", "CN3")) {?>
-                                            <button class='btn btn-sm btn-danger' id='completelyDeleteProduct' name='completelyDeleteProduct'>
-                                                <i class='fas fa-trash-alt'></i>
-                                            </button>
-                                            <?php }?>
+                                            <?php if (checkPermission("Q3", "CN3")) { ?>
+                                                <button class='btn btn-sm btn-danger' id='completelyDeleteProduct' name='completelyDeleteProduct'>
+                                                    <i class='fas fa-trash-alt'></i>
+                                                </button>
+                                            <?php } ?>
 
-                                            <?php if (checkPermission("Q3", "CN2")) {?>
-                                            <button class='btn btn-sm btn-danger' id='deleteProductButton' name='deleteProductButton'>
-                                                <i class='fas fa-eye-slash'></i>
-                                            </button>
+                                            <?php if (checkPermission("Q3", "CN2")) { ?>
+                                                <button class='btn btn-sm btn-danger' id='deleteProductButton' name='deleteProductButton'>
+                                                    <i class='fas fa-eye-slash'></i>
+                                                </button>
                                             <?php } ?>
                                         </div>
                                     </td>
@@ -384,18 +391,18 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                     document.getElementById('nextPage').classList.remove('hideBtn');
                                 }
 
-                                document.getElementById('prevPage').addEventListener('click', function() {
+                                document.getElementById('prevPage').addEventListener('click', function () {
                                     thisPage--;
                                     loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
                                 })
 
-                                document.getElementById('nextPage').addEventListener('click', function() {
+                                document.getElementById('nextPage').addEventListener('click', function () {
                                     thisPage++;
                                     loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
                                 })
 
-                                pageIndexButtons.forEach(function(button) {
-                                    button.addEventListener('click', function() {
+                                pageIndexButtons.forEach(function (button) {
+                                    button.addEventListener('click', function () {
                                         thisPage = parseInt(this.textContent);
                                         loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
                                     });
@@ -409,7 +416,7 @@ $productList = ProductBUS::getInstance()->getAllModels();
                             }
                         }
 
-                        searchInput.addEventListener('input', function() {
+                        searchInput.addEventListener('input', function () {
                             filterName = searchInput.value;
                             thisPage = 1;
                             loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
@@ -420,8 +427,8 @@ $productList = ProductBUS::getInstance()->getAllModels();
                         // hide btn
                         function addEventtoHideToBtn() {
                             let hideButtons = document.querySelectorAll('[name="deleteProductButton"]');
-                            hideButtons.forEach(function(button) {
-                                button.addEventListener('click', function() {
+                            hideButtons.forEach(function (button) {
+                                button.addEventListener('click', function () {
                                     let productElement = this.closest('tr');
                                     let productIdElement = productElement.querySelector('.product_id');
                                     let productId = productIdElement.textContent.trim();
@@ -434,16 +441,16 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                     }
 
                                     fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=product.view', {
-                                            method: 'POST',
-                                            headers: {
-                                                'Content-Type': 'application/x-www-form-urlencoded',
-                                            },
-                                            body: 'hide=' + true + '&id=' + productId
-                                        })
-                                        .then(function(response) {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/x-www-form-urlencoded',
+                                        },
+                                        body: 'hide=' + true + '&id=' + productId
+                                    })
+                                        .then(function (response) {
                                             return response.json();
                                         })
-                                        .then(function(data) {
+                                        .then(function (data) {
                                             if (data.status == "success") {
                                                 alert(data.message);
                                             } else if (data.status == "error") {
@@ -460,8 +467,8 @@ $productList = ProductBUS::getInstance()->getAllModels();
                         // delete btn
                         function addEventCompletelyDeleteToBtn() {
                             let deleteButtons = document.querySelectorAll('[name="completelyDeleteProduct"]');
-                            deleteButtons.forEach(function(button) {
-                                button.addEventListener('click', function() {
+                            deleteButtons.forEach(function (button) {
+                                button.addEventListener('click', function () {
                                     let confirmed = confirm('Bạn có chắc chắn muốn xoá sản phẩm này hoàn toàn không?');
                                     if (confirmed) {
                                         let productElement = this.closest('tr');
@@ -469,16 +476,16 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                         let productId = productIdElement.textContent.trim();
 
                                         fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=product.view', {
-                                                method: 'POST',
-                                                headers: {
-                                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                                },
-                                                body: 'delete=' + true + '&id=' + productId
-                                            })
-                                            .then(function(response) {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/x-www-form-urlencoded',
+                                            },
+                                            body: 'delete=' + true + '&id=' + productId
+                                        })
+                                            .then(function (response) {
                                                 return response.json();
                                             })
-                                            .then(function(data) {
+                                            .then(function (data) {
                                                 if (data.status == "success") {
                                                     alert(data.message);
                                                 } else if (data.status == "error") {
@@ -490,6 +497,80 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                     }
                                 });
                             });
+                        }
+
+
+                        // add btn
+                        let productName = document.getElementById("inputProductName");
+                        let chosenCategory = document.getElementById("inputProductCate");
+                        let chosenGender = document.getElementById("inputGender");
+                        let productDescription = document.getElementById("w3review");
+                        let productImageUpload = document.getElementById("inputImg");
+                        let imageProductReview = document.getElementById("imgPreview");
+
+                        productImageUpload.addEventListener('change', function (event) {
+                            let file = event.target.files[0];
+                            if (file) {
+                                let reader = new FileReader();
+                                reader.onload = function (e) {
+                                    let base64Image = e.target.result;
+                                    imageProductReview.src = base64Image;
+                                };
+                                reader.readAsDataURL(file);
+                            } else {
+                                imageProductReview.src = 'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp';
+                            }
+                        });
+
+                        if (!productImageUpload.files.length) {
+                            // Nếu không có file nào được chọn, gán đường dẫn mặc định cho imageProductReview.src
+                            imageProductReview.src = 'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp';
+                        }
+
+                        let saveBtn = document.getElementById("saveButton");
+                        if (saveBtn) {
+                            saveBtn.addEventListener('click', function (e) {
+                                e.preventDefault();
+
+                                if (!productName.value) {
+                                    alert("Please enter product name");
+                                    productName.value = "";
+                                    return;
+                                }
+
+                                if (!chosenCategory.value) {
+                                    alert("Please select a category");
+                                    return;
+                                }
+
+                                if (!productDescription.value) {
+                                    alert("Please enter product description");
+                                    productDescription.value = "";
+                                    return;
+                                }
+
+                                let trimmedDescription = productDescription.value.trim();
+                                if (trimmedDescription.length < 10) {
+                                    alert("Description must be at least 10 characters long");
+                                    return;
+                                }
+
+                                fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=product.view', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded',
+                                    },
+                                    body: 'productName=' + productName.value + '&category=' + chosenCategory.value + '&gender=' + chosenGender.value + '&description=' + productDescription.value + '&image=' + imageProductReview.src + '&saveBtn=' + true
+                                })
+                                    .then(function (response) {
+                                        return response.json();
+                                    })
+                                    .then(function (data) {
+                                        console.log(data);
+                                        alert(data.message)
+                                        loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
+                                    });
+                            })
                         }
 
 

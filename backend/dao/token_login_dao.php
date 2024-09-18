@@ -23,7 +23,7 @@ class TokenLoginDAO implements DAOInterface
     {
         $tokenLoginList = [];
 
-        $rs = DatabaseConnection::executeQuery("SELECT * FROM tokenlogin");
+        $rs = DatabaseConnection::executeQuery("SELECT * FROM tokenLogin");
         while ($row = $rs->fetch_assoc()) {
             $tokenLoginModel = $this->createTokenLoginModel($row);
             $tokenLoginList[] = $tokenLoginModel;
@@ -45,7 +45,7 @@ class TokenLoginDAO implements DAOInterface
     {
         $tokenLoginList = [];
 
-        $rs = DatabaseConnection::executeQuery("SELECT * FROM tokenlogin");
+        $rs = DatabaseConnection::executeQuery("SELECT * FROM tokenLogin");
         while ($row = $rs->fetch_assoc()) {
             $tokenLoginModel = $this->createTokenLoginModel($row);
             $tokenLoginList[] = $tokenLoginModel;
@@ -56,7 +56,7 @@ class TokenLoginDAO implements DAOInterface
 
     public function getById($id)
     {
-        $query = "SELECT * FROM tokenlogin WHERE id = ?";
+        $query = "SELECT * FROM tokenLogin WHERE id = ?";
         $rs = DatabaseConnection::executeQuery($query, $id);
 
         if ($rs->num_rows > 0) {
@@ -70,21 +70,21 @@ class TokenLoginDAO implements DAOInterface
 
     public function insert($tokenLoginModel): int
     {
-        $query = "INSERT INTO tokenlogin (user_id, token, create_at) VALUES (?, ?, ?)";
+        $query = "INSERT INTO tokenLogin (user_id, token, create_at) VALUES (?, ?, ?)";
         $args = [$tokenLoginModel->getUserId(), $tokenLoginModel->getToken(), $tokenLoginModel->getCreateAt()];
         return DatabaseConnection::executeUpdate($query, ...$args);
     }
 
     public function update($tokenLoginModel): int
     {
-        $query = "UPDATE tokenlogin SET user_id = ?, token = ?, create_at = ? WHERE id = ?";
+        $query = "UPDATE tokenLogin SET user_id = ?, token = ?, create_at = ? WHERE id = ?";
         $args = [$tokenLoginModel->getUserId(), $tokenLoginModel->getToken(), $tokenLoginModel->getCreateAt(), $tokenLoginModel->getId()];
         return DatabaseConnection::executeUpdate($query, ...$args);
     }
 
     public function delete(int $id): int
     {
-        $query = "DELETE FROM tokenlogin WHERE id = ?";
+        $query = "DELETE FROM tokenLogin WHERE id = ?";
         $args = [$id];
         return DatabaseConnection::executeUpdate($query, ...$args);
     }
@@ -96,14 +96,14 @@ class TokenLoginDAO implements DAOInterface
         }
         $query = "";
         if ($columnNames === null || count($columnNames) === 0) {
-            $query = "SELECT * FROM tokenlogin WHERE id LIKE ? OR user_id LIKE ? OR token LIKE ? OR create_at LIKE ?";
+            $query = "SELECT * FROM tokenLogin WHERE id LIKE ? OR user_id LIKE ? OR token LIKE ? OR create_at LIKE ?";
             $args = array_fill(0, 5, "%" . $condition . "%");
         } else if (count($columnNames) === 1) {
             $column = $columnNames[0];
-            $query = "SELECT * FROM tokenlogin WHERE $column LIKE ?";
+            $query = "SELECT * FROM tokenLogin WHERE $column LIKE ?";
             $args = ["%" . $condition . "%"];
         } else {
-            $query = "SELECT * FROM tokenlogin WHERE " . implode(" LIKE ? OR ", $columnNames) . " LIKE ?";
+            $query = "SELECT * FROM tokenLogin WHERE " . implode(" LIKE ? OR ", $columnNames) . " LIKE ?";
             $args = array_fill(0, count($columnNames), "%" . $condition . "%");
         }
         $rs = DatabaseConnection::executeQuery($query, ...$args);

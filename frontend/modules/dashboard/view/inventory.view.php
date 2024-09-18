@@ -39,23 +39,26 @@ $productList = ProductBUS::getInstance()->getAllModels();
 
             <!-- MAIN -->
             <main class="col-9 ms-sm-auto col-lg-10 px-4">
-                <div class="d-flex justify-content-between flex-wrap flex-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">
                         <?= $title ?>
                     </h1>
-                    <?php if (checkPermission("Q7", "CN4")) {?>
-                    <div class="btn-toolbar mb-2 mb-0">
-                        <button type="button" class="btn btn-sm btn-success align-middle" data-bs-toggle="modal" data-bs-target="#addModal" id="addSizeItem" class="addBtn">
+                    <?php if (checkPermission("Q7", "CN4")) { ?>
+                        <div class="btn-toolbar mb-2 mb-0">
+                            <!-- <button type="button" class="btn btn-sm btn-success align-middle" data-bs-toggle="modal" data-bs-target="#addModal" id="addSizeItem" class="addBtn">
                             <span data-feather="plus"></span>
                             Add
-                        </button>
-                    </div>
+                        </button> -->
+                        </div>
                     <?php } ?>
                 </div>
 
                 <div class="search-group input-group">
-                    <input type="text" id="productSearch" class="searchInput form-control" name="searchValue" placeholder="Search product name here...">
-                    <button type="submit" class="btn btn-sm btn-primary align-middle padx-0 pady-0" name="searchBtnName" id="searchBtnId">
+                    <input type="text" id="productSearch" class="searchInput form-control" name="searchValue"
+                        placeholder="Search product name here...">
+                    <button type="submit" class="btn btn-sm btn-primary align-middle padx-0 pady-0" name="searchBtnName"
+                        id="searchBtnId">
                         <span data-feather="search"></span>
                     </button>
                 </div>
@@ -67,6 +70,7 @@ $productList = ProductBUS::getInstance()->getAllModels();
                             <th>Product Name</th>
                             <th>Category</th>
                             <th>Size</th>
+                            <th>Import Price</th>
                             <th>Quantity</th>
                             <th>Action</th>
                         </tr>
@@ -80,7 +84,7 @@ $productList = ProductBUS::getInstance()->getAllModels();
                         </nav>
                         <?php
                         if (isPost()) {
-                            $filterAll = filter();  
+                            $filterAll = filter();
                             if (isset($filterAll['thisPage']) && $filterAll['limit']) {
                                 $thisPage = $filterAll['thisPage'];
                                 $limit = $filterAll['limit'];
@@ -125,12 +129,14 @@ $productList = ProductBUS::getInstance()->getAllModels();
                 </table>
 
                 <!-- Add modal -->
-                <div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                    aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Add New Item</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <form class="row g-3">
@@ -185,36 +191,43 @@ $productList = ProductBUS::getInstance()->getAllModels();
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-primary" id="saveButton" name="saveBtnName">Save</button>
+                                <button type="submit" class="btn btn-primary" id="saveButton"
+                                    name="saveBtnName">Save</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Update model -->
-                <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
                     <div class="updateModalWrapper modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Size Quantity</h1>
-                                <button type="button" class="btn-close closeUpdateModal" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close closeUpdateModal" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <label for="inputSizeUpdate" class="form-label">Size</label>
-                                <input type="text" name="inputSize" id="inputSizeUpdate" class="form-control" value="" readonly>
+                                <input type="text" name="inputSize" id="inputSizeUpdate" class="form-control" value=""
+                                    readonly>
 
                                 <label for="inputQuantityUpdate" class="form-label">Current
                                     Quantity</label>
-                                <input type="number" name="inputQuantity" id="inputQuantityUpdate" class="form-control" value="" readonly>
+                                <input type="number" name="inputQuantity" id="inputQuantityUpdate" class="form-control"
+                                    value="" readonly>
 
                                 <label for="inputNewQuantityUpdate" class="form-label">New Quantity</label>
-                                <input type="number" name="inputNewQuantity" id="inputNewQuantityUpdate" class="form-control">
+                                <input type="number" name="inputNewQuantity" id="inputNewQuantityUpdate"
+                                    onkeydown="return event.keyCode !== 69" class="form-control">
                                 <p class="text-danger"> Tip: Negative number for decreasing quantity, else
                                     increasing quantity from
                                     current quantity</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary closeUpdateModalBtn" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary closeUpdateModalBtn"
+                                    data-bs-dismiss="modal">Close</button>
                                 <button id="updateSizeItemBtn" type="button" class="btn btn-primary">Save</button>
                             </div>
                         </div>
@@ -252,17 +265,34 @@ $productList = ProductBUS::getInstance()->getAllModels();
                 if (isset($filterAll['update']) && isset($filterAll['id']) && isset($filterAll['newQuantity'])) {
                     $sizeItemId = $filterAll['id'];
                     $newQuantity = $filterAll['newQuantity'];
-
                     $sizeItem = SizeItemsBUS::getInstance()->getModelById($sizeItemId);
-                    $sizeItem->setQuantity($sizeItem->getQuantity() + $newQuantity);
-                    $result = SizeItemsBUS::getInstance()->updateModel($sizeItem);
-                    SizeItemsBUS::getInstance()->refreshData();
-                    if ($result) {
-                        ob_end_clean();
-                        return jsonResponse('success', 'Update quantity successfully!');
+
+                    if (intval($newQuantity) + $sizeItem->getQuantity() != $sizeItem->getQuantity()) {
+                        if ($sizeItem->getQuantity() + intval($newQuantity) >= 0) {
+                            $sizeItem->setQuantity($sizeItem->getQuantity() + intval($newQuantity));
+                        } else {
+                            ob_end_clean();
+                            return jsonResponse('error', 'Please enter a valid number!');
+                        }
+                        if ($sizeItem->getQuantity() == 0) {
+                            SizeItemsBUS::getInstance()->deleteModel($sizeItem);
+                            SizeItemsBUS::getInstance()->refreshData();
+                            ob_end_clean();
+                            return jsonResponse('success', 'Delete item successfully!');
+                        } else {
+                            $result = SizeItemsBUS::getInstance()->updateModel($sizeItem);
+                            SizeItemsBUS::getInstance()->refreshData();
+                            if ($result) {
+                                ob_end_clean();
+                                return jsonResponse('success', 'Update quantity successfully!');
+                            } else {
+                                ob_end_clean();
+                                return jsonResponse('error', 'Something went wrong!');
+                            }
+                        }
                     } else {
                         ob_end_clean();
-                        return jsonResponse('error', 'Something went wrong!');
+                        return jsonResponse('success', 'Nothing change!');
                     }
                 }
 
@@ -291,7 +321,7 @@ $productList = ProductBUS::getInstance()->getAllModels();
 
 
             <script>
-                document.addEventListener('DOMContentLoaded', function() {
+                document.addEventListener('DOMContentLoaded', function () {
                     let thisPage = 1;
                     let limit = 12;
 
@@ -313,16 +343,17 @@ $productList = ProductBUS::getInstance()->getAllModels();
 
                     function loadData(thisPage, limit, filterName) {
                         fetch('http://localhost/ShoesStore/frontend/index.php?module=dashboard&view=inventory.view', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                },
-                                body: 'thisPage=' + thisPage + '&limit=' + limit + '&filterName=' + filterName
-                            })
-                            .then(function(response) {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: 'thisPage=' + thisPage + '&limit=' + limit + '&filterName=' + filterName
+                        })
+                            .then(function (response) {
                                 return response.json();
                             })
-                            .then(function(data) {
+                            .then(function (data) {
+                                console.log(data);
                                 areaSizeItems.innerHTML = toHTMLSizeItem(data.listSizeItems);
                                 areaPagination.innerHTML = toHTMLPagination(data.totalQuantity, data.thisPage, data.limit);
                                 totalPage = Math.ceil(data.totalQuantity / data.limit);
@@ -337,24 +368,25 @@ $productList = ProductBUS::getInstance()->getAllModels();
 
                     function toHTMLSizeItem(sizeItems) {
                         let html = '';
-                        sizeItems.forEach(function(sizeItem) {
+                        sizeItems.forEach(function (sizeItem) {
                             html += `
                                 <tr id="${sizeItem.id}">
                                     <td><img src='${sizeItem.image}' alt='' class='rounded float-start'></td>
                                     <td>${sizeItem.productName}</td>
                                     <td>${sizeItem.category}</td>
                                     <td>${sizeItem.size}</td>
+                                    <td>${sizeItem.importPrice}</td>
                                     <td>${sizeItem.quantity}</td>
                                     <td>
-                                        <?php if (checkPermission("Q7", "CN2")) {?>
-                                        <button class="btn btn-sm btn-warning" name="updateBtn">
-                                            <i class='fas fa-edit'></i>
-                                        </button>
+                                        <?php if (checkPermission("Q7", "CN2")) { ?>
+                                                                <button class="btn btn-sm btn-warning" name="updateBtn">
+                                                                    <i class='fas fa-edit'></i>
+                                                                </button>
                                         <?php } ?>
-                                        <?php if (checkPermission("Q7", "CN3")) {?>
-                                        <button class="deleteSizeItemBtn btn btn-sm btn-danger" name="deleteSizeItemBtn">
-                                            <i class='fas fa-trash-alt'></i>
-                                        </button>
+                                        <?php if (checkPermission("Q7", "CN3")) { ?>
+                                                                <button class="deleteSizeItemBtn btn btn-sm btn-danger" name="deleteSizeItemBtn">
+                                                                    <i class='fas fa-trash-alt'></i>
+                                                                </button>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -424,18 +456,18 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                 document.getElementById('nextPage').classList.remove('hideBtn');
                             }
 
-                            document.getElementById('prevPage').addEventListener('click', function() {
+                            document.getElementById('prevPage').addEventListener('click', function () {
                                 thisPage--;
                                 loadData(thisPage, limit, filterName);
                             })
 
-                            document.getElementById('nextPage').addEventListener('click', function() {
+                            document.getElementById('nextPage').addEventListener('click', function () {
                                 thisPage++;
                                 loadData(thisPage, limit, filterName);
                             })
 
-                            pageIndexButtons.forEach(function(button) {
-                                button.addEventListener('click', function() {
+                            pageIndexButtons.forEach(function (button) {
+                                button.addEventListener('click', function () {
                                     if (this.textContent != "...") {
                                         thisPage = parseInt(this.textContent);
                                     }
@@ -451,8 +483,9 @@ $productList = ProductBUS::getInstance()->getAllModels();
                         }
                     }
 
-                    searchInput.addEventListener('input', function() {
+                    searchInput.addEventListener('input', function () {
                         filterName = searchInput.value;
+                        thisPage = 1;
                         loadData(thisPage, limit, filterName);
                     })
 
@@ -470,19 +503,19 @@ $productList = ProductBUS::getInstance()->getAllModels();
                         updateModal.style.backgroundColor = 'rgba(0,0,0,0.4)';
                     }
 
-                    updateModal.addEventListener('click', function() {
+                    updateModal.addEventListener('click', function () {
                         hideUpdateModal();
                     })
 
-                    updateModalWrapper.addEventListener('click', function(e) {
+                    updateModalWrapper.addEventListener('click', function (e) {
                         e.stopPropagation();
                     })
 
-                    closeUpdateModal.addEventListener('click', function() {
+                    closeUpdateModal.addEventListener('click', function () {
                         hideUpdateModal();
                     })
 
-                    closeUpdateModalBtn.addEventListener('click', function() {
+                    closeUpdateModalBtn.addEventListener('click', function () {
                         hideUpdateModal();
                     })
 
@@ -498,8 +531,8 @@ $productList = ProductBUS::getInstance()->getAllModels();
 
                     function addEventUpdateBtn(list) {
                         let updateButtons = document.querySelectorAll('[name="updateBtn"]');
-                        updateButtons.forEach(function(button) {
-                            button.addEventListener('click', function() {
+                        updateButtons.forEach(function (button) {
+                            button.addEventListener('click', function () {
                                 let sizeItemElement = this.closest('tr');
                                 sizeItemId = sizeItemElement.getAttribute('id');
 
@@ -514,23 +547,23 @@ $productList = ProductBUS::getInstance()->getAllModels();
 
                     function addEventDeleteBtn() {
                         let deleteButtons = document.querySelectorAll('.deleteSizeItemBtn');
-                        deleteButtons.forEach(function(button) {
-                            button.addEventListener('click', function() {
+                        deleteButtons.forEach(function (button) {
+                            button.addEventListener('click', function () {
                                 let confirmed = confirm('Bạn có chắc chắn muốn xoá không?');
                                 if (confirmed) {
                                     let sizeItemElement = this.closest('tr');
                                     sizeItemId = sizeItemElement.getAttribute('id');
                                     fetch('http://localhost/ShoesStore/frontend/index.php?module=dashboard&view=inventory.view', {
-                                            method: 'POST',
-                                            headers: {
-                                                'Content-Type': 'application/x-www-form-urlencoded',
-                                            },
-                                            body: 'delete=' + true + '&id=' + sizeItemId
-                                        })
-                                        .then(function(response) {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/x-www-form-urlencoded',
+                                        },
+                                        body: 'delete=' + true + '&id=' + sizeItemId
+                                    })
+                                        .then(function (response) {
                                             return response.json();
                                         })
-                                        .then(function(data) {
+                                        .then(function (data) {
                                             if (data.status == "success") {
                                                 alert(data.message);
                                                 window.location.href = 'http://localhost/ShoesStore/frontend/index.php?module=dashboard&view=inventory.view';
@@ -544,20 +577,22 @@ $productList = ProductBUS::getInstance()->getAllModels();
                         })
                     }
 
-                    updateSizeItemBtn.addEventListener('click', function() {
+                    updateSizeItemBtn.addEventListener('click', function () {
                         let newQuantity = inputNewQuantityUpdate.value;
 
+                        if (inputNewQuantityUpdate.value == "") inputNewQuantityUpdate.value = 0;
                         fetch('http://localhost/ShoesStore/frontend/index.php?module=dashboard&view=inventory.view', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                },
-                                body: 'update=' + true + '&id=' + sizeItemId + '&newQuantity=' + newQuantity
-                            })
-                            .then(function(response) {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: 'update=' + true + '&id=' + sizeItemId + '&newQuantity=' + newQuantity
+                        })
+                            .then(function (response) {
                                 return response.json();
                             })
-                            .then(function(data) {
+                            .then(function (data) {
+                                inputNewQuantityUpdate.value = "";
                                 if (data.status == "success") {
                                     alert(data.message);
                                 } else if (data.status == "error") {

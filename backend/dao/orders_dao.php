@@ -147,26 +147,36 @@ class OrdersDAO implements DAOInterface
         $query = "SELECT
         u.id AS user_id,
         u.name AS customer_name,
-        SUM(o.total_amount) AS total_purchase_amount
+        SUM(o.total_amount) AS total_purchase_amount,
+        (SELECT SUM(oi.import_price * oi.quantity) 
+         FROM order_items oi 
+         JOIN orders o2 ON o2.id = oi.order_id 
+         WHERE o2.user_id = u.id AND o2.status != 'canceled') AS total_import_price
         FROM
             users u
         JOIN
             orders o ON u.id = o.user_id
+        WHERE
+            o.status != 'canceled'
         GROUP BY
             u.id, u.name
         ORDER BY
             total_purchase_amount DESC
         LIMIT 5;";
+
         $rs = DatabaseConnection::executeQuery($query);
         while ($row = $rs->fetch_assoc()) {
             $userId = $row['user_id'];
             $customerName = $row['customer_name'];
             $totalPurchaseAmount = $row['total_purchase_amount'];
-            $thongKeModel = new CustomerStatisticModel($userId, $customerName, $totalPurchaseAmount);
+            $totalImportPrice = $row['total_import_price'];
+            $thongKeModel = new CustomerStatisticModel($userId, $customerName, $totalPurchaseAmount, $totalImportPrice);
             array_push($thongKeList, $thongKeModel);
         }
         return $thongKeList;
     }
+
+
 
     public function getByNgayTuNgayDenKH($ngayTu, $ngayDen): array
     {
@@ -174,32 +184,51 @@ class OrdersDAO implements DAOInterface
         $query = "SELECT
         u.id AS user_id,
         u.name AS customer_name,
-        SUM(o.total_amount) AS total_purchase_amount
+        SUM(o.total_amount) AS total_purchase_amount,
+        (SELECT SUM(oi.import_price * oi.quantity)
+         FROM order_items oi
+         JOIN orders o2 ON o2.id = oi.order_id
+         WHERE o2.user_id = u.id 
+           AND o2.order_date >= ? 
+           AND o2.order_date <= ?
+           AND o2.status != 'canceled') AS total_import_price
         FROM
             users u
         JOIN
             orders o ON u.id = o.user_id
         WHERE
-            o.order_date >= ? AND o.order_date <= ?
+            o.order_date >= ? 
+            AND o.order_date <= ?
+            AND o.status != 'canceled'
         GROUP BY
             u.id, u.name
         ORDER BY
             total_purchase_amount DESC
         LIMIT 5;";
+
         $args = [
+            $ngayTu,
+            $ngayDen,
             $ngayTu,
             $ngayDen
         ];
+
         $rs = DatabaseConnection::executeQuery($query, ...$args);
+
         while ($row = $rs->fetch_assoc()) {
             $userId = $row['user_id'];
             $customerName = $row['customer_name'];
             $totalPurchaseAmount = $row['total_purchase_amount'];
-            $thongKeModel = new CustomerStatisticModel($userId, $customerName, $totalPurchaseAmount);
+            $totalImportPrice = $row['total_import_price'];
+
+            $thongKeModel = new CustomerStatisticModel($userId, $customerName, $totalPurchaseAmount, $totalImportPrice);
             array_push($thongKeList, $thongKeModel);
         }
+
         return $thongKeList;
     }
+
+
 
     public function getByNgayTuKH($ngayTu)
     {
@@ -207,28 +236,45 @@ class OrdersDAO implements DAOInterface
         $query = "SELECT
         u.id AS user_id,
         u.name AS customer_name,
-        SUM(o.total_amount) AS total_purchase_amount
+        SUM(o.total_amount) AS total_purchase_amount,
+        (SELECT SUM(oi.import_price * oi.quantity)
+         FROM order_items oi
+         JOIN orders o2 ON o2.id = oi.order_id
+         WHERE o2.user_id = u.id 
+           AND o2.order_date >= ? 
+           AND o2.status != 'canceled') AS total_import_price
         FROM
             users u
         JOIN
             orders o ON u.id = o.user_id
         WHERE
             o.order_date >= ?
+            AND o.status != 'canceled'
         GROUP BY
             u.id, u.name
         ORDER BY
             total_purchase_amount DESC
         LIMIT 5;";
-        $rs = DatabaseConnection::executeQuery($query, $ngayTu);
+
+        // Thực thi câu truy vấn với tham số ngày từ
+        $rs = DatabaseConnection::executeQuery($query, $ngayTu, $ngayTu);
+
+        // Lấy dữ liệu từ kết quả truy vấn
         while ($row = $rs->fetch_assoc()) {
             $userId = $row['user_id'];
             $customerName = $row['customer_name'];
             $totalPurchaseAmount = $row['total_purchase_amount'];
-            $thongKeModel = new CustomerStatisticModel($userId, $customerName, $totalPurchaseAmount);
+            $totalImportPrice = $row['total_import_price'];
+
+            // Tạo model thống kê khách hàng
+            $thongKeModel = new CustomerStatisticModel($userId, $customerName, $totalPurchaseAmount, $totalImportPrice);
             array_push($thongKeList, $thongKeModel);
         }
+
         return $thongKeList;
     }
+
+
 
     public function getByNgayDenKH($ngayDen)
     {
@@ -236,28 +282,42 @@ class OrdersDAO implements DAOInterface
         $query = "SELECT
         u.id AS user_id,
         u.name AS customer_name,
-        SUM(o.total_amount) AS total_purchase_amount
+        SUM(o.total_amount) AS total_purchase_amount,
+        (SELECT SUM(oi.import_price * oi.quantity)
+         FROM order_items oi
+         JOIN orders o2 ON o2.id = oi.order_id
+         WHERE o2.user_id = u.id 
+           AND o2.order_date <= ? 
+           AND o2.status != 'canceled') AS total_import_price
         FROM
             users u
         JOIN
             orders o ON u.id = o.user_id
         WHERE
             o.order_date <= ?
+            AND o.status != 'canceled'
         GROUP BY
             u.id, u.name
         ORDER BY
             total_purchase_amount DESC
         LIMIT 5;";
-        $rs = DatabaseConnection::executeQuery($query, $ngayDen);
+
+        $rs = DatabaseConnection::executeQuery($query, $ngayDen, $ngayDen);
+
         while ($row = $rs->fetch_assoc()) {
             $userId = $row['user_id'];
             $customerName = $row['customer_name'];
             $totalPurchaseAmount = $row['total_purchase_amount'];
-            $thongKeModel = new CustomerStatisticModel($userId, $customerName, $totalPurchaseAmount);
+            $totalImportPrice = $row['total_import_price'];
+
+            $thongKeModel = new CustomerStatisticModel($userId, $customerName, $totalPurchaseAmount, $totalImportPrice);
             array_push($thongKeList, $thongKeModel);
         }
+
         return $thongKeList;
     }
+
+
 
     public function getAllThongKeSP(): array
     {
@@ -548,15 +608,20 @@ class OrdersDAO implements DAOInterface
             o.customer_phone,
             o.customer_address,
             o.status,
-            pm.method_name AS payment_method
+            pm.method_name AS payment_method,
+            COALESCE(SUM(oi.import_price * oi.quantity), 0) AS total_import_price
         FROM 
             orders o
         LEFT JOIN 
             payments p ON o.id = p.order_id
         LEFT JOIN 
             payment_methods pm ON p.method_id = pm.id
-        LIMIT ?, ?;    
-        ";
+        LEFT JOIN 
+            order_items oi ON o.id = oi.order_id
+        GROUP BY 
+            o.id, o.user_id, o.order_date, o.total_amount, o.customer_name, o.customer_phone, o.customer_address, o.status, pm.method_name
+        LIMIT ?, ?;
+    ";
         $args = [
             $from,
             $limit
@@ -572,6 +637,7 @@ class OrdersDAO implements DAOInterface
             $customerAddress = $row['customer_address'];
             $status = $row['status'];
             $paymentMethod = $row['payment_method'];
+            $totalImportPrice = $row['total_import_price'];
 
             $orderItem = [
                 'id' => $id,
@@ -582,12 +648,14 @@ class OrdersDAO implements DAOInterface
                 'customerPhone' => $customerPhone,
                 'customerAddress' => $customerAddress,
                 'status' => $status,
-                'paymentMethod' => $paymentMethod
+                'paymentMethod' => $paymentMethod,
+                'totalImportPrice' => $totalImportPrice
             ];
             array_push($orderItemsList, $orderItem);
         }
         return $orderItemsList;
     }
+
 
 
     public function countFilteredModel($filterName, $dateFrom, $dateTo, $filterStatus)
@@ -625,24 +693,28 @@ class OrdersDAO implements DAOInterface
     {
         $orderItemsList = [];
         $query = "
-        SELECT 
-            o.id,
-            o.user_id,
-            o.order_date,
-            o.total_amount,
-            o.customer_name,
-            o.customer_phone,
-            o.customer_address,
-            o.status,
-            pm.method_name AS payment_method
-        FROM 
-            orders o
-        LEFT JOIN 
-            payments p ON o.id = p.order_id
-        LEFT JOIN 
-            payment_methods pm ON p.method_id = pm.id
-        WHERE 1=1
+    SELECT 
+        o.id,
+        o.user_id,
+        o.order_date,
+        o.total_amount,
+        o.customer_name,
+        o.customer_phone,
+        o.customer_address,
+        o.status,
+        pm.method_name AS payment_method,
+        COALESCE(SUM(oi.import_price * oi.quantity), 0) AS total_import_price
+    FROM 
+        orders o
+    LEFT JOIN 
+        payments p ON o.id = p.order_id
+    LEFT JOIN 
+        payment_methods pm ON p.method_id = pm.id
+    LEFT JOIN 
+        order_items oi ON o.id = oi.order_id
+    WHERE 1=1
     ";
+
         $args = [];
 
         if (!empty($filterName)) {
@@ -665,7 +737,9 @@ class OrdersDAO implements DAOInterface
             $args[] = $filterStatus;
         }
 
-        $query .= " LIMIT ?, ?";
+        $query .= " GROUP BY 
+        o.id, o.user_id, o.order_date, o.total_amount, o.customer_name, o.customer_phone, o.customer_address, o.status, pm.method_name
+    LIMIT ?, ?";
         $args[] = $from;
         $args[] = $limit;
 
@@ -680,6 +754,7 @@ class OrdersDAO implements DAOInterface
             $customerAddress = $row['customer_address'];
             $status = $row['status'];
             $paymentMethod = $row['payment_method'];
+            $totalImportPrice = $row['total_import_price'];
 
             $orderItem = [
                 'id' => $id,
@@ -690,10 +765,12 @@ class OrdersDAO implements DAOInterface
                 'customerPhone' => $customerPhone,
                 'customerAddress' => $customerAddress,
                 'status' => $status,
-                'paymentMethod' => $paymentMethod
+                'paymentMethod' => $paymentMethod,
+                'totalImportPrice' => $totalImportPrice
             ];
             array_push($orderItemsList, $orderItem);
         }
         return $orderItemsList;
     }
+
 }

@@ -182,15 +182,19 @@ if (isLogin()) {
 
                             $filterAll = filter();
                             $sizeId = $filterAll['sizeItem'];
-                            $quantity = $filterAll['pquantity'];
+                            $quantity = intval($filterAll['pquantity']);
 
                             $cartItem = CartsBUS::getInstance()->getModelByUserIdAndProductIdAndSizeId($userModel->getId(), $product->getId(), $sizeId);
                             if ($cartItem != null) {
-                                $sizeItem = SizeItemsBUS::getInstance()->getModelBySizeIdAndProductId($sizeId, $product->getId());
-                                if ($cartItem->getQuantity() + $quantity > $sizeItem->getQuantity()) {
+                                $sizeItems = SizeItemsBUS::getInstance()->getAllModelBySizeIdAndProductId($sizeId, $product->getId());
+                                $quantityInventory = 0;
+                                foreach ($sizeItems as $sizeItem) {
+                                    $quantityInventory += $sizeItem->getQuantity();
+                                }
+                                if ($cartItem->getQuantity() + $quantity > $quantityInventory) {
                                     ob_end_clean();
                                     return jsonResponse('error', 'The quantity of the product in the cart can\'t exceeds the remaining quantity of the product');
-                                } else if ($cartItem->getQuantity() + $quantity <= $sizeItem->getQuantity()) {
+                                } else if ($cartItem->getQuantity() + $quantity <= $quantityInventory) {
                                     $cartItem->setQuantity($cartItem->getQuantity() + $quantity);
                                     CartsBUS::getInstance()->updateModel($cartItem);
                                     CartsBUS::getInstance()->refreshData();
@@ -198,19 +202,20 @@ if (isLogin()) {
                                     return jsonResponse('success', 'The product is already in your cart, the quantity of the product has been updated');
                                 }
                             } else if ($cartItem == null) {
-                                $cart = new CartsModel(null, null, null, null, null);
+                                $cart = new CartsModel(null, null, null, null, null, null);
                                 $cart->setUserId($userModel->getId());
                                 $cart->setProductId($product->getId());
                                 $cart->setSizeId($sizeId);
-
-                                //Check if the quantity is greater than the quantity of the product:
-                                $sizeItems = SizeItemsBUS::getInstance()->getModelBySizeIdAndProductId($sizeId, $product->getId());
+                                $sizeItems = SizeItemsBUS::getInstance()->getAllModelBySizeIdAndProductId($sizeId, $product->getId());
+                                $quantityInventory = 0;
+                                foreach ($sizeItems as $sizeItem) {
+                                    $quantityInventory += $sizeItem->getQuantity();
+                                }
                                 if ($sizeItems == null) {
                                     ob_end_clean();
                                     return jsonResponse('error', 'This size is not available for this product');
                                 }
-                                if ($quantity > $sizeItems->getQuantity()) {
-                                    $cart->setQuantity($sizeItems->getQuantity());
+                                if ($quantity > $quantityInventory) {
                                     ob_end_clean();
                                     return jsonResponse('error', 'The quantity of the product can\'t exceeds the remaining quantity of the product.');
                                 } else {

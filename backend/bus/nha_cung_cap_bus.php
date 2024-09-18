@@ -87,5 +87,23 @@ class NhaCungCapBUS implements BUSInterface
         return NhaCungCapDAO::getInstance()->search($condition, $columnNames);
     }
 
+    public function countAllModels()
+    {
+        return NhaCungCapDAO::getInstance()->countAllModels();
+    }
 
+    public function paginationTech($from, $limit)
+    {
+        return NhaCungCapDAO::getInstance()->paginationTech($from, $limit);
+    }
+
+    public function filterByEmail($from, $limit, $email)
+    {
+        return NhaCungCapDAO::getInstance()->filterByEmail($from, $limit, $email);
+    }
+
+    public function countFilterByEmail($email)
+    {
+        return NhaCungCapDAO::getInstance()->countFilterByEmail($email);
+    }
 }

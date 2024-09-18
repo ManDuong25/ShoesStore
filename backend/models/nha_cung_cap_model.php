@@ -11,12 +11,14 @@ class NhaCungCapModel
         $ten,
         $diaChi,
         $sdt,
+        $email,
         $trangThai
     ) {
         $this->maNCC = $maNCC;
         $this->ten = $ten;
         $this->diaChi = $diaChi;
         $this->sdt = $sdt;
+        $this->email = $email;
         $this->trangThai = $trangThai;
     }
 

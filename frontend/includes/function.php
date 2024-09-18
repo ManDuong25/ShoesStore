@@ -170,6 +170,15 @@ function requireLogin()
 function isAllowToDashBoard()
 {
     $tokenLogin = session::getInstance()->getSession('tokenLogin');
+    if ($tokenLogin === null) {
+        return false;
+    }   
+
+    $tokenModel = TokenLoginBUS::getInstance()->getModelByToken($tokenLogin);
+    if ($tokenModel === null) {
+        return false; // Hoặc xử lý lỗi khác nếu cần
+    }
+
     $userId = TokenLoginBUS::getInstance()->getModelByToken($tokenLogin)->getUserId();
     $userModel = UserBUS::getInstance()->getModelById($userId);
     $roleId = $userModel->getMaNhomQuyen();

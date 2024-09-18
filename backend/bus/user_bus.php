@@ -110,6 +110,10 @@ class UserBUS implements BUSInterface
         return $result;
     }
 
+    public function getByMaNhomQuyen($maNhomQuyen) {
+        return UserDAO::getInstance()->getByMaNhomQuyen($maNhomQuyen);
+    }
+
     public function deleteModel($userModel): int
     {
         $result = UserDAO::getInstance()->delete($userModel);
@@ -131,30 +135,38 @@ class UserBUS implements BUSInterface
         $validation = Validation::getInstance();
         $errors = [];
 
+        if ($userModel->getName() == null || trim($userModel->getName()) == "") {
+            $errors['fullname']['required'] = "Name is required";
+        }
+
         // Check for required fields:
         if ($userModel->getUsername() == null || trim($userModel->getUsername()) == "") {
             $errors['username']['required'] = "Username is required";
-        }
-
-        if ($userModel->getPassword() == null || trim($userModel->getPassword()) == "") {
-            $errors['password']['required'] = "Password is required";
         }
 
         if ($userModel->getEmail() == null || trim($userModel->getEmail()) == "") {
             $errors['email']['required'] = "Email is required";
         }
 
-        if ($this->isEmailUsed($userModel->getEmail())) {
-            $errors['email']['existed'] = "Email is existed";
+        // Validate phone number and address
+        if ($userModel->getPhone() !== null && !$validation->isValidPhoneNumber($userModel->getPhone())) {
+            $errors['phone']['valid'] = "Invalid phone number";
         }
 
+        if ($userModel->getAddress() !== null && !$validation->isValidAddress($userModel->getAddress())) {
+            $errors['address']['valid'] = "Invalid address";
+        }
 
-        if ($userModel->getName() == null || trim($userModel->getName()) == "") {
-            $errors['fullname']['required'] = "Name is required";
+        if ($userModel->getPassword() == null || trim($userModel->getPassword()) == "") {
+            $errors['password']['required'] = "Password is required";
         }
 
         if ($userModel->getGender() == null || trim($userModel->getGender()) == "") {
             $errors['gender']['required'] = "Gender is required";
+        }
+
+        if ($this->isEmailUsed($userModel->getEmail())) {
+            $errors['email']['existed'] = "Email is existed";
         }
 
         //Validate username and password
@@ -193,15 +205,6 @@ class UserBUS implements BUSInterface
         $maNhomQuyen = $userModel->getMaNhomQuyen();
         if ($maNhomQuyen === null) {
             $errors[] = "Role is required";
-        }
-
-        // Validate phone number and address
-        if ($userModel->getPhone() !== null && !$validation->isValidPhoneNumber($userModel->getPhone())) {
-            $errors['phone']['valid'] = "Invalid phone number";
-        }
-
-        if ($userModel->getAddress() !== null && !$validation->isValidAddress($userModel->getAddress())) {
-            $errors['address']['valid'] = "Invalid address";
         }
 
         return $errors;

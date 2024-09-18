@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 // require config
 require __DIR__ . '/config.php';
@@ -28,13 +31,15 @@ if (!empty($_GET['view'])) {
 }
 
 if ($module != 'dashboard') {
-    $path = 'modules\\' . $module . '\\' . $action . '.php';
+    $path = 'modules' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $action . '.php';
 } else {
-    $path = 'modules\\' . $module . '\\view\\' . $view . '.php';
+    $path = 'modules' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . $view . '.php';
 }
+
 
 if (file_exists($path))
     require_once ($path);
 else {
-    require_once ('modules\error\404page.php');
+    require_once ('modules' . DIRECTORY_SEPARATOR . 'error' . DIRECTORY_SEPARATOR . '404page.php');
+
 }

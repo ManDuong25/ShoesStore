@@ -2,7 +2,6 @@ $(document).ready(function () {
     let productName = document.getElementById("inputEditProductName");
     let chosenCategory = document.getElementById("inputEditProductCate");
     let productPrice = document.getElementById("inputEditPrice");
-    let giaNhap = document.getElementById("giaNhap");
     let chosenGender = document.getElementById("inputEditGender");
     let productDescription = document.getElementById("w3Editreview");
     let productImageUpload = document.getElementById("inputEditImg");
@@ -12,7 +11,6 @@ $(document).ready(function () {
     //Get default values:
     let productNameDefault = productName.value;
     let productPriceDefault = productPrice.value;
-    let giaNhapDefault = giaNhap.value;
     let productDescriptionDefault = productDescription.value;
     let imageProductReviewDefault = imageProductReview.src;
     let chosenCategoryDefault = chosenCategory.value;
@@ -42,8 +40,8 @@ $(document).ready(function () {
                 imageProductReview.src === imageProductReviewDefault &&
                 chosenCategory.value === chosenCategoryDefault &&
                 chosenGender.value === chosenGenderDefault &&
-                inputEditProductStatus.value === inputEditProductStatusDefault && 
-                giaNhap.value === giaNhapDefault) {
+                inputEditProductStatus.value === inputEditProductStatusDefault)
+            {
                 alert("No changes have been made.");
                 return;
             }
@@ -59,18 +57,7 @@ $(document).ready(function () {
                 return;
             }
 
-            if (isNaN(productPrice.value) || productPrice.value < 0) {
-                alert("Please enter a valid price");
-                return;
-            }
-
-
-            if (!giaNhap.value) {
-                alert("Please enter product price");
-                return;
-            }
-
-            if (isNaN(giaNhap.value) || giaNhap.value < 0) {
+            if (isNaN(productPrice.value) || productPrice.value <= 0) {
                 alert("Please enter a valid price");
                 return;
             }
@@ -106,7 +93,6 @@ $(document).ready(function () {
                     descriptionEdit: productDescription.value,
                     statusEdit: inputEditProductStatus.value,
                     imageEdit: imageProductReview.src,
-                    giaNhapEdit: giaNhap.value,
                     updateEditBtnName: true,
                 },
                 success: function (data) {
