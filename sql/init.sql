@@ -1,1788 +1,545 @@
-INSERT INTO
-    `sizes`(`id`, `name`)
-VALUES
-    ('35', 'Size 35'),
-    ('36', 'Size 36'),
-    ('37', 'Size 37'),
-    ('38', 'Size 38'),
-    ('39', 'Size 39'),
-    ('40', 'Size 40'),
-    ('41', 'Size 41'),
-    ('42', 'Size 42'),
-    ('43', 'Size 43'),
-    ('44', 'Size 44');
+DROP DATABASE if EXISTS quanlicuahanggiay;
 
-INSERT INTO
-    `categories`(`id`, `name`)
-VALUES
-    ('1', 'Running Shoes'),
-    ('2', 'Walking Shoes'),
-    ('3', 'Tennis'),
-    ('4', 'Trail Running Shoes'),
-    ('5', 'Basketball Shoes');
+CREATE DATABASE IF NOT EXISTS quanlicuahanggiay;
 
-INSERT INTO
-    `products` (
-        `id`,
-        `name`,
-        `category_id`,
-        `price`,
-        `description`,
-        `image`,
-        `gender`
-    )
-VALUES
-    (
-        '4',
-        'Asics GT-2000 11',
-        '1',
-        '100000',
-        'Has thick cushioning to absorb shock when the foot hits the road. Protects the forefoot and heel. Suitable for marathons or long-distance running.',
-        '../img/Running Shoes/Asics GT-2000 11.avif',
-        '0'
-    ),
-    (
-        '5',
-        'On Women’s Cloudrunner',
-        '1',
-        '100000',
-        'Has thick cushioning to absorb shock when the foot hits the road. Protects the forefoot and heel. Suitable for marathons or long-distance running.',
-        '../img/Running Shoes/On Women’s Cloudrunner.avif',
-        '1'
-    ),
-    (
-        '6',
-        'Saucony Guide 16',
-        '1',
-        '150000',
-        'Has thick cushioning to absorb shock when the foot hits the road. Protects the forefoot and heel. Suitable for marathons or long-distance running.',
-        '../img/Running Shoes/Saucony Guide 16.avif',
-        '0'
-    ),
-    (
-        '7',
-        'Hoka Bondi 8',
-        '1',
-        '150000',
-        'Has thick cushioning to absorb shock when the foot hits the road. Protects the forefoot and heel. Suitable for marathons or long-distance running.',
-        '../img/Running Shoes/Hoka Bondi 8.avif',
-        '1'
-    ),
-    (
-        '8',
-        'Brooks Women Ariel 20 Running Shoes',
-        '1',
-        '150000',
-        'Has thick cushioning to absorb shock when the foot hits the road. Protects the forefoot and heel. Suitable for marathons or long-distance running. ',
-        '../img/Running Shoes/Brooks Women Ariel 20 Running.avif',
-        '1'
-    ),
-    (
-        '9',
-        'Saucony Peregrine 13 Hiking Shoe',
-        '1',
-        '150000',
-        'Has thick cushioning to absorb shock when the foot hits the road. Protects the forefoot and heel. Suitable for marathons or long-distance running.',
-        '../img/Running Shoes/Saucony Peregrine 13 Hiking Shoe.avif',
-        '0'
-    ),
-    (
-        '10',
-        'Asics Gel-Excite 9',
-        '1',
-        '150000',
-        'Has thick cushioning to absorb shock when the foot hits the road. Protects the forefoot and heel. Suitable for marathons or long-distance running. ',
-        '../img/Running Shoes/Asics Gel-Excite 9.avif',
-        '0'
-    ),
-    (
-        '11',
-        'Adidas Ultraboost Light Running Shoe',
-        '2',
-        '200000',
-        'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe.',
-        '../img/Walking Shoes/Adidas Ultraboost Light Running Shoe.avif',
-        '1'
-    ),
-    (
-        '12',
-        'Ryka Devotion Plus 3 Walking Shoe',
-        '2',
-        '200000',
-        'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe. ',
-        '../img/Walking Shoes/Ryka Devotion Plus 3 Walking Shoe.avif',
-        '0'
-    ),
-    (
-        '13',
-        'Brooks Glycerin GTS 20',
-        '2',
-        '200000',
-        'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe.',
-        '../img/Walking Shoes/Brooks Glycerin GTS 20.avif',
-        '0'
-    ),
-    (
-        '14',
-        'Asics Gel-venture 8',
-        '2',
-        '200000',
-        'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe. ',
-        '../img/Walking Shoes/Asics Gel-venture 8.avif',
-        '1'
-    ),
-    (
-        '15',
-        'New Balance Men’s Fresh Foam 1080 V11',
-        '2',
-        '200000',
-        'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe.',
-        '../img/Walking Shoes/New Balance Men’s Fresh Foam 1080 V11.avif',
-        '1'
-    ),
-    (
-        '16',
-        'Hoka Bondi 7 Shoes',
-        '2',
-        '250000',
-        'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe.',
-        '../img/Walking Shoes/Hoka Bondi 7 Shoes.avif',
-        '1'
-    ),
-    (
-        '17',
-        'Vionic Tokyo Sneaker',
-        '2',
-        '250000',
-        'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe. ',
-        '../img/Walking Shoes/Vionic Tokyo Sneaker.avif',
-        '0'
-    ),
-    (
-        '18',
-        'Altra Women’s Lone Peak 7 Trail Running Shoe',
-        '2',
-        '250000',
-        'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe.',
-        '../img/Walking Shoes/Altra Women’s Lone Peak 7 Trail Running Shoe.avif',
-        '1'
-    ),
-    (
-        '19',
-        'Keen Targhee Vent Hiking Shoes',
-        '2',
-        '250000',
-        'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe. ',
-        '../img/Walking Shoes/Keen Targhee Vent Hiking Shoes.avif',
-        '0'
-    ),
-    (
-        '20',
-        'Allbirds Tree Runners',
-        '2',
-        '250000',
-        'Lightweight, hugs the feet, reduces pain and muscle tension when walking. The slightly rounded sole helps transfer weight from heel to toe.',
-        '../img/Walking Shoes/Allbirds Tree Runners.avif',
-        '0'
-    ),
-    (
-        '21',
-        'NikeCourt Air Zoom Vapor Pro 2 (Nam)',
-        '3',
-        '300000',
-        'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
-        '../img/Tennis Shoes/NikeCourt Air Zoom Vapor Pro 2 (Nam).avif',
-        '0'
-    ),
-    (
-        '22',
-        'NikeCourt Air Zoom Vapor Pro 2 (Nữ)',
-        '3',
-        '300000',
-        'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
-        '../img/Tennis Shoes/NikeCourt Air Zoom Vapor Pro 2.avif',
-        '1'
-    ),
-    (
-        '23',
-        'Nike Zoom GP Challenge 1 (Nam)',
-        '3',
-        '300000',
-        'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
-        '../img/Tennis Shoes/Nike Zoom GP Challenge 1 (Nam).avif',
-        '0'
-    ),
-    (
-        '24',
-        'Nike Zoom GP Challenge 1 (Nữ)',
-        '3',
-        '300000',
-        'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
-        '../img/Tennis Shoes/Nike Zoom GP Challenge 1.avif',
-        '1'
-    ),
-    (
-        '25',
-        'Adidas Barricade Tokyo (Nam)',
-        '3',
-        '300000',
-        'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
-        '../img/Tennis Shoes/Adidas Barricade Tokyo (Nam).avif',
-        '0'
-    ),
-    (
-        '26',
-        'Adidas Adizero Ubersonic 4 (Nam)',
-        '3',
-        '300000',
-        'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
-        '../img/Tennis Shoes/Adidas Adizero Ubersonic 4 (Nam).avif',
-        '0'
-    ),
-    (
-        '27',
-        'Nike Vapor Lite HC (Nữ)',
-        '3',
-        '300000',
-        'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
-        '../img/Tennis Shoes/Nike Vapor Lite HC.avif',
-        '1'
-    ),
-    (
-        '28',
-        'Adidas Gamecourt (Nam)',
-        '3',
-        '300000',
-        'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
-        '../img/Tennis Shoes/Adidas Gamecourt (Nam).avif',
-        '0'
-    ),
-    (
-        '29',
-        'Adidas Solematch Bounce (Nam)',
-        '3',
-        '300000',
-        'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
-        '../img/Tennis Shoes/Adidas Solematch Bounce (Nam).avif',
-        '0'
-    ),
-    (
-        '30',
-        'Nike Air Zoom Vapor Pro (Nam)',
-        '3',
-        '300000',
-        'Supports the inside and outside of the foot. .Flexible at the base for quick forward movement.',
-        '../img/Tennis Shoes/NikeCourt Air Zoom Vapor Pro 2 (Nam).avif',
-        '0'
-    ),
-    (
-        '31',
-        'Nike Pegasus Trail 4 GTX',
-        '4',
-        '350000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
-        '../img/Trail Running Shoes/Nike Pegasus Trail 4 GTX.avif',
-        '0'
-    ),
-    (
-        '32',
-        'Topo Athletic Ultraventure 3',
-        '4',
-        '350000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
-        '../img/Trail Running Shoes/Topo Athletic Ultraventure 3.avif',
-        '0'
-    ),
-    (
-        '33',
-        'Hoka Mafate Speed 4',
-        '4',
-        '350000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
-        '../img/Trail Running Shoes/Hoka Mafate Speed 4.avif',
-        '0'
-    ),
-    (
-        '34',
-        'Altra Lone Peak 7',
-        '4',
-        '350000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
-        '../img/Trail Running Shoes/Altra Lone Peak 7.avif',
-        '1'
-    ),
-    (
-        '35',
-        'Salomon Speedcross 5',
-        '4',
-        '350000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
-        '../img/Trail Running Shoes/Salomon Speedcross 5.avif',
-        '0'
-    ),
-    (
-        '36',
-        'Brooks Cascadia 16',
-        '4',
-        '350000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
-        '../img/Trail Running Shoes/Brooks Cascadia 16.avif',
-        '1'
-    ),
-    (
-        '37',
-        'Saucony Peregrine 11',
-        '4',
-        '350000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
-        '../img/Trail Running Shoes/Saucony Peregrine 11.avif',
-        '0'
-    ),
-    (
-        '38',
-        'La Sportiva Bushido II',
-        '4',
-        '350000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
-        '../img/Trail Running Shoes/La Sportiva Bushido II.avif',
-        '0'
-    ),
-    (
-        '39',
-        'Inov-8 Terraultra G 270',
-        '4',
-        '350000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
-        '../img/Trail Running Shoes/Inov-8 Terraultra G 270.avif',
-        '0'
-    ),
-    (
-        '40',
-        'Merrell MTL Long Sky',
-        '4',
-        '350000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.Resistant to mud, soil, water and rocks. Bigger spikes for grip on uneven surfaces.',
-        '../img/Trail Running Shoes/Merrell MTL Long Sky.avif',
-        '1'
-    ),
-    (
-        '41',
-        'Nike Kyrie 7',
-        '5',
-        '360000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
-        '../img/Basketball Shoes/Nike Kyrie 7.avif',
-        '1'
-    ),
-    (
-        '42',
-        'PEAK Streetball Master',
-        '5',
-        '360000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
-        '../img/Basketball Shoes/PEAK Streetball Master.avif',
-        '0'
-    ),
-    (
-        '43',
-        'Adidas Harden Stepback',
-        '5',
-        '360000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
-        '../img/Basketball Shoes/Adidas Harden Stepback.avif',
-        '0'
-    ),
-    (
-        '44',
-        'Nike PG 5',
-        '5',
-        '360000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
-        '../img/Basketball Shoes/Nike PG 5.avif',
-        '0'
-    ),
-    (
-        '45',
-        'Nike LeBron 19',
-        '5',
-        '360000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
-        '../img/Basketball Shoes/Nike LeBron 19.avif',
-        '0'
-    ),
-    (
-        '46',
-        'Adidas Dame 7',
-        '5',
-        '360000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
-        '../img/Basketball Shoes/Adidas Dame 7.avif',
-        '1'
-    ),
-    (
-        '47',
-        'Adidas N3XT L3V3L 2022',
-        '5',
-        '360000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
-        '../img/Basketball Shoes/Adidas N3XT L3V3L 2022.avif',
-        '0'
-    ),
-    (
-        '48',
-        'Under Armour HOVR Havoc 5',
-        '5',
-        '360000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
-        '../img/Basketball Shoes/Under Armour HOVR Havoc 5.avif',
-        '1'
-    ),
-    (
-        '49',
-        'Puma Clyde All-Pro',
-        '5',
-        '360000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
-        '../img/Basketball Shoes/Puma Clyde All-Pro.avif',
-        '1'
-    ),
-    (
-        '50',
-        'New Balance Kawhi Leonard 1',
-        '5',
-        '360000',
-        'The sole is thick and hard, providing support when running up and down the court. The shoe collar is high, covering the ankle.',
-        '../img/Basketball Shoes/New Balance Kawhi Leonard 1.avif',
-        '0'
-    );
+USE quanlicuahanggiay;
 
-INSERT INTO
-    size_items (product_id, size_id, quantity, import_price)
-VALUES
-    (4, 35, 10, 50000),
-    (4, 36, 10, 50000),
-    (4, 37, 10, 50000),
-    (4, 38, 10, 50000),
-    (4, 39, 10, 50000),
-    (4, 40, 10, 50000),
-    (4, 41, 10, 50000),
-    (4, 42, 10, 50000),
-    (4, 43, 10, 50000),
-    (4, 44, 10, 50000),
-    (5, 35, 10, 50000),
-    (5, 36, 10, 50000),
-    (5, 37, 10, 50000),
-    (5, 38, 10, 50000),
-    (5, 39, 10, 50000),
-    (5, 40, 10, 50000),
-    (5, 41, 10, 50000),
-    (5, 42, 10, 50000),
-    (5, 43, 10, 50000),
-    (5, 44, 10, 50000),
-    (6, 35, 10, 50000),
-    (6, 36, 10, 50000),
-    (6, 37, 10, 50000),
-    (6, 38, 10, 50000),
-    (6, 39, 10, 50000),
-    (6, 40, 10, 50000),
-    (6, 41, 10, 50000),
-    (6, 42, 10, 50000),
-    (6, 43, 10, 50000),
-    (6, 44, 10, 50000),
-    (7, 35, 10, 50000),
-    (7, 36, 10, 50000),
-    (7, 37, 10, 50000),
-    (7, 38, 10, 50000),
-    (7, 39, 10, 50000),
-    (7, 40, 10, 50000),
-    (7, 41, 10, 50000),
-    (7, 42, 10, 50000),
-    (7, 43, 10, 50000),
-    (7, 44, 10, 50000),
-    (8, 35, 10, 50000),
-    (8, 36, 10, 50000),
-    (8, 37, 10, 50000),
-    (8, 38, 10, 50000),
-    (8, 39, 10, 50000),
-    (8, 40, 10, 50000),
-    (8, 41, 10, 50000),
-    (8, 42, 10, 50000),
-    (8, 43, 10, 50000),
-    (8, 44, 10, 50000),
-    (9, 35, 10, 50000),
-    (9, 36, 10, 50000),
-    (9, 37, 10, 50000),
-    (9, 38, 10, 50000),
-    (9, 39, 10, 50000),
-    (9, 40, 10, 50000),
-    (9, 41, 10, 50000),
-    (9, 42, 10, 50000),
-    (9, 43, 10, 50000),
-    (9, 44, 10, 50000),
-    (10, 35, 10, 50000),
-    (10, 36, 10, 50000),
-    (10, 37, 10, 50000),
-    (10, 38, 10, 50000),
-    (10, 39, 10, 50000),
-    (10, 40, 10, 50000),
-    (10, 41, 10, 50000),
-    (10, 42, 10, 50000),
-    (10, 43, 10, 50000),
-    (10, 44, 10, 50000),
-    (11, 35, 10, 50000),
-    (11, 36, 10, 50000),
-    (11, 37, 10, 50000),
-    (11, 38, 10, 50000),
-    (11, 39, 10, 50000),
-    (11, 40, 10, 50000),
-    (11, 41, 10, 50000),
-    (11, 42, 10, 50000),
-    (11, 43, 10, 50000),
-    (11, 44, 10, 50000),
-    (12, 35, 10, 50000),
-    (12, 36, 10, 50000),
-    (12, 37, 10, 50000),
-    (12, 38, 10, 50000),
-    (12, 39, 10, 50000),
-    (12, 40, 10, 50000),
-    (12, 41, 10, 50000),
-    (12, 42, 10, 50000),
-    (12, 43, 10, 50000),
-    (12, 44, 10, 50000),
-    (13, 35, 10, 50000),
-    (13, 36, 10, 50000),
-    (13, 37, 10, 50000),
-    (13, 38, 10, 50000),
-    (13, 39, 10, 50000),
-    (13, 40, 10, 50000),
-    (13, 41, 10, 50000),
-    (13, 42, 10, 50000),
-    (13, 43, 10, 50000),
-    (13, 44, 10, 50000),
-    (14, 35, 10, 50000),
-    (14, 36, 10, 50000),
-    (14, 37, 10, 50000),
-    (14, 38, 10, 50000),
-    (14, 39, 10, 50000),
-    (14, 40, 10, 50000),
-    (14, 41, 10, 50000),
-    (14, 42, 10, 50000),
-    (14, 43, 10, 50000),
-    (14, 44, 10, 50000),
-    (15, 35, 10, 50000),
-    (15, 36, 10, 50000),
-    (15, 37, 10, 50000),
-    (15, 38, 10, 50000),
-    (15, 39, 10, 50000),
-    (15, 40, 10, 50000),
-    (15, 41, 10, 50000),
-    (15, 42, 10, 50000),
-    (15, 43, 10, 50000),
-    (15, 44, 10, 50000),
-    (16, 35, 10, 50000),
-    (16, 36, 10, 50000),
-    (16, 37, 10, 50000),
-    (16, 38, 10, 50000),
-    (16, 39, 10, 50000),
-    (16, 40, 10, 50000),
-    (16, 41, 10, 50000),
-    (16, 42, 10, 50000),
-    (16, 43, 10, 50000),
-    (16, 44, 10, 50000),
-    (17, 35, 10, 50000),
-    (17, 36, 10, 50000),
-    (17, 37, 10, 50000),
-    (17, 38, 10, 50000),
-    (17, 39, 10, 50000),
-    (17, 40, 10, 50000),
-    (17, 41, 10, 50000),
-    (17, 42, 10, 50000),
-    (17, 43, 10, 50000),
-    (17, 44, 10, 50000),
-    (18, 35, 10, 50000),
-    (18, 36, 10, 50000),
-    (18, 37, 10, 50000),
-    (18, 38, 10, 50000),
-    (18, 39, 10, 50000),
-    (18, 40, 10, 50000),
-    (18, 41, 10, 50000),
-    (18, 42, 10, 50000),
-    (18, 43, 10, 50000),
-    (18, 44, 10, 50000),
-    (19, 35, 10, 50000),
-    (19, 36, 10, 50000),
-    (19, 37, 10, 50000),
-    (19, 38, 10, 50000),
-    (19, 39, 10, 50000),
-    (19, 40, 10, 50000),
-    (19, 41, 10, 50000),
-    (19, 42, 10, 50000),
-    (19, 43, 10, 50000),
-    (19, 44, 10, 50000),
-    (20, 35, 10, 50000),
-    (20, 36, 10, 50000),
-    (20, 37, 10, 50000),
-    (20, 38, 10, 50000),
-    (20, 39, 10, 50000),
-    (20, 40, 10, 50000),
-    (20, 41, 10, 50000),
-    (20, 42, 10, 50000),
-    (20, 43, 10, 50000),
-    (20, 44, 10, 50000),
-    (21, 35, 10, 50000),
-    (21, 36, 10, 50000),
-    (21, 37, 10, 50000),
-    (21, 38, 10, 50000),
-    (21, 39, 10, 50000),
-    (21, 40, 10, 50000),
-    (21, 41, 10, 50000),
-    (21, 42, 10, 50000),
-    (21, 43, 10, 50000),
-    (21, 44, 10, 50000),
-    (22, 35, 10, 50000),
-    (22, 36, 10, 50000),
-    (22, 37, 10, 50000),
-    (22, 38, 10, 50000),
-    (22, 39, 10, 50000),
-    (22, 40, 10, 50000),
-    (22, 41, 10, 50000),
-    (22, 42, 10, 50000),
-    (22, 43, 10, 50000),
-    (22, 44, 10, 50000),
-    (23, 35, 10, 50000),
-    (23, 36, 10, 50000),
-    (23, 37, 10, 50000),
-    (23, 38, 10, 50000),
-    (23, 39, 10, 50000),
-    (23, 40, 10, 50000),
-    (23, 41, 10, 50000),
-    (23, 42, 10, 50000),
-    (23, 43, 10, 50000),
-    (23, 44, 10, 50000),
-    (24, 35, 10, 50000),
-    (24, 36, 10, 50000),
-    (24, 37, 10, 50000),
-    (24, 38, 10, 50000),
-    (24, 39, 10, 50000),
-    (24, 40, 10, 50000),
-    (24, 41, 10, 50000),
-    (24, 42, 10, 50000),
-    (24, 43, 10, 50000),
-    (24, 44, 10, 50000),
-    (25, 35, 10, 50000),
-    (25, 36, 10, 50000),
-    (25, 37, 10, 50000),
-    (25, 38, 10, 50000),
-    (25, 39, 10, 50000),
-    (25, 40, 10, 50000),
-    (25, 41, 10, 50000),
-    (25, 42, 10, 50000),
-    (25, 43, 10, 50000),
-    (25, 44, 10, 50000),
-    (26, 35, 10, 50000),
-    (26, 36, 10, 50000),
-    (26, 37, 10, 50000),
-    (26, 38, 10, 50000),
-    (26, 39, 10, 50000),
-    (26, 40, 10, 50000),
-    (26, 41, 10, 50000),
-    (26, 42, 10, 50000),
-    (26, 43, 10, 50000),
-    (26, 44, 10, 50000),
-    (27, 35, 10, 50000),
-    (27, 36, 10, 50000),
-    (27, 37, 10, 50000),
-    (27, 38, 10, 50000),
-    (27, 39, 10, 50000),
-    (27, 40, 10, 50000),
-    (27, 41, 10, 50000),
-    (27, 42, 10, 50000),
-    (27, 43, 10, 50000),
-    (27, 44, 10, 50000),
-    (28, 35, 10, 50000),
-    (28, 36, 10, 50000),
-    (28, 37, 10, 50000),
-    (28, 38, 10, 50000),
-    (28, 39, 10, 50000),
-    (28, 40, 10, 50000),
-    (28, 41, 10, 50000),
-    (28, 42, 10, 50000),
-    (28, 43, 10, 50000),
-    (28, 44, 10, 50000),
-    (29, 35, 10, 50000),
-    (29, 36, 10, 50000),
-    (29, 37, 10, 50000),
-    (29, 38, 10, 50000),
-    (29, 39, 10, 50000),
-    (29, 40, 10, 50000),
-    (29, 41, 10, 50000),
-    (29, 42, 10, 50000),
-    (29, 43, 10, 50000),
-    (29, 44, 10, 50000),
-    (30, 35, 10, 50000),
-    (30, 36, 10, 50000),
-    (30, 37, 10, 50000),
-    (30, 38, 10, 50000),
-    (30, 39, 10, 50000),
-    (30, 40, 10, 50000),
-    (30, 41, 10, 50000),
-    (30, 42, 10, 50000),
-    (30, 43, 10, 50000),
-    (30, 44, 10, 50000),
-    (31, 35, 10, 50000),
-    (31, 36, 10, 50000),
-    (31, 37, 10, 50000),
-    (31, 38, 10, 50000),
-    (31, 39, 10, 50000),
-    (31, 40, 10, 50000),
-    (31, 41, 10, 50000),
-    (31, 42, 10, 50000),
-    (31, 43, 10, 50000),
-    (31, 44, 10, 50000),
-    (32, 35, 10, 50000),
-    (32, 36, 10, 50000),
-    (32, 37, 10, 50000),
-    (32, 38, 10, 50000),
-    (32, 39, 10, 50000),
-    (32, 40, 10, 50000),
-    (32, 41, 10, 50000),
-    (32, 42, 10, 50000),
-    (32, 43, 10, 50000),
-    (32, 44, 10, 50000),
-    (33, 35, 10, 50000),
-    (33, 36, 10, 50000),
-    (33, 37, 10, 50000),
-    (33, 38, 10, 50000),
-    (33, 39, 10, 50000),
-    (33, 40, 10, 50000),
-    (33, 41, 10, 50000),
-    (33, 42, 10, 50000),
-    (33, 43, 10, 50000),
-    (33, 44, 10, 50000),
-    (34, 35, 10, 50000),
-    (34, 36, 10, 50000),
-    (34, 37, 10, 50000),
-    (34, 38, 10, 50000),
-    (34, 39, 10, 50000),
-    (34, 40, 10, 50000),
-    (34, 41, 10, 50000),
-    (34, 42, 10, 50000),
-    (34, 43, 10, 50000),
-    (34, 44, 10, 50000),
-    (35, 35, 10, 50000),
-    (35, 36, 10, 50000),
-    (35, 37, 10, 50000),
-    (35, 38, 10, 50000),
-    (35, 39, 10, 50000),
-    (35, 40, 10, 50000),
-    (35, 41, 10, 50000),
-    (35, 42, 10, 50000),
-    (35, 43, 10, 50000),
-    (35, 44, 10, 50000),
-    (36, 35, 10, 50000),
-    (36, 36, 10, 50000),
-    (36, 37, 10, 50000),
-    (36, 38, 10, 50000),
-    (36, 39, 10, 50000),
-    (36, 40, 10, 50000),
-    (36, 41, 10, 50000),
-    (36, 42, 10, 50000),
-    (36, 43, 10, 50000),
-    (36, 44, 10, 50000),
-    (37, 35, 10, 50000),
-    (37, 36, 10, 50000),
-    (37, 37, 10, 50000),
-    (37, 38, 10, 50000),
-    (37, 39, 10, 50000),
-    (37, 40, 10, 50000),
-    (37, 41, 10, 50000),
-    (37, 42, 10, 50000),
-    (37, 43, 10, 50000),
-    (37, 44, 10, 50000),
-    (38, 35, 10, 50000),
-    (38, 36, 10, 50000),
-    (38, 37, 10, 50000),
-    (38, 38, 10, 50000),
-    (38, 39, 10, 50000),
-    (38, 40, 10, 50000),
-    (38, 41, 10, 50000),
-    (38, 42, 10, 50000),
-    (38, 43, 10, 50000),
-    (38, 44, 10, 50000),
-    (39, 35, 10, 50000),
-    (39, 36, 10, 50000),
-    (39, 37, 10, 50000),
-    (39, 38, 10, 50000),
-    (39, 39, 10, 50000),
-    (39, 40, 10, 50000),
-    (39, 41, 10, 50000),
-    (39, 42, 10, 50000),
-    (39, 43, 10, 50000),
-    (39, 44, 10, 50000),
-    (40, 35, 10, 50000),
-    (40, 36, 10, 50000),
-    (40, 37, 10, 50000),
-    (40, 38, 10, 50000),
-    (40, 39, 10, 50000),
-    (40, 40, 10, 50000),
-    (40, 41, 10, 50000),
-    (40, 42, 10, 50000),
-    (40, 43, 10, 50000),
-    (40, 44, 10, 50000),
-    (41, 35, 10, 50000),
-    (41, 36, 10, 50000),
-    (41, 37, 10, 50000),
-    (41, 38, 10, 50000),
-    (41, 39, 10, 50000),
-    (41, 40, 10, 50000),
-    (41, 41, 10, 50000),
-    (41, 42, 10, 50000),
-    (41, 43, 10, 50000),
-    (41, 44, 10, 50000),
-    (42, 35, 10, 50000),
-    (42, 36, 10, 50000),
-    (42, 37, 10, 50000),
-    (42, 38, 10, 50000),
-    (42, 39, 10, 50000),
-    (42, 40, 10, 50000),
-    (42, 41, 10, 50000),
-    (42, 42, 10, 50000),
-    (42, 43, 10, 50000),
-    (42, 44, 10, 50000),
-    (43, 35, 10, 50000),
-    (43, 36, 10, 50000),
-    (43, 37, 10, 50000),
-    (43, 38, 10, 50000),
-    (43, 39, 10, 50000),
-    (43, 40, 10, 50000),
-    (43, 41, 10, 50000),
-    (43, 42, 10, 50000),
-    (43, 43, 10, 50000),
-    (43, 44, 10, 50000),
-    (44, 35, 10, 50000),
-    (44, 36, 10, 50000),
-    (44, 37, 10, 50000),
-    (44, 38, 10, 50000),
-    (44, 39, 10, 50000),
-    (44, 40, 10, 50000),
-    (44, 41, 10, 50000),
-    (44, 42, 10, 50000),
-    (44, 43, 10, 50000),
-    (44, 44, 10, 50000),
-    (45, 35, 10, 50000),
-    (45, 36, 10, 50000),
-    (45, 37, 10, 50000),
-    (45, 38, 10, 50000),
-    (45, 39, 10, 50000),
-    (45, 40, 10, 50000),
-    (45, 41, 10, 50000),
-    (45, 42, 10, 50000),
-    (45, 43, 10, 50000),
-    (45, 44, 10, 50000),
-    (46, 35, 10, 50000),
-    (46, 36, 10, 50000),
-    (46, 37, 10, 50000),
-    (46, 38, 10, 50000),
-    (46, 39, 10, 50000),
-    (46, 40, 10, 50000),
-    (46, 41, 10, 50000),
-    (46, 42, 10, 50000),
-    (46, 43, 10, 50000),
-    (46, 44, 10, 50000),
-    (47, 35, 10, 50000),
-    (47, 36, 10, 50000),
-    (47, 37, 10, 50000),
-    (47, 38, 10, 50000),
-    (47, 39, 10, 50000),
-    (47, 40, 10, 50000),
-    (47, 41, 10, 50000),
-    (47, 42, 10, 50000),
-    (47, 43, 10, 50000),
-    (47, 44, 10, 50000),
-    (48, 35, 10, 50000),
-    (48, 36, 10, 50000),
-    (48, 37, 10, 50000),
-    (48, 38, 10, 50000),
-    (48, 39, 10, 50000),
-    (48, 40, 10, 50000),
-    (48, 41, 10, 50000),
-    (48, 42, 10, 50000),
-    (48, 43, 10, 50000),
-    (48, 44, 10, 50000),
-    (49, 35, 10, 50000),
-    (49, 36, 10, 50000),
-    (49, 37, 10, 50000),
-    (49, 38, 10, 50000),
-    (49, 39, 10, 50000),
-    (49, 40, 10, 50000),
-    (49, 41, 10, 50000),
-    (49, 42, 10, 50000),
-    (49, 43, 10, 50000),
-    (49, 44, 10, 50000),
-    (50, 35, 10, 50000),
-    (50, 36, 10, 50000),
-    (50, 37, 10, 50000),
-    (50, 38, 10, 50000),
-    (50, 39, 10, 50000),
-    (50, 40, 10, 50000),
-    (50, 41, 10, 50000),
-    (50, 42, 10, 50000),
-    (50, 43, 10, 50000),
-    (50, 44, 10, 80000);
+SET
+  SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 
-INSERT INTO chucnang (maChucNang, tenChucNang)
-VALUES 
-    ('CN1', 'Xem'),
-    ('CN2', 'Sửa'),
-    ('CN3', 'Xoá'),
-    ('CN4', 'Tạo');
+START TRANSACTION;
 
-INSERT INTO quyen (maQuyen, tenQuyen)
-VALUES 
-    ('Q1', 'Thống kê doanh thu'),
-    ('Q2', 'Quản lí đơn hàng'),
-    ('Q3', 'Quản lí sản phẩm'),
-    ('Q4', 'Quản lí danh mục'),
-    ('Q5', 'Quản lí kích cỡ'),
-    ('Q6', 'Quản lí mã giảm giá'),
-    ('Q7', 'Quản lí kho hàng'),
-	 ('Q8', 'Quản lí tài khoản'),
-	 ('Q9', 'Quản lí phân quyền'),
-	 ('Q10', 'Quản lí phiếu nhập');
-	 
-INSERT INTO nhomquyen (maNhomQuyen, tenNhomQuyen, trangThai)
-VALUES 
-   ('NQ1', 'Admin', 1),
-	('NQ2', 'Manager', 1),
-	('NQ3', 'Employee', 1),
-	('NQ4', 'Customer', 1);
-	
-INSERT INTO chitietquyen(maNhomQuyen, maChucNang, maQuyen)
-VALUES
-    -- Admin có full quyền và chức năng
-    ('NQ1', 'CN1', 'Q1'),
-    ('NQ1', 'CN2', 'Q1'),
-    ('NQ1', 'CN3', 'Q1'),
-    ('NQ1', 'CN4', 'Q1'),
-    ('NQ1', 'CN1', 'Q2'),
-    ('NQ1', 'CN2', 'Q2'),
-    ('NQ1', 'CN3', 'Q2'),
-    ('NQ1', 'CN4', 'Q2'),
-    ('NQ1', 'CN1', 'Q3'),
-    ('NQ1', 'CN2', 'Q3'),
-    ('NQ1', 'CN3', 'Q3'),
-    ('NQ1', 'CN4', 'Q3'),
-    ('NQ1', 'CN1', 'Q4'),
-    ('NQ1', 'CN2', 'Q4'),
-    ('NQ1', 'CN3', 'Q4'),
-    ('NQ1', 'CN4', 'Q4'),
-    ('NQ1', 'CN1', 'Q5'),
-    ('NQ1', 'CN2', 'Q5'),
-    ('NQ1', 'CN3', 'Q5'),
-    ('NQ1', 'CN4', 'Q5'),
-    ('NQ1', 'CN1', 'Q6'),
-    ('NQ1', 'CN2', 'Q6'),
-    ('NQ1', 'CN3', 'Q6'),
-    ('NQ1', 'CN4', 'Q6'),
-    ('NQ1', 'CN1', 'Q7'),
-    ('NQ1', 'CN2', 'Q7'),
-    ('NQ1', 'CN3', 'Q7'),
-    ('NQ1', 'CN4', 'Q7'),
-    ('NQ1', 'CN1', 'Q8'),
-    ('NQ1', 'CN2', 'Q8'),
-    ('NQ1', 'CN3', 'Q8'),
-    ('NQ1', 'CN4', 'Q8'),
-    ('NQ1', 'CN1', 'Q9'),
-    ('NQ1', 'CN2', 'Q9'),
-    ('NQ1', 'CN3', 'Q9'),
-    ('NQ1', 'CN4', 'Q9'),
-    ('NQ1', 'CN1', 'Q10'),
-    ('NQ1', 'CN2', 'Q10'),
-    ('NQ1', 'CN3', 'Q10'),
-    ('NQ1', 'CN4', 'Q10'),
-    
-    ('NQ2', 'CN1', 'Q1'),
-    ('NQ2', 'CN2', 'Q1'),
-    ('NQ2', 'CN3', 'Q1'),
-    ('NQ2', 'CN4', 'Q1'),
-    ('NQ2', 'CN1', 'Q2'),
-    ('NQ2', 'CN2', 'Q2'),
-    ('NQ2', 'CN3', 'Q2'),
-    ('NQ2', 'CN4', 'Q2'),
-    ('NQ2', 'CN1', 'Q3'),
-    ('NQ2', 'CN2', 'Q3'),
-    ('NQ2', 'CN3', 'Q3'),
-    ('NQ2', 'CN4', 'Q3'),
-    ('NQ2', 'CN1', 'Q4'),
-    ('NQ2', 'CN2', 'Q4'),
-    ('NQ2', 'CN3', 'Q4'),
-    ('NQ2', 'CN4', 'Q4'),
-    ('NQ2', 'CN1', 'Q5'),
-    ('NQ2', 'CN2', 'Q5'),
-    ('NQ2', 'CN3', 'Q5'),
-    ('NQ2', 'CN4', 'Q5'),
-    ('NQ2', 'CN1', 'Q6'),
-    ('NQ2', 'CN2', 'Q6'),
-    ('NQ2', 'CN3', 'Q6'),
-    ('NQ2', 'CN4', 'Q6'),
-    ('NQ2', 'CN1', 'Q7'),
-    ('NQ2', 'CN2', 'Q7'),
-    ('NQ2', 'CN3', 'Q7'),
-    ('NQ2', 'CN4', 'Q7'),
-    ('NQ2', 'CN1', 'Q10'),
-    ('NQ2', 'CN2', 'Q10'),
-    ('NQ2', 'CN3', 'Q10'),
-    ('NQ2', 'CN4', 'Q10'),
-    
-    ('NQ3', 'CN1', 'Q2'),
-    ('NQ3', 'CN2', 'Q2'),
-    ('NQ3', 'CN4', 'Q2'),
-    ('NQ3', 'CN1', 'Q3'),
-    ('NQ3', 'CN2', 'Q3'),
-    ('NQ3', 'CN4', 'Q3');
-    
-INSERT INTO
-    `payment_methods`(`method_name`)
-VALUES
-    ('Thanh toán tiền mặt'),
-    ('Thanh toán chuyển khoản');
+SET
+  time_zone = "+00:00";
 
-/*Create 10 users: 1 admin, 1 manager, 2 employees, 6 customers
- Default pass: 1234567890 
- Encoded pass: $2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO
- */
- 
-INSERT INTO
-    users (
-        id,
-        username,
-        password,
-        email,
-        name,
-        phone,
-        gender,
-        image,
-        maNhomQuyen,
-        status,
-        address
-    )
-VALUES
-    (
-        1,
-        'admin',
-        '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
-        'admin@example.com',
-        'Admin',
-        '0911111232',
-        'M',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
-        'NQ1',
-        'active',
-        '123 Admin St'
-    ),
-    (
-        2,
-        'manager',
-        '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
-        'manager@example.com',
-        'Manager',
-        '0948733232',
-        'F',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
-        'NQ2',
-        'active',
-        '456 Manager St'
-    ),
-    (
-        3,
-        'employee1',
-        '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
-        'employee1@example.com',
-        'Employee 1',
-        '0911238523',
-        'M',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
-        'NQ3',
-        'active',
-        '789 Employee St'
-    ),
-    (
-        4,
-        'employee2',
-        '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
-        'employee2@example.com',
-        'Employee 2',
-        '0911239233',
-        'F',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
-        'NQ3',
-        'active',
-        '012 Employee St'
-    ),
-    (
-        5,
-        'customer1',
-        '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
-        'customer1@example.com',
-        'Customer 1',
-        '0911286233',
-        'M',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
-        'NQ4',
-        'active',
-        '345 Customer St'
-    ),
-    (
-        6,
-        'customer2',
-        '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
-        'customer2@example.com',
-        'Customer 2',
-        '0911543233',
-        'F',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
-        'NQ4',
-        'active',
-        '678 Customer St'
-    ),
-    (
-        7,
-        'customer3',
-        '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
-        'customer3@example.com',
-        'Customer 3',
-        '0911233233',
-        'M',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
-        'NQ4',
-        'active',
-        '901 Customer St'
-    ),
-    (
-        8,
-        'customer4',
-        '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
-        'customer4@example.com',
-        'Customer 4',
-        '0913223232',
-        'F',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
-        'NQ4',
-        'active',
-        '234 Customer St'
-    ),
-    (
-        9,
-        'customer5',
-        '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
-        'customer5@example.com',
-        'Customer 5',
-        '0913883434',
-        'M',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
-        'NQ4',
-        'active',
-        '567 Customer St'
-    ),
-    (
-        10,
-        'customer6',
-        '$2y$10$MTfIUUl6vb3fbRYTQi3pYuJzVm0BJVz7yAtOs6850bnQy68Iq7.EO',
-        'customer6@example.com',
-        'Customer 6',
-        '0911432234',
-        'F',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
-        'NQ4',
-        'active',
-        '890 Customer St'
-    );
-    
-INSERT INTO
-    coupons (
-        id,
-        code,
-        quantity,
-        percent,
-        expired,
-        description
-    )
-VALUES
-    (
-        1,
-        'SALE10',
-        100,
-        10,
-        '2022-12-31',
-        'Giảm 10% cho tất cả sản phẩm'
-    ),
-    (
-        2,
-        'SALE20',
-        100,
-        20,
-        '2022-12-31',
-        'Giảm 20% cho tất cả sản phẩm'
-    ),
-    (
-        3,
-        'SALE30',
-        100,
-        30,
-        '2022-12-31',
-        'Giảm 30% cho tất cả sản phẩm'
-    ),
-    (
-        4,
-        'SALE40',
-        100,
-        40,
-        '2022-12-31',
-        'Giảm 40% cho tất cả sản phẩm'
-    ),
-    (
-        5,
-        'SALE50',
-        100,
-        50,
-        '2022-12-31',
-        'Giảm 50% cho tất cả sản phẩm'
-    );
-    
-    
-INSERT INTO nhacungcap (maNCC, ten, diaChi, sdt, email, trangThai)
-VALUES 
-	('1', 'Nhà cung cấp A', 'Địa chỉ A', '0323456789', 'email1@gmail.com', 1),
-	('2', 'Nhà cung cấp B', 'Địa chỉ B', '0987654321', 'email2@gmail.com', 1),
-	('3', 'Nhà cung cấp C', 'Địa chỉ C', '0369696969', 'email3@gmail.com', 1),
-	('4', 'Nhà cung cấp D', 'Địa chỉ D', '0888888888', 'email4@gmail.com', 1),
-	('5', 'Nhà cung cấp E', 'Địa chỉ E', '0777777777', 'email5@gmail.com', 1),
-	('6', 'Nhà cung cấp F', 'Địa chỉ F', '0999999999', 'email6@gmail.com', 1),
-	('7', 'Nhà cung cấp G', 'Địa chỉ G', '0912345678', 'email7@gmail.com', 1),
-	('8', 'Nhà cung cấp H', 'Địa chỉ H', '0966666666', 'email8@gmail.com', 1),
-	('9', 'Nhà cung cấp I', 'Địa chỉ I', '0333333333', 'email9@gmail.com', 1),
-	('10', 'Nhà cung cấp J', 'Địa chỉ J', '0355555555', 'email10@gmail.com', 1);
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */
+;
 
-INSERT INTO phieunhap (maPhieuNhap, user_id, phieuNhapDate, total_amount, maNCC, trangThai) 
-VALUES 
-    ('1', '1', '2024-09-18 07:25:45', '5000000', '1', '1'),
-    ('2', '1', '2024-09-18 08:23:45', '5000000', '2', '1'),
-    ('3', '1', '2024-09-18 09:25:45', '5000000', '3', '1'),
-    ('4', '1', '2024-09-18 10:25:45', '5000000', '4', '1'),
-    ('5', '1', '2024-09-18 11:25:45', '5000000', '5', '1'),
-    ('6', '1', '2024-09-18 12:25:45', '5000000', '1', '1'),
-    ('7', '1', '2024-09-19 07:25:45', '5000000', '2', '1'),
-    ('8', '1', '2024-09-19 08:25:45', '5000000', '3', '1'),
-    ('9', '1', '2024-09-19 09:25:45', '5000000', '4', '1'),
-    ('10', '1', '2024-09-19 10:25:45', '5000000', '5', '1'),
-    ('11', '1', '2024-09-19 11:25:45', '5000000', '1', '1'),
-    ('12', '1', '2024-09-20 07:25:45', '5000000', '2', '1'),
-    ('13', '1', '2024-09-20 08:25:45', '5000000', '3', '1'),
-    ('14', '1', '2024-09-20 09:25:45', '5000000', '4', '1'),
-    ('15', '1', '2024-09-20 10:25:45', '5000000', '5', '1'),
-    ('16', '1', '2024-09-20 11:25:45', '5000000', '1', '1'),
-    ('17', '1', '2024-09-21 07:25:45', '5000000', '2', '1'),
-    ('18', '1', '2024-09-21 08:25:45', '5000000', '3', '1'),
-    ('19', '1', '2024-09-21 09:25:45', '5000000', '4', '1'),
-    ('20', '1', '2024-09-21 10:25:45', '5000000', '5', '1'),
-    ('21', '1', '2024-09-21 11:25:45', '5000000', '1', '1'),
-    ('22', '1', '2024-09-22 07:25:45', '5000000', '2', '1'),
-    ('23', '1', '2024-09-22 08:25:45', '5000000', '3', '1'),
-    ('24', '1', '2024-09-22 09:25:45', '5000000', '4', '1'),
-    ('25', '1', '2024-09-22 10:25:45', '5000000', '5', '1'),
-    ('26', '1', '2024-09-22 11:25:45', '5000000', '1', '1'),
-    ('27', '1', '2024-09-23 07:25:45', '5000000', '2', '1'),
-    ('28', '1', '2024-09-23 08:25:45', '5000000', '3', '1'),
-    ('29', '1', '2024-09-23 09:25:45', '5000000', '4', '1'),
-    ('30', '1', '2024-09-23 10:25:45', '5000000', '5', '1'),
-    ('31', '1', '2024-09-23 11:25:45', '5000000', '1', '1'),
-    ('32', '1', '2024-09-24 08:25:45', '5000000', '2', '1'),
-    ('33', '1', '2024-09-24 09:25:45', '5000000', '3', '1'),
-    ('34', '1', '2024-09-24 10:25:45', '5000000', '4', '1'),
-    ('35', '1', '2024-09-24 11:25:45', '5000000', '5', '1'),
-    ('36', '1', '2024-09-25 07:25:45', '5000000', '1', '1'),
-    ('37', '1', '2024-09-25 08:25:45', '5000000', '2', '1'),
-    ('38', '1', '2024-09-25 09:25:45', '5000000', '3', '1'),
-    ('39', '1', '2024-09-25 10:25:45', '5000000', '4', '1'),
-    ('40', '1', '2024-09-25 11:25:45', '5000000', '5', '1'),
-    ('41', '1', '2024-09-26 07:25:45', '5000000', '1', '1'),
-    ('42', '1', '2024-09-26 08:25:45', '5000000', '2', '1'),
-    ('43', '1', '2024-09-26 09:25:45', '5000000', '3', '1'),
-    ('44', '1', '2024-09-26 10:25:45', '5000000', '4', '1'),
-    ('45', '1', '2024-09-26 11:25:45', '5000000', '5', '1'),
-    ('46', '1', '2024-09-27 07:25:45', '5000000', '1', '1'),
-    ('47', '1', '2024-09-27 08:25:45', '5000000', '1', '1');    
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */
+;
+
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */
+;
+
+/*!40101 SET NAMES utf8mb4 */
+;
+
+--
+-- Database: `quanlicuahanggiay`
+--
+-- --------------------------------------------------------
+--
+-- Table structure for table `carts`
+--
+CREATE TABLE `carts` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `size_id` int(11) NOT NULL,
+  `import_price` DOUBLE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `categories`
+--
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `coupons`
+--
+CREATE TABLE `coupons` (
+  `id` int(11) NOT NULL,
+  `code` varchar(50) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `percent` int(3) NOT NULL,
+  `expired` date NOT NULL,
+  `description` varchar(255) NOT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 
-INSERT INTO chitietphieunhap (maCTPN, maPhieuNhap, product_id, size_id, quantity, price)
-VALUES
-    ('1', '1', '4', '35', '10', '50000'),
-    ('2', '1', '4', '36', '10', '50000'),
-    ('3', '1', '4', '37', '10', '50000'),
-    ('4', '1', '4', '38', '10', '50000'),
-    ('5', '1', '4', '39', '10', '50000'),
-    ('6', '1', '4', '40', '10', '50000'),
-    ('7', '1', '4', '41', '10', '50000'),
-    ('8', '1', '4', '42', '10', '50000'),
-    ('9', '1', '4', '43', '10', '50000'),
-    ('10', '1', '4', '44', '10', '50000'),
-    ('11', '2', '5', '35', '10', '50000'),
-    ('12', '2', '5', '36', '10', '50000'),
-    ('13', '2', '5', '37', '10', '50000'),
-    ('14', '2', '5', '38', '10', '50000'),
-    ('15', '2', '5', '39', '10', '50000'),
-    ('16', '2', '5', '40', '10', '50000'),
-    ('17', '2', '5', '41', '10', '50000'),
-    ('18', '2', '5', '42', '10', '50000'),
-    ('19', '2', '5', '43', '10', '50000'),
-    ('20', '2', '5', '44', '10', '50000'),
-    ('21', '3', '6', '35', '10', '50000'),
-    ('22', '3', '6', '36', '10', '50000'),
-    ('23', '3', '6', '37', '10', '50000'),
-    ('24', '3', '6', '38', '10', '50000'),
-    ('25', '3', '6', '39', '10', '50000'),
-    ('26', '3', '6', '40', '10', '50000'),
-    ('27', '3', '6', '41', '10', '50000'),
-    ('28', '3', '6', '42', '10', '50000'),
-    ('29', '3', '6', '43', '10', '50000'),
-    ('30', '3', '6', '44', '10', '50000'),
-    ('31', '4', '7', '35', '10', '50000'),
-    ('32', '4', '7', '36', '10', '50000'),
-    ('33', '4', '7', '37', '10', '50000'),
-    ('34', '4', '7', '38', '10', '50000'),
-    ('35', '4', '7', '39', '10', '50000'),
-    ('36', '4', '7', '40', '10', '50000'),
-    ('37', '4', '7', '41', '10', '50000'),
-    ('38', '4', '7', '42', '10', '50000'),
-    ('39', '4', '7', '43', '10', '50000'),
-    ('40', '4', '7', '44', '10', '50000'),
-    ('41', '5', '8', '35', '10', '50000'),
-    ('42', '5', '8', '36', '10', '50000'),
-    ('43', '5', '8', '37', '10', '50000'),
-    ('44', '5', '8', '38', '10', '50000'),
-    ('45', '5', '8', '39', '10', '50000'),
-    ('46', '5', '8', '40', '10', '50000'),
-    ('47', '5', '8', '41', '10', '50000'),
-    ('48', '5', '8', '42', '10', '50000'),
-    ('49', '5', '8', '43', '10', '50000'),
-    ('50', '5', '8', '44', '10', '50000'),
-    ('51', '6', '9', '35', '10', '50000'),
-    ('52', '6', '9', '36', '10', '50000'),
-    ('53', '6', '9', '37', '10', '50000'),
-    ('54', '6', '9', '38', '10', '50000'),
-    ('55', '6', '9', '39', '10', '50000'),
-    ('56', '6', '9', '40', '10', '50000'),
-    ('57', '6', '9', '41', '10', '50000'),
-    ('58', '6', '9', '42', '10', '50000'),
-    ('59', '6', '9', '43', '10', '50000'),
-    ('60', '6', '9', '44', '10', '50000'),
-    ('61', '7', '10', '35', '10', '50000'),
-    ('62', '7', '10', '36', '10', '50000'),
-    ('63', '7', '10', '37', '10', '50000'),
-    ('64', '7', '10', '38', '10', '50000'),
-    ('65', '7', '10', '39', '10', '50000'),
-    ('66', '7', '10', '40', '10', '50000'),
-    ('67', '7', '10', '41', '10', '50000'),
-    ('68', '7', '10', '42', '10', '50000'),
-    ('69', '7', '10', '43', '10', '50000'),
-    ('70', '7', '10', '44', '10', '50000'),
-    ('71', '8', '11', '35', '10', '50000'),
-    ('72', '8', '11', '36', '10', '50000'),
-    ('73', '8', '11', '37', '10', '50000'),
-    ('74', '8', '11', '38', '10', '50000'),
-    ('75', '8', '11', '39', '10', '50000'),
-    ('76', '8', '11', '40', '10', '50000'),
-    ('77', '8', '11', '41', '10', '50000'),
-    ('78', '8', '11', '42', '10', '50000'),
-    ('79', '8', '11', '43', '10', '50000'),
-    ('80', '8', '11', '44', '10', '50000'),
-    ('81', '9', '12', '35', '10', '50000'),
-    ('82', '9', '12', '36', '10', '50000'),
-    ('83', '9', '12', '37', '10', '50000'),
-    ('84', '9', '12', '38', '10', '50000'),
-    ('85', '9', '12', '39', '10', '50000'),
-    ('86', '9', '12', '40', '10', '50000'),
-    ('87', '9', '12', '41', '10', '50000'),
-    ('88', '9', '12', '42', '10', '50000'),
-    ('89', '9', '12', '43', '10', '50000'),
-    ('90', '9', '12', '44', '10', '50000'),
-    ('91', '10', '13', '35', '10', '50000'),
-    ('92', '10', '13', '36', '10', '50000'),
-    ('93', '10', '13', '37', '10', '50000'),
-    ('94', '10', '13', '38', '10', '50000'),
-    ('95', '10', '13', '39', '10', '50000'),
-    ('96', '10', '13', '40', '10', '50000'),
-    ('97', '10', '13', '41', '10', '50000'),
-    ('98', '10', '13', '42', '10', '50000'),
-    ('99', '10', '13', '43', '10', '50000'),
-    ('100', '10', '13', '44', '10', '50000'),
-    ('101', '11', '14', '35', '10', '50000'),
-    ('102', '11', '14', '36', '10', '50000'),
-    ('103', '11', '14', '37', '10', '50000'),
-    ('104', '11', '14', '38', '10', '50000'),
-    ('105', '11', '14', '39', '10', '50000'),
-    ('106', '11', '14', '40', '10', '50000'),
-    ('107', '11', '14', '41', '10', '50000'),
-    ('108', '11', '14', '42', '10', '50000'),
-    ('109', '11', '14', '43', '10', '50000'),
-    ('110', '11', '14', '44', '10', '50000'),
-    ('111', '12', '15', '35', '10', '50000'),
-    ('112', '12', '15', '36', '10', '50000'),
-    ('113', '12', '15', '37', '10', '50000'),
-    ('114', '12', '15', '38', '10', '50000'),
-    ('115', '12', '15', '39', '10', '50000'),
-    ('116', '12', '15', '40', '10', '50000'),
-    ('117', '12', '15', '41', '10', '50000'),
-    ('118', '12', '15', '42', '10', '50000'),
-    ('119', '12', '15', '43', '10', '50000'),
-    ('120', '12', '15', '44', '10', '50000'),
-    ('121', '13', '16', '35', '10', '50000'),
-    ('122', '13', '16', '36', '10', '50000'),
-    ('123', '13', '16', '37', '10', '50000'),
-    ('124', '13', '16', '38', '10', '50000'),
-    ('125', '13', '16', '39', '10', '50000'),
-    ('126', '13', '16', '40', '10', '50000'),
-    ('127', '13', '16', '41', '10', '50000'),
-    ('128', '13', '16', '42', '10', '50000'),
-    ('129', '13', '16', '43', '10', '50000'),
-    ('130', '13', '16', '44', '10', '50000'),
-    ('131', '14', '17', '35', '10', '50000'),
-    ('132', '14', '17', '36', '10', '50000'),
-    ('133', '14', '17', '37', '10', '50000'),
-    ('134', '14', '17', '38', '10', '50000'),
-    ('135', '14', '17', '39', '10', '50000'),
-    ('136', '14', '17', '40', '10', '50000'),
-    ('137', '14', '17', '41', '10', '50000'),
-    ('138', '14', '17', '42', '10', '50000'),
-    ('139', '14', '17', '43', '10', '50000'),
-    ('140', '14', '17', '44', '10', '50000'),
-    ('141', '15', '18', '35', '10', '50000'),
-    ('142', '15', '18', '36', '10', '50000'),
-    ('143', '15', '18', '37', '10', '50000'),
-    ('144', '15', '18', '38', '10', '50000'),
-    ('145', '15', '18', '39', '10', '50000'),
-    ('146', '15', '18', '40', '10', '50000'),
-    ('147', '15', '18', '41', '10', '50000'),
-    ('148', '15', '18', '42', '10', '50000'),
-    ('149', '15', '18', '43', '10', '50000'),
-    ('150', '15', '18', '44', '10', '50000'),
-    ('151', '16', '19', '35', '10', '50000'),
-    ('152', '16', '19', '36', '10', '50000'),
-    ('153', '16', '19', '37', '10', '50000'),
-    ('154', '16', '19', '38', '10', '50000'),
-    ('155', '16', '19', '39', '10', '50000'),
-    ('156', '16', '19', '40', '10', '50000'),
-    ('157', '16', '19', '41', '10', '50000'),
-    ('158', '16', '19', '42', '10', '50000'),
-    ('159', '16', '19', '43', '10', '50000'),
-    ('160', '16', '19', '44', '10', '50000'),
-    ('161', '17', '20', '35', '10', '50000'),
-    ('162', '17', '20', '36', '10', '50000'),
-    ('163', '17', '20', '37', '10', '50000'),
-    ('164', '17', '20', '38', '10', '50000'),
-    ('165', '17', '20', '39', '10', '50000'),
-    ('166', '17', '20', '40', '10', '50000'),
-    ('167', '17', '20', '41', '10', '50000'),
-    ('168', '17', '20', '42', '10', '50000'),
-    ('169', '17', '20', '43', '10', '50000'),
-    ('170', '17', '20', '44', '10', '50000'),
-    ('171', '18', '21', '35', '10', '50000'),
-    ('172', '18', '21', '36', '10', '50000'),
-    ('173', '18', '21', '37', '10', '50000'),
-    ('174', '18', '21', '38', '10', '50000'),
-    ('175', '18', '21', '39', '10', '50000'),
-    ('176', '18', '21', '40', '10', '50000'),
-    ('177', '18', '21', '41', '10', '50000'),
-    ('178', '18', '21', '42', '10', '50000'),
-    ('179', '18', '21', '43', '10', '50000'),
-    ('180', '18', '21', '44', '10', '50000'),
-    ('181', '19', '22', '35', '10', '50000'),
-    ('182', '19', '22', '36', '10', '50000'),
-    ('183', '19', '22', '37', '10', '50000'),
-    ('184', '19', '22', '38', '10', '50000'),
-    ('185', '19', '22', '39', '10', '50000'),
-    ('186', '19', '22', '40', '10', '50000'),
-    ('187', '19', '22', '41', '10', '50000'),
-    ('188', '19', '22', '42', '10', '50000'),
-    ('189', '19', '22', '43', '10', '50000'),
-    ('190', '19', '22', '44', '10', '50000'),
-    ('191', '20', '23', '35', '10', '50000'),
-    ('192', '20', '23', '36', '10', '50000'),
-    ('193', '20', '23', '37', '10', '50000'),
-    ('194', '20', '23', '38', '10', '50000'),
-    ('195', '20', '23', '39', '10', '50000'),
-    ('196', '20', '23', '40', '10', '50000'),
-    ('197', '20', '23', '41', '10', '50000'),
-    ('198', '20', '23', '42', '10', '50000'),
-    ('199', '20', '23', '43', '10', '50000'),
-    ('200', '20', '23', '44', '10', '50000'),
-    ('201', '21', '24', '35', '10', '50000'),
-    ('202', '21', '24', '36', '10', '50000'),
-    ('203', '21', '24', '37', '10', '50000'),
-    ('204', '21', '24', '38', '10', '50000'),
-    ('205', '21', '24', '39', '10', '50000'),
-    ('206', '21', '24', '40', '10', '50000'),
-    ('207', '21', '24', '41', '10', '50000'),
-    ('208', '21', '24', '42', '10', '50000'),
-    ('209', '21', '24', '43', '10', '50000'),
-    ('210', '21', '24', '44', '10', '50000'),
-    ('211', '22', '25', '35', '10', '50000'),
-    ('212', '22', '25', '36', '10', '50000'),
-    ('213', '22', '25', '37', '10', '50000'),
-    ('214', '22', '25', '38', '10', '50000'),
-    ('215', '22', '25', '39', '10', '50000'),
-    ('216', '22', '25', '40', '10', '50000'),
-    ('217', '22', '25', '41', '10', '50000'),
-    ('218', '22', '25', '42', '10', '50000'),
-    ('219', '22', '25', '43', '10', '50000'),
-    ('220', '22', '25', '44', '10', '50000'),
-    ('221', '23', '26', '35', '10', '50000'),
-    ('222', '23', '26', '36', '10', '50000'),
-    ('223', '23', '26', '37', '10', '50000'),
-    ('224', '23', '26', '38', '10', '50000'),
-    ('225', '23', '26', '39', '10', '50000'),
-    ('226', '23', '26', '40', '10', '50000'),
-    ('227', '23', '26', '41', '10', '50000'),
-    ('228', '23', '26', '42', '10', '50000'),
-    ('229', '23', '26', '43', '10', '50000'),
-    ('230', '23', '26', '44', '10', '50000'),
-    ('231', '24', '27', '35', '10', '50000'),
-    ('232', '24', '27', '36', '10', '50000'),
-    ('233', '24', '27', '37', '10', '50000'),
-    ('234', '24', '27', '38', '10', '50000'),
-    ('235', '24', '27', '39', '10', '50000'),
-    ('236', '24', '27', '40', '10', '50000'),
-    ('237', '24', '27', '41', '10', '50000'),
-    ('238', '24', '27', '42', '10', '50000'),
-    ('239', '24', '27', '43', '10', '50000'),
-    ('240', '24', '27', '44', '10', '50000'),
-    ('241', '25', '28', '35', '10', '50000'),
-    ('242', '25', '28', '36', '10', '50000'),
-    ('243', '25', '28', '37', '10', '50000'),
-    ('244', '25', '28', '38', '10', '50000'),
-    ('245', '25', '28', '39', '10', '50000'),
-    ('246', '25', '28', '40', '10', '50000'),
-    ('247', '25', '28', '41', '10', '50000'),
-    ('248', '25', '28', '42', '10', '50000'),
-    ('249', '25', '28', '43', '10', '50000'),
-    ('250', '25', '28', '44', '10', '50000'),
-    ('251', '26', '29', '35', '10', '50000'),
-    ('252', '26', '29', '36', '10', '50000'),
-    ('253', '26', '29', '37', '10', '50000'),
-    ('254', '26', '29', '38', '10', '50000'),
-    ('255', '26', '29', '39', '10', '50000'),
-    ('256', '26', '29', '40', '10', '50000'),
-    ('257', '26', '29', '41', '10', '50000'),
-    ('258', '26', '29', '42', '10', '50000'),
-    ('259', '26', '29', '43', '10', '50000'),
-    ('260', '26', '29', '44', '10', '50000'),
-    ('261', '27', '30', '35', '10', '50000'),
-    ('262', '27', '30', '36', '10', '50000'),
-    ('263', '27', '30', '37', '10', '50000'),
-    ('264', '27', '30', '38', '10', '50000'),
-    ('265', '27', '30', '39', '10', '50000'),
-    ('266', '27', '30', '40', '10', '50000'),
-    ('267', '27', '30', '41', '10', '50000'),
-    ('268', '27', '30', '42', '10', '50000'),
-    ('269', '27', '30', '43', '10', '50000'),
-    ('270', '27', '30', '44', '10', '50000'),
-    ('271', '28', '31', '35', '10', '50000'),
-    ('272', '28', '31', '36', '10', '50000'),
-    ('273', '28', '31', '37', '10', '50000'),
-    ('274', '28', '31', '38', '10', '50000'),
-    ('275', '28', '31', '39', '10', '50000'),
-    ('276', '28', '31', '40', '10', '50000'),
-    ('277', '28', '31', '41', '10', '50000'),
-    ('278', '28', '31', '42', '10', '50000'),
-    ('279', '28', '31', '43', '10', '50000'),
-    ('280', '28', '31', '44', '10', '50000'),
-    ('281', '29', '32', '35', '10', '50000'),
-    ('282', '29', '32', '36', '10', '50000'),
-    ('283', '29', '32', '37', '10', '50000'),
-    ('284', '29', '32', '38', '10', '50000'),
-    ('285', '29', '32', '39', '10', '50000'),
-    ('286', '29', '32', '40', '10', '50000'),
-    ('287', '29', '32', '41', '10', '50000'),
-    ('288', '29', '32', '42', '10', '50000'),
-    ('289', '29', '32', '43', '10', '50000'),
-    ('290', '29', '32', '44', '10', '50000'),
-    ('291', '30', '33', '35', '10', '50000'),
-    ('292', '30', '33', '36', '10', '50000'),
-    ('293', '30', '33', '37', '10', '50000'),
-    ('294', '30', '33', '38', '10', '50000'),
-    ('295', '30', '33', '39', '10', '50000'),
-    ('296', '30', '33', '40', '10', '50000'),
-    ('297', '30', '33', '41', '10', '50000'),
-    ('298', '30', '33', '42', '10', '50000'),
-    ('299', '30', '33', '43', '10', '50000'),
-    ('300', '30', '33', '44', '10', '50000'),
-    ('301', '31', '34', '35', '10', '50000'),
-    ('302', '31', '34', '36', '10', '50000'),
-    ('303', '31', '34', '37', '10', '50000'),
-    ('304', '31', '34', '38', '10', '50000'),
-    ('305', '31', '34', '39', '10', '50000'),
-    ('306', '31', '34', '40', '10', '50000'),
-    ('307', '31', '34', '41', '10', '50000'),
-    ('308', '31', '34', '42', '10', '50000'),
-    ('309', '31', '34', '43', '10', '50000'),
-    ('310', '31', '34', '44', '10', '50000'),
-    ('311', '32', '35', '35', '10', '50000'),
-    ('312', '32', '35', '36', '10', '50000'),
-    ('313', '32', '35', '37', '10', '50000'),
-    ('314', '32', '35', '38', '10', '50000'),
-    ('315', '32', '35', '39', '10', '50000'),
-    ('316', '32', '35', '40', '10', '50000'),
-    ('317', '32', '35', '41', '10', '50000'),
-    ('318', '32', '35', '42', '10', '50000'),
-    ('319', '32', '35', '43', '10', '50000'),
-    ('320', '32', '35', '44', '10', '50000'),
-    ('321', '33', '36', '35', '10', '50000'),
-    ('322', '33', '36', '36', '10', '50000'),
-    ('323', '33', '36', '37', '10', '50000'),
-    ('324', '33', '36', '38', '10', '50000'),
-    ('325', '33', '36', '39', '10', '50000'),
-    ('326', '33', '36', '40', '10', '50000'),
-    ('327', '33', '36', '41', '10', '50000'),
-    ('328', '33', '36', '42', '10', '50000'),
-    ('329', '33', '36', '43', '10', '50000'),
-    ('330', '33', '36', '44', '10', '50000'),
-    ('331', '34', '37', '35', '10', '50000'),
-    ('332', '34', '37', '36', '10', '50000'),
-    ('333', '34', '37', '37', '10', '50000'),
-    ('334', '34', '37', '38', '10', '50000'),
-    ('335', '34', '37', '39', '10', '50000'),
-    ('336', '34', '37', '40', '10', '50000'),
-    ('337', '34', '37', '41', '10', '50000'),
-    ('338', '34', '37', '42', '10', '50000'),
-    ('339', '34', '37', '43', '10', '50000'),
-    ('340', '34', '37', '44', '10', '50000'),
-    ('341', '35', '38', '35', '10', '50000'),
-    ('342', '35', '38', '36', '10', '50000'),
-    ('343', '35', '38', '37', '10', '50000'),
-    ('344', '35', '38', '38', '10', '50000'),
-    ('345', '35', '38', '39', '10', '50000'),
-    ('346', '35', '38', '40', '10', '50000'),
-    ('347', '35', '38', '41', '10', '50000'),
-    ('348', '35', '38', '42', '10', '50000'),
-    ('349', '35', '38', '43', '10', '50000'),
-    ('350', '35', '38', '44', '10', '50000'),
-    ('351', '36', '39', '35', '10', '50000'),
-    ('352', '36', '39', '36', '10', '50000'),
-    ('353', '36', '39', '37', '10', '50000'),
-    ('354', '36', '39', '38', '10', '50000'),
-    ('355', '36', '39', '39', '10', '50000'),
-    ('356', '36', '39', '40', '10', '50000'),
-    ('357', '36', '39', '41', '10', '50000'),
-    ('358', '36', '39', '42', '10', '50000'),
-    ('359', '36', '39', '43', '10', '50000'),
-    ('360', '36', '39', '44', '10', '50000'),
-    ('361', '37', '40', '35', '10', '50000'),
-    ('362', '37', '40', '36', '10', '50000'),
-    ('363', '37', '40', '37', '10', '50000'),
-    ('364', '37', '40', '38', '10', '50000'),
-    ('365', '37', '40', '39', '10', '50000'),
-    ('366', '37', '40', '40', '10', '50000'),
-    ('367', '37', '40', '41', '10', '50000'),
-    ('368', '37', '40', '42', '10', '50000'),
-    ('369', '37', '40', '43', '10', '50000'),
-    ('370', '37', '40', '44', '10', '50000'),
-    ('371', '38', '41', '35', '10', '50000'),
-    ('372', '38', '41', '36', '10', '50000'),
-    ('373', '38', '41', '37', '10', '50000'),
-    ('374', '38', '41', '38', '10', '50000'),
-    ('375', '38', '41', '39', '10', '50000'),
-    ('376', '38', '41', '40', '10', '50000'),
-    ('377', '38', '41', '41', '10', '50000'),
-    ('378', '38', '41', '42', '10', '50000'),
-    ('379', '38', '41', '43', '10', '50000'),
-    ('380', '38', '41', '44', '10', '50000'),
-    ('381', '39', '42', '35', '10', '50000'),
-    ('382', '39', '42', '36', '10', '50000'),
-    ('383', '39', '42', '37', '10', '50000'),
-    ('384', '39', '42', '38', '10', '50000'),
-    ('385', '39', '42', '39', '10', '50000'),
-    ('386', '39', '42', '40', '10', '50000'),
-    ('387', '39', '42', '41', '10', '50000'),
-    ('388', '39', '42', '42', '10', '50000'),
-    ('389', '39', '42', '43', '10', '50000'),
-    ('390', '39', '42', '44', '10', '50000'),
-    ('391', '40', '43', '35', '10', '50000'),
-    ('392', '40', '43', '36', '10', '50000'),
-    ('393', '40', '43', '37', '10', '50000'),
-    ('394', '40', '43', '38', '10', '50000'),
-    ('395', '40', '43', '39', '10', '50000'),
-    ('396', '40', '43', '40', '10', '50000'),
-    ('397', '40', '43', '41', '10', '50000'),
-    ('398', '40', '43', '42', '10', '50000'),
-    ('399', '40', '43', '43', '10', '50000'),
-    ('400', '40', '43', '44', '10', '50000'),
-    ('401', '41', '44', '35', '10', '50000'),
-    ('402', '41', '44', '36', '10', '50000'),
-    ('403', '41', '44', '37', '10', '50000'),
-    ('404', '41', '44', '38', '10', '50000'),
-    ('405', '41', '44', '39', '10', '50000'),
-    ('406', '41', '44', '40', '10', '50000'),
-    ('407', '41', '44', '41', '10', '50000'),
-    ('408', '41', '44', '42', '10', '50000'),
-    ('409', '41', '44', '43', '10', '50000'),
-    ('410', '41', '44', '44', '10', '50000'),
-    ('411', '42', '45', '35', '10', '50000'),
-    ('412', '42', '45', '36', '10', '50000'),
-    ('413', '42', '45', '37', '10', '50000'),
-    ('414', '42', '45', '38', '10', '50000'),
-    ('415', '42', '45', '39', '10', '50000'),
-    ('416', '42', '45', '40', '10', '50000'),
-    ('417', '42', '45', '41', '10', '50000'),
-    ('418', '42', '45', '42', '10', '50000'),
-    ('419', '42', '45', '43', '10', '50000'),
-    ('420', '42', '45', '44', '10', '50000'),
-    ('421', '43', '46', '35', '10', '50000'),
-    ('422', '43', '46', '36', '10', '50000'),
-    ('423', '43', '46', '37', '10', '50000'),
-    ('424', '43', '46', '38', '10', '50000'),
-    ('425', '43', '46', '39', '10', '50000'),
-    ('426', '43', '46', '40', '10', '50000'),
-    ('427', '43', '46', '41', '10', '50000'),
-    ('428', '43', '46', '42', '10', '50000'),
-    ('429', '43', '46', '43', '10', '50000'),
-    ('430', '43', '46', '44', '10', '50000'),
-    ('431', '44', '47', '35', '10', '50000'),
-    ('432', '44', '47', '36', '10', '50000'),
-    ('433', '44', '47', '37', '10', '50000'),
-    ('434', '44', '47', '38', '10', '50000'),
-    ('435', '44', '47', '39', '10', '50000'),
-    ('436', '44', '47', '40', '10', '50000'),
-    ('437', '44', '47', '41', '10', '50000'),
-    ('438', '44', '47', '42', '10', '50000'),
-    ('439', '44', '47', '43', '10', '50000'),
-    ('440', '44', '47', '44', '10', '50000'),
-    ('441', '45', '48', '35', '10', '50000'),
-    ('442', '45', '48', '36', '10', '50000'),
-    ('443', '45', '48', '37', '10', '50000'),
-    ('444', '45', '48', '38', '10', '50000'),
-    ('445', '45', '48', '39', '10', '50000'),
-    ('446', '45', '48', '40', '10', '50000'),
-    ('447', '45', '48', '41', '10', '50000'),
-    ('448', '45', '48', '42', '10', '50000'),
-    ('449', '45', '48', '43', '10', '50000'),
-    ('450', '45', '48', '44', '10', '50000'),
-    ('451', '46', '49', '35', '10', '50000'),
-    ('452', '46', '49', '36', '10', '50000'),
-    ('453', '46', '49', '37', '10', '50000'),
-    ('454', '46', '49', '38', '10', '50000'),
-    ('455', '46', '49', '39', '10', '50000'),
-    ('456', '46', '49', '40', '10', '50000'),
-    ('457', '46', '49', '41', '10', '50000'),
-    ('458', '46', '49', '42', '10', '50000'),
-    ('459', '46', '49', '43', '10', '50000'),
-    ('460', '46', '49', '44', '10', '50000'),
-    ('461', '47', '50', '35', '10', '50000'),
-    ('462', '47', '50', '36', '10', '50000'),
-    ('463', '47', '50', '37', '10', '50000'),
-    ('464', '47', '50', '38', '10', '50000'),
-    ('465', '47', '50', '39', '10', '50000'),
-    ('466', '47', '50', '40', '10', '50000'),
-    ('467', '47', '50', '41', '10', '50000'),
-    ('468', '47', '50', '42', '10', '50000'),
-    ('469', '47', '50', '43', '10', '50000'),
-    ('470', '47', '50', '44', '10', '50000');
+-- --------------------------------------------------------
+--
+-- Table structure for table `orders`
+--
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `order_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `total_amount` double NOT NULL,
+  `customer_name` varchar(50) NOT NULL,
+  `customer_phone` varchar(10) NOT NULL,
+  `customer_address` varchar(255) NOT NULL,
+  `status` enum(
+    'pending',
+    'accepted',
+    'completed',
+    'shipping',
+    'canceled'
+  ) NOT NULL DEFAULT 'pending'
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `order_items`
+--
+CREATE TABLE `order_items` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `size_id` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `price` DOUBLE NOT NULL,
+  `import_price` DOUBLE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `payments`
+--
+CREATE TABLE `payments` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `method_id` int(11) DEFAULT NULL,
+  `payment_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `total_price` double NOT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `payment_methods`
+--
+CREATE TABLE `payment_methods` (
+  `id` int(11) NOT NULL,
+  `method_name` varchar(50) DEFAULT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `products`
+--
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `price` double NOT NULL,
+  `description` text NOT NULL,
+  `image` longtext NOT NULL,
+  `gender` int(11) NOT NULL DEFAULT 0,
+  `status` enum('active', 'inactive') NOT NULL DEFAULT 'active'
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = UTF8MB4_GENERAL_CI;
+
+CREATE TABLE `sizes` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `size_items`
+--
+CREATE TABLE `size_items` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `size_id` int(11) DEFAULT NULL,
+  `quantity` int(11) NOT NULL DEFAULT 0,
+  `import_price` DOUBLE DEFAULT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = UTF8MB4_GENERAL_CI;
+
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `phone` varchar(10) DEFAULT NULL,
+  `gender` tinyint(4) NOT NULL DEFAULT 0,
+  `image` longtext DEFAULT NULL,
+  `maNhomQuyen` varchar(50) DEFAULT NULL,
+  `status` enum('active', 'inactive', 'banned') NOT NULL DEFAULT 'active',
+  `address` varchar(255) NOT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+
+ALTER TABLE
+  `carts`
+ADD
+  PRIMARY KEY (`id`),
+ADD
+  KEY `user_id` (`user_id`, `product_id`),
+ADD
+  KEY `product_id` (`product_id`),
+ADD
+  KEY `size_id` (`size_id`);
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE
+  `categories`
+ADD
+  PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `coupons`
+--
+ALTER TABLE
+  `coupons`
+ADD
+  PRIMARY KEY (`id`);
+
+
+
+-- Indexes for table `orders`
+--
+ALTER TABLE
+  `orders`
+ADD
+  PRIMARY KEY (`id`),
+ADD
+  KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `order_items`
+--
+ALTER TABLE
+  `order_items`
+ADD
+  PRIMARY KEY (`id`),
+ADD
+  KEY `order_id` (`order_id`, `product_id`, `size_id`),
+ADD
+  KEY `product_id` (`product_id`),
+ADD
+  KEY `size_id` (`size_id`);
+
+--
+-- Indexes for table `payments`
+--
+ALTER TABLE
+  `payments`
+ADD
+  PRIMARY KEY (`id`),
+ADD
+  KEY `order_id` (`order_id`, `method_id`),
+ADD
+  KEY `method_id` (`method_id`);
+
+--
+-- Indexes for table `payment_methods`
+--
+ALTER TABLE
+  `payment_methods`
+ADD
+  PRIMARY KEY (`id`);
+  
+ALTER TABLE
+  `products`
+ADD
+  PRIMARY KEY (`id`),
+ADD
+  KEY `category_id` (`category_id`);
+  
+  
+ALTER TABLE
+  `sizes`
+ADD
+  PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `size_items`
+--
+ALTER TABLE
+  `size_items`
+ADD
+  PRIMARY KEY (`id`),
+ADD
+  KEY `product_id` (`product_id`, `size_id`),
+ADD
+  KEY `size_id` (`size_id`);
+  
+CREATE TABLE IF NOT EXISTS chucnang (
+    maChucNang VARCHAR(50) NOT NULL,
+    tenChucNang VARCHAR(255),
+    PRIMARY KEY (maChucNang)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = UTF8MB4_GENERAL_CI;
+
+-- Tạo bảng nhomquyen
+CREATE TABLE IF NOT EXISTS nhomquyen (
+    maNhomQuyen VARCHAR(50) NOT NULL,
+    tenNhomQuyen VARCHAR(255),
+    trangThai BIT NOT NULL DEFAULT 1,
+    PRIMARY KEY (maNhomQuyen)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = UTF8MB4_GENERAL_CI;
+
+-- Tạo bảng quyen
+CREATE TABLE IF NOT EXISTS quyen (
+    maQuyen VARCHAR(50) NOT NULL,
+    tenQuyen VARCHAR(255),
+    PRIMARY KEY (maQuyen)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = UTF8MB4_GENERAL_CI;
+
+-- Tạo bảng chitietquyen
+CREATE TABLE IF NOT EXISTS chitietquyen (
+    maNhomQuyen VARCHAR(50) NOT NULL,
+    maChucNang VARCHAR(50) NOT NULL,
+    maQuyen VARCHAR(50) NOT NULL,
+    PRIMARY KEY (maNhomQuyen, maChucNang, maQuyen)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = UTF8MB4_GENERAL_CI;
+
+
+-- Thêm ràng buộc khóa ngoại cho bảng chitietquyen
+ALTER TABLE chitietquyen
+ADD CONSTRAINT fk_chitietquyen_nhomquyen FOREIGN KEY (maNhomQuyen) REFERENCES nhomquyen(maNhomQuyen) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE chitietquyen
+ADD CONSTRAINT fk_chitietquyen_chucnang FOREIGN KEY (maChucNang) REFERENCES chucnang(maChucNang) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE chitietquyen
+ADD CONSTRAINT fk_chitietquyen_quyen FOREIGN KEY (maQuyen) REFERENCES quyen(maQuyen) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+ALTER TABLE `users`
+ADD CONSTRAINT fk_users_nhomquyen FOREIGN KEY (maNhomQuyen) REFERENCES nhomquyen(maNhomQuyen) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE
+  `users`
+ADD
+  PRIMARY KEY (`id`),
+ADD
+  UNIQUE KEY `email` (`email`);
+  
+  
+ALTER TABLE
+  `carts`
+MODIFY
+  `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE
+  `categories`
+MODIFY
+  `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `coupons`
+--
+ALTER TABLE
+  `coupons`
+MODIFY
+  `id` int(11) NOT NULL AUTO_INCREMENT;
+
+
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE
+  `orders`
+MODIFY
+  `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `order_items`
+--
+ALTER TABLE
+  `order_items`
+MODIFY
+  `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE
+  `payments`
+MODIFY
+  `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `payment_methods`
+--
+ALTER TABLE
+  `payment_methods`
+MODIFY
+  `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE
+  `products`
+MODIFY
+  `id` int(11) NOT NULL AUTO_INCREMENT;
+  
+ALTER TABLE
+  `sizes`
+MODIFY
+  `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `size_items`
+--
+ALTER TABLE
+  `size_items`
+MODIFY
+  `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE
+  `users`
+MODIFY
+  `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE
+  `carts`
+ADD
+  CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+ADD
+  CONSTRAINT `carts_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+ADD
+  CONSTRAINT `carts_ibfk_3` FOREIGN KEY (`size_id`) REFERENCES `sizes` (`id`);
+
+
+
+--
+-- Constraints for table `orders`
+--
+ALTER TABLE
+  `orders`
+ADD
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `order_items`
+--
+ALTER TABLE
+  `order_items`
+ADD
+  CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
+ADD
+  CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+ADD
+  CONSTRAINT `order_items_ibfk_3` FOREIGN KEY (`size_id`) REFERENCES `sizes` (`id`);
+
+--
+-- Constraints for table `payments`
+--
+ALTER TABLE
+  `payments`
+ADD
+  CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`method_id`) REFERENCES `payment_methods` (`id`),
+ADD
+  CONSTRAINT `payments_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`);
+
+--
+-- Constraints for table `products`
+--
+ALTER TABLE
+  `products`
+ADD
+  CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
+  
+ALTER TABLE
+  `size_items`
+ADD
+  CONSTRAINT `size_items_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+ADD
+  CONSTRAINT `size_items_ibfk_2` FOREIGN KEY (`size_id`) REFERENCES `sizes` (`id`);
+  
+
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */
+;
+
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */
+;
+
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */
+;
+
+ALTER TABLE
+  `users`
+ADD
+  COLUMN forgotToken VARCHAR(100);
+
+ALTER TABLE
+  `users`
+ADD
+  COLUMN activeToken VARCHAR(100);
+
+ALTER TABLE
+  `users`
+ADD
+  COLUMN create_at DATETIME;
+
+ALTER TABLE
+  `users`
+ADD
+  COLUMN update_at DATETIME;
+
+CREATE TABLE tokenLogin(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  user_id INT,
+  token VARCHAR(100),
+  create_at DATETIME
+);
+
+ALTER TABLE
+  tokenLogin
+ADD
+  CONSTRAINT FK_tokenLogin_user FOREIGN KEY (user_id) REFERENCES `users`(id);
+  
+  
+  
+CREATE TABLE IF NOT EXISTS nhacungcap (
+    maNCC INT(11) PRIMARY KEY AUTO_INCREMENT,
+    ten VARCHAR(255),
+    diaChi VARCHAR(512),
+    sdt VARCHAR(20),
+    email VARCHAR(255),
+    trangThai BIT NOT NULL
+);
+
+
+CREATE TABLE `phieunhap` (
+  `maPhieuNhap` int(11) PRIMARY KEY AUTO_INCREMENT,
+  `user_id` INT(11) DEFAULT NULL,
+  `phieuNhapDate` datetime NOT NULL DEFAULT current_timestamp(),
+  `total_amount` double NOT NULL,
+  `maNCC` INT(11),
+  trangThai BIT NOT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+ALTER TABLE phieunhap
+ADD CONSTRAINT fk_phieunhap_users FOREIGN KEY (user_id) REFERENCES `users`(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE phieunhap
+ADD CONSTRAINT fk_phieunhap_nhacungcap FOREIGN KEY (maNCC) REFERENCES `nhacungcap`(maNCC) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+CREATE TABLE `chitietphieunhap` (
+  `maCTPN` int(11) PRIMARY KEY AUTO_INCREMENT,
+  `maPhieuNhap` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `size_id` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `price` double NOT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+
+ALTER TABLE chitietphieunhap
+ADD CONSTRAINT fk_chitietphieunhap_phieunhap FOREIGN KEY (maPhieuNhap) REFERENCES phieunhap(maPhieuNhap) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE chitietphieunhap
+ADD CONSTRAINT fk_chitietphieunhap_products FOREIGN KEY (product_id) REFERENCES products(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE chitietphieunhap
+ADD CONSTRAINT fk_chitietphieunhap_sizes FOREIGN KEY (size_id) REFERENCES sizes(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
