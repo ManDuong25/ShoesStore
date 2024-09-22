@@ -42,6 +42,7 @@ type localhost/ShoesStore on google search bar
 - CSS
 - Javascript
 - PHP
+- MySQL
 
 # Project Maintainers
 - [ManDuong](https://www.linkedin.com/in/man-duong-5b360132a/)
