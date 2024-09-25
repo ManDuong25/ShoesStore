@@ -199,7 +199,7 @@ $productList = ProductBUS::getInstance()->getAllModels();
                 </div>
 
                 <!-- Update model -->
-                <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                <!-- <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
                     <div class="updateModalWrapper modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -232,7 +232,7 @@ $productList = ProductBUS::getInstance()->getAllModels();
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </main>
             <?php
             if (isPost()) {
@@ -358,7 +358,7 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                 areaPagination.innerHTML = toHTMLPagination(data.totalQuantity, data.thisPage, data.limit);
                                 totalPage = Math.ceil(data.totalQuantity / data.limit);
                                 changePageIndexLogic(totalPage, data.totalQuantity, data.limit);
-                                addEventUpdateBtn(data.listSizeItems);
+                                // addEventUpdateBtn(data.listSizeItems);
                                 addEventDeleteBtn();
                             });
                     }
@@ -378,11 +378,6 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                     <td>${sizeItem.importPrice}</td>
                                     <td>${sizeItem.quantity}</td>
                                     <td>
-                                        <?php if (checkPermission("Q7", "CN2")) { ?>
-                                                                <button class="btn btn-sm btn-warning" name="updateBtn">
-                                                                    <i class='fas fa-edit'></i>
-                                                                </button>
-                                        <?php } ?>
                                         <?php if (checkPermission("Q7", "CN3")) { ?>
                                                                 <button class="deleteSizeItemBtn btn btn-sm btn-danger" name="deleteSizeItemBtn">
                                                                     <i class='fas fa-trash-alt'></i>
@@ -489,35 +484,35 @@ $productList = ProductBUS::getInstance()->getAllModels();
                         loadData(thisPage, limit, filterName);
                     })
 
-                    function showUpdateModal() {
-                        updateModal.style.display = 'block';
-                        updateModal.setAttribute('role', 'dialog');
-                        updateModal.classList.add('show');
-                        updateModal.style.backgroundColor = 'rgba(0,0,0,0.4)';
-                    }
+                    // function showUpdateModal() {
+                    //     updateModal.style.display = 'block';
+                    //     updateModal.setAttribute('role', 'dialog');
+                    //     updateModal.classList.add('show');
+                    //     updateModal.style.backgroundColor = 'rgba(0,0,0,0.4)';
+                    // }
 
-                    function hideUpdateModal() {
-                        updateModal.style.display = 'none';
-                        updateModal.removeAttribute('role');
-                        updateModal.classList.remove('show');
-                        updateModal.style.backgroundColor = 'rgba(0,0,0,0.4)';
-                    }
+                    // function hideUpdateModal() {
+                    //     updateModal.style.display = 'none';
+                    //     updateModal.removeAttribute('role');
+                    //     updateModal.classList.remove('show');
+                    //     updateModal.style.backgroundColor = 'rgba(0,0,0,0.4)';
+                    // }
 
-                    updateModal.addEventListener('click', function () {
-                        hideUpdateModal();
-                    })
+                    // updateModal.addEventListener('click', function () {
+                    //     hideUpdateModal();
+                    // })
 
-                    updateModalWrapper.addEventListener('click', function (e) {
-                        e.stopPropagation();
-                    })
+                    // updateModalWrapper.addEventListener('click', function (e) {
+                    //     e.stopPropagation();
+                    // })
 
-                    closeUpdateModal.addEventListener('click', function () {
-                        hideUpdateModal();
-                    })
+                    // closeUpdateModal.addEventListener('click', function () {
+                    //     hideUpdateModal();
+                    // })
 
-                    closeUpdateModalBtn.addEventListener('click', function () {
-                        hideUpdateModal();
-                    })
+                    // closeUpdateModalBtn.addEventListener('click', function () {
+                    //     hideUpdateModal();
+                    // })
 
 
                     function getElementInListById(list, id) {
@@ -529,21 +524,21 @@ $productList = ProductBUS::getInstance()->getAllModels();
                     }
 
 
-                    function addEventUpdateBtn(list) {
-                        let updateButtons = document.querySelectorAll('[name="updateBtn"]');
-                        updateButtons.forEach(function (button) {
-                            button.addEventListener('click', function () {
-                                let sizeItemElement = this.closest('tr');
-                                sizeItemId = sizeItemElement.getAttribute('id');
+                    // function addEventUpdateBtn(list) {
+                    //     let updateButtons = document.querySelectorAll('[name="updateBtn"]');
+                    //     updateButtons.forEach(function (button) {
+                    //         button.addEventListener('click', function () {
+                    //             let sizeItemElement = this.closest('tr');
+                    //             sizeItemId = sizeItemElement.getAttribute('id');
 
-                                let sizeItemInList = getElementInListById(list, sizeItemId);
+                    //             let sizeItemInList = getElementInListById(list, sizeItemId);
 
-                                inputSizeUpdate.value = sizeItemInList.size;
-                                inputQuantityUpdate.value = sizeItemInList.quantity;
-                                showUpdateModal();
-                            });
-                        });
-                    }
+                    //             inputSizeUpdate.value = sizeItemInList.size;
+                    //             inputQuantityUpdate.value = sizeItemInList.quantity;
+                    //             showUpdateModal();
+                    //         });
+                    //     });
+                    // }
 
                     function addEventDeleteBtn() {
                         let deleteButtons = document.querySelectorAll('.deleteSizeItemBtn');
