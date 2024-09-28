@@ -71,12 +71,12 @@ if (isPost()) {
                 exit;
             } else {
                 header('Content-Type: application/json');
-                echo json_encode(['status' => 'error', 'message' => 'Hệ thống đang gặp sự cố, vui lòng thử lại sau!']);
+                echo json_encode(['status' => 'errorAlert', 'message' => 'Hệ thống đang gặp sự cố, vui lòng thử lại sau!']);
                 exit;
             }
         } else {
             header('Content-Type: application/json');
-            echo json_encode(['status' => 'error', 'message' => 'Hệ thống đang gặp sự cố, vui lòng thử lại sau!']);
+            echo json_encode(['status' => 'errorAlert', 'message' => 'Hệ thống đang gặp sự cố, vui lòng thử lại sau!']);
             exit;
         }
     } else {
@@ -196,8 +196,10 @@ $data = [
                         if (document.querySelector('.top_message')) {
                             document.querySelector('.top_message').remove();
                         }
-                        if (document.querySelector('.error-message')) {
-                            document.querySelector('.error-message').remove();
+                        if (document.querySelectorAll('.error-message')) {
+                            document.querySelectorAll('.error-message').forEach(item => {
+                                item.remove();
+                            });
                         }
                         // Sau khi nhận được phản hồi thành công, đặt lại giá trị của các trường input
                         document.querySelector('input[name="fullname"]').value = "";
@@ -218,8 +220,10 @@ $data = [
                         document.querySelector('.header_register').insertAdjacentHTML('afterend', msg);
 
                     } else if (data.status == 'error') {
-                        if (document.querySelector('.error-message'))
-                            document.querySelector('.error-message').remove();
+                        if (document.querySelectorAll('.error-message'))
+                            document.querySelectorAll('.error-message').forEach(item => {
+                                item.remove();
+                            });
                         var errorsArray = Object.entries(data.errors);
                         for (var i = 0; i < errorsArray.length; i++) {
                             document.querySelector('input[name="' + errorsArray[0][0] + '"]').focus();
@@ -235,6 +239,8 @@ $data = [
                                 }
                             }
                         }
+                    } else if (data.status == 'errorAlert') {
+                        alert(data.message);
                     }
                 });
         }

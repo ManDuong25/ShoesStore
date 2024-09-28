@@ -154,7 +154,7 @@ class UserBUS implements BUSInterface
         }
 
         if ($userModel->getAddress() !== null && !$validation->isValidAddress($userModel->getAddress())) {
-            $errors['address']['valid'] = "Invalid address";
+            $errors['address']['valid'] = "Invalid address (required, no special character allowed)";
         }
 
         if ($userModel->getPassword() == null || trim($userModel->getPassword()) == "") {
