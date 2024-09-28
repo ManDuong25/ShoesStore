@@ -72,7 +72,7 @@ $productList = ProductBUS::getInstance()->getAllModels();
                             <th>Size</th>
                             <th>Import Price</th>
                             <th>Quantity</th>
-                            <th>Action</th>
+                            <!-- <th>Action</th> -->
                         </tr>
                     </thead>
 
@@ -377,13 +377,6 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                     <td>${sizeItem.size}</td>
                                     <td>${sizeItem.importPrice}</td>
                                     <td>${sizeItem.quantity}</td>
-                                    <td>
-                                        <?php if (checkPermission("Q7", "CN3")) { ?>
-                                                                <button class="deleteSizeItemBtn btn btn-sm btn-danger" name="deleteSizeItemBtn">
-                                                                    <i class='fas fa-trash-alt'></i>
-                                                                </button>
-                                        <?php } ?>
-                                    </td>
                                 </tr>
                             `;
                         });
