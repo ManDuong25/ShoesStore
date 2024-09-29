@@ -71,10 +71,10 @@ class validation
 
     public static function isValidAddress($address)
     {
-        $regex = "/^[a-zA-Z0-9., \\-\\/]+$/";
+        // Regex cho phép các ký tự Tiếng Việt, số, dấu chấm, dấu phẩy, gạch ngang, gạch chéo và khoảng trắng
+        $regex = "/^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠ-ỹ0-9., \\-\\/]+$/";
         return self::isMatch($address, $regex);
     }
-
     public static function isValidProductQuantity($quantity)
     {
         $regex = "/^(0|[1-9]\\d*)$/";
