@@ -192,7 +192,7 @@ if (isset($_GET['id'])) {
     <div class="col-md-12">
         <form method="POST">
             <div class="text-center">
-                <button type="button" class="btn btn-secondary" id="cancelEditBtn">Cancel</button>
+                <!-- <button type="button" class="btn btn-secondary" id="cancelEditBtn">Cancel</button> -->
                 <button type="button" class="btn btn-primary" id="updateEditBtn" name="updateEdtBtnName">Update</button>
             </div>
         </form>

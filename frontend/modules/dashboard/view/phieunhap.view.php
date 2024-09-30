@@ -222,7 +222,7 @@ $orderListItem = OrderItemsBUS::getInstance();
                                 <h3 class="finalPriceCtpnView"></h3>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="closeCTPNBtn btn btn-secondary">Cancel</button>
+                                <button hidden type="button" class="closeCTPNBtn btn btn-secondary">Cancel</button>
                                 <?php if (checkPermission("Q10", "CN2")) { ?>
                                     <button type="button" class="acceptPNBtn btn btn-success">Accept</button>
                                 <?php } ?>

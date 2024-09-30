@@ -61,9 +61,9 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                 </div>
                 <div class="search-group input-group">
                     <input type="text" id="accountSearch" class="searchInput form-control" name="searchValue" placeholder="Search product name here...">
-                    <button type="submit" class="btn btn-sm btn-primary align-middle padx-0 pady-0" name="searchBtnName" id="searchBtnId">
+                    <!-- <button type="submit" class="btn btn-sm btn-primary align-middle padx-0 pady-0" name="searchBtnName" id="searchBtnId">
                         <span data-feather="search">Tìm kiếm</span>
-                    </button>
+                    </button> -->
                 </div>
                 <!-- BODY DATABASE -->
                 <table class="table align-middle table-borderless table-hover text-start">
@@ -216,7 +216,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                     <form class="row g-3">
                         <div class="col-md-4">
                             <label for="inputUsername" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="inputUsernameUpdate" name="inputUsernameName">
+                            <input disabled type="text" class="form-control" id="inputUsernameUpdate" name="inputUsernameName">
                         </div>
                         <div class="col-md-3">
                             <label for="inputPassword" class="form-label">Password</label>
@@ -266,7 +266,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="closeUpdateModalBtn" type="button" class="btn btn-secondary">Cancel</button>
+                    <button hidden id="closeUpdateModalBtn" type="button" class="btn btn-secondary">Cancel</button>
                     <button type="submit" class="btn btn-warning" id="updateBtn">Update</button>
                 </div>
                 </form>

@@ -79,7 +79,7 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                 <div class="search-group input-group py-2">
                     <input type="text" name="productSearch" id="productSearchBar" class="searchInput form-control"
                         placeholder="Search anything here...">
-                    <button type="submit" id="productSearchButton" name="productSearchButtonName"
+                    <button hidden type="submit" id="productSearchButton" name="productSearchButtonName"
                         class="btn btn-sm btn-primary align-middle px-3">
                         <span data-feather="search"></span>
                     </button>
@@ -205,7 +205,7 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="closeAddModalBtn btn btn-secondary"
+                                <button hidden type="button" class="closeAddModalBtn btn btn-secondary"
                                     data-bs-dismiss="modal">Cancel</button>
                                 <button type="submit" class="btn btn-primary" id="importBtn"
                                     name="importBtnName">Import</button>
@@ -268,7 +268,7 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                                 <h3 class="totalAmountCartAdmin">Tổng tiền: 0</h3>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="closeCartBtn btn btn-secondary">Cancel</button>
+                                <button hidden type="button" class="closeCartBtn btn btn-secondary">Cancel</button>
                                 <button type="submit" class="btn btn-primary" id="nhapHangBtn">Import</button>
                             </div>
                         </div>
@@ -323,7 +323,7 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button hidden type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <button type="submit" class="btn btn-primary" id="saveButton"
                                     name="saveBtnName">Save</button>
                             </div>

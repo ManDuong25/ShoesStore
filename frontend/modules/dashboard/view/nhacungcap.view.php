@@ -61,9 +61,9 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                 <div class="search-group input-group">
                     <input type="text" id="accountSearch" class="searchInput form-control" name="searchValue"
                         placeholder="Search product name here...">
-                    <button type="submit" class="btn btn-sm btn-primary align-middle padx-0 pady-0" name="searchBtnName"
+                    <button hidden type="submit" class="btn btn-sm btn-primary align-middle padx-0 pady-0" name="searchBtnName"
                         id="searchBtnId">
-                        <span data-feather="search">Tìm kiếm</span>
+                        <span hidden data-feather="search">Tìm kiếm</span>
                     </button>
                 </div>
                 <!-- BODY DATABASE -->
@@ -167,7 +167,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="closeAddModalBtn" type="button" class="btn btn-secondary">Cancel</button>
+                    <button hidden id="closeAddModalBtn" type="button" class="btn btn-secondary">Cancel</button>
                     <button type="submit" class="btn btn-primary" id="saveBtn">Save</button>
                 </div>
                 </form>
@@ -211,7 +211,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="closeUpdateModalBtn" type="button" class="btn btn-secondary">Cancel</button>
+                    <button hidden id="closeUpdateModalBtn" type="button" class="btn btn-secondary">Cancel</button>
                     <button type="submit" class="btn btn-warning" id="updateBtn">Update</button>
                 </div>
                 </form>

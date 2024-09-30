@@ -75,7 +75,7 @@ function showCouponList($coupon)
     echo "<input type='date' class='form-control' id='inputEdtCouponExpiredId" . $coupon->getId() . "' value='" . $coupon->getExpired() . "'>";
     echo "</div>";
     echo "<div class='modal-footer'>";
-    echo "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>";
+    echo "<button hidden type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>";
     echo "<button type='submit' class='btn btn-primary' id='editButtonId' name='editBtnName'>Update</button>";
     echo "</div>";
     echo "</form>";

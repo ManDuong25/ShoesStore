@@ -57,10 +57,10 @@ $productList = ProductBUS::getInstance()->getAllModels();
                 <div class="search-group input-group">
                     <input type="text" id="productSearch" class="searchInput form-control" name="searchValue"
                         placeholder="Search product name here...">
-                    <button type="submit" class="btn btn-sm btn-primary align-middle padx-0 pady-0" name="searchBtnName"
+                    <!-- <button type="submit" class="btn btn-sm btn-primary align-middle padx-0 pady-0" name="searchBtnName"
                         id="searchBtnId">
                         <span data-feather="search"></span>
-                    </button>
+                    </button> -->
                 </div>
 
                 <table class="table align-middle table-borderless table-hover">
@@ -76,6 +76,7 @@ $productList = ProductBUS::getInstance()->getAllModels();
                         </tr>
                     </thead>
 
+                    <br>
                     <tbody class="areaSizeItems">
                         <nav aria-label='Page navigation example'>
                             <ul class='pagination justify-content-start areaPagination'>
@@ -190,7 +191,7 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button hidden type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <button type="submit" class="btn btn-primary" id="saveButton"
                                     name="saveBtnName">Save</button>
                             </div>

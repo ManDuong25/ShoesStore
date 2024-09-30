@@ -114,7 +114,7 @@ use backend\bus\SizeBUS;
                                                         name="sizeName">
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
+                                                    <button hidden type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Cancel</button>
                                                     <button type="submit" class="btn btn-primary" id="editButtonId"
                                                         name="editButtonName">Update</button>

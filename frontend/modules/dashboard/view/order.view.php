@@ -244,7 +244,7 @@ function completeOrderHandler($orderId)
                                 <hr>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="closeCTHDBtn btn btn-secondary">Cancel</button>
+                                <button hidden type="button" class="closeCTHDBtn btn btn-secondary">Cancel</button>
                             </div>
                         </div>
                     </div>

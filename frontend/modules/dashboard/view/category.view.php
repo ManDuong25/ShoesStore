@@ -114,7 +114,7 @@ use backend\bus\CategoriesBUS;
                                                         value="<?php echo $categories->getName(); ?>" name="categoryName">
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
+                                                    <button  hidden type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Cancel</button>
                                                     <button type="submit" class="btn btn-primary" id="editButtonId"
                                                         name="editButtonName">Update</button>

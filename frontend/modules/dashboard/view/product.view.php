@@ -64,10 +64,10 @@ $productList = ProductBUS::getInstance()->getAllModels();
                 <div class="search-group input-group py-2">
                     <input type="text" name="productSearch" id="productSearchBar" class="searchInput form-control"
                         placeholder="Search anything here...">
-                    <button type="submit" id="productSearchButton" name="productSearchButtonName"
+                    <!-- <button type="submit" id="productSearchButton" name="productSearchButtonName"
                         class="btn btn-sm btn-primary align-middle px-3">
                         <span data-feather="search"></span>
-                    </button>
+                    </button> -->
                 </div>
 
                 <table class="table align-middle table-borderless table-hover">
@@ -188,7 +188,7 @@ $productList = ProductBUS::getInstance()->getAllModels();
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button hidden type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <button type="submit" class="btn btn-primary" id="saveButton"
                                     name="saveBtnName">Save</button>
                             </div>
