@@ -194,21 +194,6 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                 }
                 ?>
             </li>
-            <li class="nav-item">
-                <?php
-                if (checkPermission("Q11", "CN1")) {
-                    ?>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo isActivePage($_GET['view'], 'nhacungcap.view'); ?>"
-                        href="?module=dashboard&view=nhacungcap.view">
-                        <span data-feather="users"></span>
-                        Nhà Cung Cấp
-                    </a>
-                </li>
-                <?php
-                }
-                ?>
-            </li>
         </ul>
     </div>
 </nav>
