@@ -70,10 +70,10 @@ class NhomQuyenDAO
         ];
         return DatabaseConnection::executeUpdate($query, ...$args);
     }
-
+    
     public function update($data): int
     {
-        $query = "UPDATE nhomQuyen SET tenNhomQuyen = ?, trangThai = ? WHERE maNhomQuyen = ?";
+        $query = "UPDATE nhomquyen SET tenNhomQuyen = ?, trangThai = ? WHERE maNhomQuyen = ?";
         $args = [
             $data->getTenNhomQuyen(),
             $data->getTrangThai(),
@@ -88,7 +88,8 @@ class NhomQuyenDAO
         return DatabaseConnection::executeUpdate($query, $maNhomQuyen);
     }
 
-    public function getNhomQuyenByTenNhomQuyen($tenNhomQuyen) {
+    public function getNhomQuyenByTenNhomQuyen($tenNhomQuyen)
+    {
         $query = "SELECT * from nhomquyen WHERE tenNhomQuyen = ?";
         $result = DatabaseConnection::executeQuery($query, $tenNhomQuyen);
         if ($result->num_rows > 0) {
