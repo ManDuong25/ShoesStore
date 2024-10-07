@@ -44,7 +44,7 @@ if (isLogin()) {
                         session::getInstance()->setFlashData('msg', 'Please check your email to reset your password!');
                         session::getInstance()->setFlashData('msg_type', 'success');
                     } else {
-                        session::getInstance()->setFlashData('msg', 'System error! Please try again later!(email)');
+                        session::getInstance()->setFlashData('msg', 'Some error occured! (Email not exist or bad network connection)');
                         session::getInstance()->setFlashData('msg_type', 'danger');
                     }
                 } else {
@@ -77,10 +77,12 @@ $msgType = session::getInstance()->getFlashData('msg_type');
     <div class="row">
         <div class="cw col-4" style="margin:50px auto;">
             <h2 style="text-align: center; text-transform: uppercase;">Forgot password</h2>
-            <?php
-            if (!empty($msg)) {
-                getMsg($msg, $msgType);
-            } ?>
+            <?php if (!empty($msg)) { ?>
+                <div class="text-center alert alert-<?php echo $msgType; ?>">
+                    <?php echo $msg; ?>
+                </div>
+            <?php } ?>
+
             <form action="" method="post">
                 <div class="form-group mg-form">
                     <label for="">Email</label>

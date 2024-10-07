@@ -60,7 +60,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                     <?php } ?>
                 </div>
                 <div class="search-group input-group">
-                    <input type="text" id="accountSearch" class="searchInput form-control" name="searchValue" placeholder="Search product name here...">
+                    <input type="text" id="accountSearch" class="searchInput form-control" name="searchValue" placeholder="Search user email here...">
                     <!-- <button type="submit" class="btn btn-sm btn-primary align-middle padx-0 pady-0" name="searchBtnName" id="searchBtnId">
                         <span data-feather="search">Tìm kiếm</span>
                     </button> -->

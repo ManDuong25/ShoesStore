@@ -78,7 +78,7 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
 
                 <div class="search-group input-group py-2">
                     <input type="text" name="productSearch" id="productSearchBar" class="searchInput form-control"
-                        placeholder="Search anything here...">
+                        placeholder="Search product name here...">
                     <button hidden type="submit" id="productSearchButton" name="productSearchButtonName"
                         class="btn btn-sm btn-primary align-middle px-3">
                         <span data-feather="search"></span>
@@ -722,6 +722,7 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                                     productCateCS.value = productChosen.categoryName;
                                     productGenderCS.value = productChosen.gender == 1 ? 'Male' : 'Female';
                                     productQuantityCS.value = "";
+                                    productPriceCS.value = "";
                                 })
                             })
                         }
@@ -741,15 +742,18 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                             }
 
                             if (isNaN(productQuantity)) {
-                                console.log(productQuantity);
                                 alert('Số lượng phải là một số!');
                                 return;
                             }
+                            
+                            let quantityNumber = Number(productQuantity);
+                            if (!Number.isInteger(quantityNumber)) {
+                                alert('Số lượng phải là một số nguyên!');
+                                return;
+                            }
 
-                            let quantityInt = parseInt(productQuantity);
-                            if (!Number.isInteger(quantityInt)) {
-                                console.log(quantityInt);
-                                alert('Số lượng phải là số nguyên!');
+                            if (quantityNumber <= 0) {
+                                alert('Số lượng phải > 0!');
                                 return;
                             }
 

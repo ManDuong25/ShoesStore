@@ -62,10 +62,10 @@ $orderListItem = OrderItemsBUS::getInstance();
 
                 <!-- SEARCH BAR -->
                 <div class="container-lg d-flex justify-content-start m-0">
-                    <form action="" method="POST" class="m-0 col-lg-6">
+                    <form id="testForm" method="POST" class="m-0 col-lg-6">
                         <div class="input-group">
                             <input type="text" id="filterNameOrder" class="searchInput form-control my-2 rounded-0"
-                                placeholder="Search anything here..." style="width: 100%;">
+                                placeholder="Search staff name here..." style="width: 100%;">
                             <input type="date" id="dateFromOrder" class="form-control rounded-0" style="width: 120px;"
                                 placeholder="Start Date">
                             <input type="date" id="dateToOrder" class="form-control rounded-0" style="width: 120px;"
@@ -702,6 +702,16 @@ $orderListItem = OrderItemsBUS::getInstance();
                     filterStatus = filterStatusOrder.value;
                     loadData(thisPage, limit, filterName, dateFrom, dateTo, filterStatus);
                 })
+
+
+                document.querySelector('#testForm').addEventListener('keydown', function (event) {
+                    if (event.key === 'Enter') {
+                        event.preventDefault(); // Ngăn form submit mặc định khi nhấn Enter
+                    }
+                });
+
+
+
             </script>
             <?php include(__DIR__ . '/../inc/app/app.php'); ?>
 </body>

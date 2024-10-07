@@ -1,5 +1,5 @@
 <?php
-
+require 'VerifyEmail.php';
 use backend\bus\ChiTietQuyenBUS;
 use backend\bus\RolePermissionBUS;
 use backend\enums\StatusEnums;
@@ -25,9 +25,22 @@ function layouts($layoutName, $data = [])
     }
 }
 
+
 // Hàm gửi mail 
 function sendMail($to, $subject, $content)
 {
+    $mailCheck = new VerifyEmail();
+    $mailCheck->setStreamTimeoutWait(5); // Giảm thời gian chờ nếu cần
+    $mailCheck->Debug = TRUE;
+    $mailCheck->Debugoutput = 'html';
+    $mailCheck->setEmailFrom("manshpypro@gmail.com");
+
+    // Nếu email hợp lệ về cú pháp, tiến hành kiểm tra chi tiết
+    if ($mailCheck->check($to)) {
+
+    } else {
+        return false;
+    }
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailer(true);
 
@@ -54,7 +67,6 @@ function sendMail($to, $subject, $content)
 
 
         $sendMailStatus = $mail->send();
-        // echo 'Gửi thành công!';
     } catch (Exception $e) {
         echo "Gửi mail thất bại. Mailer Error: {$mail->ErrorInfo}";
     }
@@ -172,7 +184,7 @@ function isAllowToDashBoard()
     $tokenLogin = session::getInstance()->getSession('tokenLogin');
     if ($tokenLogin === null) {
         return false;
-    }   
+    }
 
     $tokenModel = TokenLoginBUS::getInstance()->getModelByToken($tokenLogin);
     if ($tokenModel === null) {

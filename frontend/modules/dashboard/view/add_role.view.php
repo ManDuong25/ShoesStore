@@ -18,7 +18,7 @@ if (!isAllowToDashBoard()) {
     die('Access denied');
 }
 
-if (!checkPermission("Q9", "CN1") || !checkPermission("Q9", "CN4")){
+if (!checkPermission("Q9", "CN1") || !checkPermission("Q9", "CN4")) {
     die('Access denied');
 }
 
@@ -68,6 +68,8 @@ if (isPost()) {
         $permissionsData = json_decode($jsonData, true);
 
         $nhomQuyen = NhomQuyenBUS::getInstance()->getModelById($roleId);
+
+
         if ($nhomQuyen) {
             if ($tenNhomQuyen == $nhomQuyen->getTenNhomQuyen()) {
                 $resultDeleteOldCTQ = ChiTietQuyenBUS::getInstance()->deleteModel($roleId);
@@ -142,26 +144,28 @@ if (isPost()) {
 
             <!-- MAIN -->
             <main class="col-9 ms-sm-auto col-lg-10 px-4">
-                <div class="d-flex justify-content-between flex-wrap flex-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">
                         <?= $title ?>
                     </h1>
                 </div>
                 <input type="text" name="roleName" id="addRoleName" class="form-control" value="<?php
 
-                                                                                                if (isGet()) {
-                                                                                                    $filterAll = filter();
-                                                                                                    if (isset($filterAll['roleId'])) {
-                                                                                                        $roleId = $filterAll['roleId'];
-                                                                                                        if ($roleId == "") {
-                                                                                                        } else {
-                                                                                                            $tenNhomQuyen = NhomQuyenBUS::getInstance()->getModelById($roleId)->getTenNhomQuyen();
-                                                                                                            echo $tenNhomQuyen;
-                                                                                                        }
-                                                                                                    } else {
-                                                                                                    }
-                                                                                                }
-                                                                                                ?>" placeholder="Nhập tên nhóm quyền...">
+                if (isGet()) {
+                    $filterAll = filter();
+                    if (isset($filterAll['roleId'])) {
+                        $roleId = $filterAll['roleId'];
+                        if ($roleId == "") {
+                        } else {
+                            $tenNhomQuyen = NhomQuyenBUS::getInstance()->getModelById($roleId)->getTenNhomQuyen();
+                            echo $tenNhomQuyen;
+                        }
+                    } else {
+                    }
+                }
+                ?>"
+                    placeholder="Nhập tên nhóm quyền...">
                 <hr>
 
                 <table class="table align-middle table-borderless table-hover">
@@ -206,8 +210,10 @@ if (isPost()) {
                                                     break;
                                                 }
                                             }
-                                            if ($isChecked)  echo '<input type="checkbox" checked class="' . $chucNang->getMaChucNang() . '" style="transform: scale(2); width:100%; text-align: center;">';
-                                            else  echo '<input type="checkbox" class="' . $chucNang->getMaChucNang() . '" style="transform: scale(2); width:100%; text-align: center;">';
+                                            if ($isChecked)
+                                                echo '<input type="checkbox" checked class="' . $chucNang->getMaChucNang() . '" style="transform: scale(2); width:100%; text-align: center;">';
+                                            else
+                                                echo '<input type="checkbox" class="' . $chucNang->getMaChucNang() . '" style="transform: scale(2); width:100%; text-align: center;">';
                                             echo '</td>';
                                         }
                                         echo '</tr>';
@@ -244,7 +250,7 @@ if (isPost()) {
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function () {
                 let cancelCreateNewRoleBtn = document.querySelector('.cancelCreateNewRoleBtn');
                 let checkboxes = document.querySelectorAll('input[type="checkbox"]');
                 let permissionsData = {};
@@ -253,29 +259,29 @@ if (isPost()) {
                 let addRoleName = document.getElementById('addRoleName');
                 let updateOldRoleBtn = document.getElementById('updateOldRoleBtn');
 
-                cancelCreateNewRoleBtn.addEventListener('click', function() {
+                cancelCreateNewRoleBtn.addEventListener('click', function () {
                     window.location.href = 'http://localhost/ShoesStore/frontend/?module=dashboard&view=role.view';
                 })
 
                 function resetAllCheckBox() {
-                    checkboxes.forEach(function(checkbox) {
+                    checkboxes.forEach(function (checkbox) {
                         checkbox.checked = false;
                     });
                 }
 
-                checkboxes.forEach(function(checkbox) {
-                    checkbox.addEventListener('click', function(event) {
+                checkboxes.forEach(function (checkbox) {
+                    checkbox.addEventListener('click', function (event) {
                         let currentRow = event.target.closest('tr');
                         let firstCheckbox = currentRow.querySelector('.CN1');
 
                         if (checkbox === firstCheckbox && !checkbox.checked) {
                             alert('Bạn phải chọn chức năng XEM trước khi chọn các chức năng KHÁC!');
-                            currentRow.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
+                            currentRow.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) {
                                 checkbox.checked = false;
                             });
                         } else if (checkbox !== firstCheckbox && firstCheckbox && !firstCheckbox.checked) {
                             alert('Bạn phải chọn chức năng XEM trước khi chọn các chức năng KHÁC!');
-                            currentRow.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
+                            currentRow.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) {
                                 checkbox.checked = false;
                             });
                         }
@@ -284,7 +290,7 @@ if (isPost()) {
 
 
                 if (createNewRoleBtn) {
-                    createNewRoleBtn.addEventListener('click', function() {
+                    createNewRoleBtn.addEventListener('click', function () {
                         if (addRoleName.value == '') {
                             alert('Bạn phải nhập tên nhóm quyền trước khi tạo!');
                             return;
@@ -293,13 +299,13 @@ if (isPost()) {
 
                         let rows = document.querySelectorAll('tbody tr');
                         let index = 1;
-                        rows.forEach(function(row) {
+                        rows.forEach(function (row) {
                             let maQuyen = "Q" + index++;
 
                             let chucNangList = [];
 
                             let checkboxes = row.querySelectorAll('input[type="checkbox"]');
-                            checkboxes.forEach(function(checkbox) {
+                            checkboxes.forEach(function (checkbox) {
                                 if (checkbox.checked) {
                                     chucNangList.push(checkbox.className);
                                 }
@@ -318,17 +324,18 @@ if (isPost()) {
                         let jsonData = JSON.stringify(permissionsData);
 
                         fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=add_role.view', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                },
-                                body: 'data=' + jsonData + '&tenNhomQuyen=' + addRoleName.value + '&createNew=' + true
-                            })
-                            .then(function(response) {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: 'data=' + jsonData + '&tenNhomQuyen=' + addRoleName.value + '&createNew=' + true
+                        })
+                            .then(function (response) {
                                 return response.json();
                             })
-                            .then(function(data) {
+                            .then(function (data) {
                                 alert(data.message);
+                                permissionsData = {};
                                 resetAllCheckBox();
                                 addRoleName.value = '';
                             });
@@ -343,7 +350,8 @@ if (isPost()) {
                 }
 
                 if (updateOldRoleBtn) {
-                    updateOldRoleBtn.addEventListener('click', function() {
+                    updateOldRoleBtn.addEventListener('click', function () {
+                        permissionsData = {};
                         if (addRoleName.value == '') {
                             alert('Bạn phải nhập tên nhóm quyền trước khi tạo!');
                             return;
@@ -354,13 +362,13 @@ if (isPost()) {
 
                         let rows = document.querySelectorAll('tbody tr');
                         let index = 1;
-                        rows.forEach(function(row) {
+                        rows.forEach(function (row) {
                             let maQuyen = "Q" + index++;
 
                             let chucNangList = [];
 
                             let checkboxes = row.querySelectorAll('input[type="checkbox"]');
-                            checkboxes.forEach(function(checkbox) {
+                            checkboxes.forEach(function (checkbox) {
                                 if (checkbox.checked) {
                                     chucNangList.push(checkbox.className);
                                 }
@@ -379,16 +387,17 @@ if (isPost()) {
                         let jsonData = JSON.stringify(permissionsData);
 
                         fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=add_role.view', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                },
-                                body: 'data=' + jsonData + '&tenNhomQuyen=' + addRoleName.value + '&updateNQ=' + true + '&roleId=' + roleId
-                            })
-                            .then(function(response) {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: 'data=' + jsonData + '&tenNhomQuyen=' + addRoleName.value + '&updateNQ=' + true + '&roleId=' + roleId
+                        })
+                            .then(function (response) {
                                 return response.json();
                             })
-                            .then(function(data) {
+                            .then(function (data) {
+                                console.log(permissionsData);
                                 alert(data.message);
                             });
                     })

@@ -29,8 +29,15 @@ $(document).ready(function () {
                 alert("Please enter a valid quantity");
                 return;
             }
+            
+            var quantityNumber = Number(quantity);
+            console.log(quantityNumber);
+            if (!Number.isInteger(quantityNumber)) {
+                alert("Quantity must be an integer");
+                return;
+            }
 
-            if (quantity < 1) {
+            if (quantity <= 0) {
                 alert("Quantity should be greater than 0");
                 return;
             }
