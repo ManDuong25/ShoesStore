@@ -2,6 +2,7 @@
 
 use backend\bus\CartsBUS;
 use backend\enums\StatusEnums;
+use PHPUnit\Framework\Constraint\IsEmpty;
 
 ob_start();
 
@@ -481,6 +482,10 @@ $userIdNow = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginNow)->getU
                         $userId = TokenLoginBUS::getInstance()->getModelByToken($tokenLogin)->getUserId();
 
                         $userCartItems = CartsBUS::getInstance()->getModelByUserId($userId);
+                        if (empty($userCartItems)) {
+                            ob_end_clean();
+                            return jsonResponse('error',  'Cart must have at least 1 product!');
+                        }
                         $totalAmount = 0;
 
                         foreach ($userCartItems as $userCartItem) {
