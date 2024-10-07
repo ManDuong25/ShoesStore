@@ -51,7 +51,7 @@ if (!empty($token)) {
         $msg = session::getInstance()->getFlashData('msg');
         $msg_type = session::getInstance()->getFlashData('msg_type');
         $errors = session::getInstance()->getFlashData('errors');
-        ?>
+?>
         <!-- Bảng đặt lại mật khẩu -->
         <div id="header">
             <?php layouts('header', $data); ?>
@@ -87,7 +87,7 @@ if (!empty($token)) {
                 </div>
             </div>
         </body>
-        <?php
+<?php
     } else {
         getMsg("Liên kết không tồn tại hoặc đã hết hạn.", "danger");
     }
