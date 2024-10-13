@@ -135,6 +135,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
+            if (newPassword.value.length < 6) {
+                alert("Password minimum length is 6!");
+                return;
+            }
+
+            if (newPassword.value.length > 30) {
+                alert("Password maximum length is 30!");
+                return;
+            }
+
             //Check for empty confirm new password field:
             if (confirmNewPassword.value === "") {
                 alert("Please confirm your new password!");

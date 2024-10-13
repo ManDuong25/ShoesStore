@@ -876,6 +876,15 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                     alert("Please fill all fields");
                     return;
                 }
+                if (passwordUpdate.value < 6) {
+                    alert("Password minimum length is 6");
+                    return;
+                }
+
+                if (passwordUpdate.value > 30) {
+                    alert("Password maximum length is 30");
+                    return;
+                }
 
                 fetch('http://localhost/ShoesStore/frontend/?module=dashboard&view=account.view', {
                         method: 'POST',

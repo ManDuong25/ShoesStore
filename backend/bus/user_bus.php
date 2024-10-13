@@ -175,7 +175,7 @@ class UserBUS implements BUSInterface
         }
 
         if (strlen($userModel->getPassword()) < 6) {
-            $errors['password']['min-length'] = "Password must be at least 8 characters";
+            $errors['password']['min-length'] = "Password must be at least 6 characters";
         }
 
         $passwordValidationResult = $validation->isValidPassword($userModel->getPassword());
@@ -184,8 +184,8 @@ class UserBUS implements BUSInterface
             $errors['password']['valid'] = $passwordValidationResult;
         }
 
-        if (strlen($userModel->getPassword()) < 6) {
-            $errors['password']['min-length'] = "Password must be at least 8 characters";
+        if (strlen($userModel->getPassword()) > 30) {
+            $errors['password']['max-length'] = "Password must less than 30 characters";
         }
 
         // Validate email and name
@@ -223,8 +223,12 @@ class UserBUS implements BUSInterface
             $errors['password']['valid'] = "Invalid password";
         }
 
-        if (strlen($password) < 8) {
-            $errors['password']['min-length'] = "Password must be at least 8 characters";
+        if (strlen($password) < 6) {
+            $errors['password']['min-length'] = "Password must be at least 6 characters";
+        }
+
+        if (strlen($password) > 30) {
+            $errors['password']['max-length'] = "Password must less than 30 characters";
         }
 
         if ($password != $password_confirm) {
