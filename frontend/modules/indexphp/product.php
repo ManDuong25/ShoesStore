@@ -146,8 +146,10 @@ $products = ProductBUS::getInstance()->getAllModels();
     <div class="con_product">
         <form method="POST">
             <div class="psearch">
-                <input class="searchInput" type="text" name="searchbox" placeholder="Nhập sản phẩm bạn muốn tìm kiếm" required>
-                <button class="custom-btn btn-14" name="searchBtn" id="searchBtnId" onchange="this.form.submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <input class="searchInput" type="text" name="searchbox" placeholder="Nhập sản phẩm bạn muốn tìm kiếm"
+                    required>
+                <button class="custom-btn btn-14" name="searchBtn" id="searchBtnId" onchange="this.form.submit"><i
+                        class="fa-solid fa-magnifying-glass"></i></button>
             </div>
         </form>
 
@@ -174,10 +176,11 @@ $products = ProductBUS::getInstance()->getAllModels();
                 <fieldset>
                     <legend>Price</legend>
                     <label for="min_price">Minimum Price:</label>
-                    <input type="number" name="min_price" min="0" placeholder="100000">
+                    <input type="text" name="min_price" min="0" placeholder="100000">
                     <br>
                     <label for="max_price">Maximum Price:</label>
-                    <input type="number" name="max_price" min="<?php echo $_POST['min_price'] ?? '' ?>" placeholder="100000">
+                    <input type="text" name="max_price" min="<?php echo $_POST['min_price'] ?? '' ?>"
+                        placeholder="100000">
                 </fieldset>
             </div>
             <div class="container_pagination">
@@ -238,7 +241,7 @@ $products = ProductBUS::getInstance()->getAllModels();
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         let thisPage = 1;
         let limit = 12;
         let areaProduct = document.querySelector('.areaproduct');
@@ -251,7 +254,6 @@ $products = ProductBUS::getInstance()->getAllModels();
         let categoryRadios = document.querySelectorAll('input[name="category"]');
         let genderRadios = document.querySelectorAll('input[name="gender"]');
         let inputPriceFrom = document.querySelector('input[name="min_price"]');
-        console.log(inputPriceFrom)
         let inputPriceTo = document.querySelector('input[name="max_price"]');
 
         let filterName = "";
@@ -263,20 +265,19 @@ $products = ProductBUS::getInstance()->getAllModels();
         // Hàm tải dữ liệu cho trang hiện tại
         function loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo) {
             fetch('http://localhost/ShoesStore/frontend/?module=indexphp&action=product', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: 'thisPage=' + thisPage + '&limit=' + limit + '&filterName=' + filterName + '&filterCategory=' + filterCategory + '&filterGender=' + filterGender + '&filterPriceFrom=' + filterPriceFrom + '&filterPriceTo=' + filterPriceTo
-                })
-                .then(function(response) {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'thisPage=' + thisPage + '&limit=' + limit + '&filterName=' + filterName + '&filterCategory=' + filterCategory + '&filterGender=' + filterGender + '&filterPriceFrom=' + filterPriceFrom + '&filterPriceTo=' + filterPriceTo
+            })
+                .then(function (response) {
                     return response.json();
                 })
-                .then(function(data) {
+                .then(function (data) {
                     areaProduct.innerHTML = toHTMLProductList(data.listProducts);
                     areaPage.innerHTML = toHTMLPagination(data.totalQuantity, data.thisPage, data.limit);
                     totalPage = Math.ceil(data.totalQuantity / data.limit);
-                    console.log(filterGender)
                     changePageIndexLogic(totalPage, data.totalQuantity, data.limit);
                 });
         }
@@ -341,18 +342,18 @@ $products = ProductBUS::getInstance()->getAllModels();
                     document.getElementById('nextPage').classList.remove('hideBtn');
                 }
 
-                document.getElementById('prevPage').addEventListener('click', function() {
+                document.getElementById('prevPage').addEventListener('click', function () {
                     thisPage--;
                     loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
                 })
 
-                document.getElementById('nextPage').addEventListener('click', function() {
+                document.getElementById('nextPage').addEventListener('click', function () {
                     thisPage++;
                     loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
                 })
 
-                pageIndexButtons.forEach(function(button) {
-                    button.addEventListener('click', function() {
+                pageIndexButtons.forEach(function (button) {
+                    button.addEventListener('click', function () {
                         thisPage = parseInt(this.textContent);
                         loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
                     });
@@ -366,39 +367,82 @@ $products = ProductBUS::getInstance()->getAllModels();
             }
         }
 
-        searchInput.addEventListener('input', function() {
+        searchInput.addEventListener('input', function () {
             filterName = searchInput.value;
             thisPage = 1;
             loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
         })
 
-        categoryRadios.forEach(function(categoryRadio) {
-            categoryRadio.addEventListener('click', function() {
+        categoryRadios.forEach(function (categoryRadio) {
+            categoryRadio.addEventListener('click', function () {
                 filterCategory = categoryRadio.value;
                 thisPage = 1;
                 loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
             });
         })
 
-        genderRadios.forEach(function(genderRadio) {
-            genderRadio.addEventListener('click', function() {
+        genderRadios.forEach(function (genderRadio) {
+            genderRadio.addEventListener('click', function () {
                 filterGender = genderRadio.value;
                 thisPage = 1;
                 loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
             })
         })
 
-        inputPriceFrom.addEventListener('change', function() {
-            filterPriceFrom = inputPriceFrom.value;
-            thisPage = 1;
-            loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
-        })
+        inputPriceFrom.addEventListener('change', function () {
+            filterPriceFrom = inputPriceFrom.value.trim();
 
-        inputPriceTo.addEventListener('change', function() {
-            filterPriceTo = inputPriceTo.value;
+            if (filterPriceFrom !== '') {
+                let parsedPriceFrom = parseFloat(filterPriceFrom);
+
+                if (isNaN(parsedPriceFrom)) {
+                    alert("Giá từ phải là một số.");
+                    inputPriceFrom.value = '';
+                    return;
+                } else if (parsedPriceFrom < 0) {
+                    alert("Giá từ không thể là số âm.");
+                    inputPriceFrom.value = '';
+                    return;
+                }
+                filterPriceFrom = parsedPriceFrom;
+            }
+
             thisPage = 1;
             loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
-        })
+        });
+
+        inputPriceTo.addEventListener('change', function () {
+            filterPriceTo = inputPriceTo.value.trim();
+
+            if (filterPriceTo !== '') {
+                let parsedPriceTo = parseFloat(filterPriceTo);
+
+                if (isNaN(parsedPriceTo)) {
+                    alert("Giá đến phải là một số.");
+                    inputPriceTo.value = '';
+                    return;
+                } else if (parsedPriceTo < 0) {
+                    alert("Giá đến không thể là số âm.");
+                    inputPriceTo.value = '';
+                    return;
+                }
+
+                if (filterPriceFrom !== '' && !isNaN(parseFloat(filterPriceFrom))) {
+                    let parsedPriceFrom = parseFloat(filterPriceFrom);
+                    if (parsedPriceTo < parsedPriceFrom) {
+                        alert("Giá đến phải lớn hơn hoặc bằng giá từ.");
+                        inputPriceTo.value = '';
+                        return;
+                    }
+                }
+                filterPriceTo = parsedPriceTo;
+            }
+
+            thisPage = 1;
+            loadData(thisPage, limit, filterName, filterCategory, filterGender, filterPriceFrom, filterPriceTo);
+        });
+
+
 
     });
 </script>
