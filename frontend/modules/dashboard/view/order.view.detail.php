@@ -137,26 +137,26 @@ include(__DIR__ . '/../inc/head.php');
                             echo '<div style="height: 300px; overflow-y: auto;">'; // Adjust the height as needed
                             foreach ($orderItemsListBasedOnOrderFromUser as $orderItem) {
                                 echo '<div class="card shadow-0 border mb-4">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-2">
-                    <img src="' . ProductBUS::getInstance()->getModelById($orderItem->getProductId())->getImage() . '" class="img-fluid" alt="Shoes">
-                </div>
-                <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                    <p class="text-muted mb-0">' . ProductBUS::getInstance()->getModelById($orderItem->getProductId())->getName() . '</p>
-                </div>
-                <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                    <p class="text-muted mb-0 small">Size: ' . $orderItem->getSizeId() . '</p>
-                </div>
-                <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                    <p class="text-muted mb-0 small">Qty: ' . $orderItem->getQuantity() . '</p>
-                </div>
-                <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                    <p class="text-muted mb-0 small">$ ' . $orderItem->getPrice() . '</p>
-                </div>
-            </div>
-        </div>
-    </div>';
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <img src="' . ProductBUS::getInstance()->getModelById($orderItem->getProductId())->getImage() . '" class="img-fluid" alt="Shoes">
+                                            </div>
+                                            <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                <p class="text-muted mb-0">' . ProductBUS::getInstance()->getModelById($orderItem->getProductId())->getName() . '</p>
+                                            </div>
+                                            <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                <p class="text-muted mb-0 small">Size: ' . $orderItem->getSizeId() . '</p>
+                                            </div>
+                                            <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                <p class="text-muted mb-0 small">Qty: ' . $orderItem->getQuantity() . '</p>
+                                            </div>
+                                            <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                <p class="text-muted mb-0 small">$ ' . $orderItem->getPrice() . '</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>';
                             }
                             echo '</div>';
                             ?>
