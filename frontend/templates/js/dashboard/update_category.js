@@ -24,6 +24,7 @@ $(document).ready(function () {
             alert('Category name cannot be empty');
             return;
         }
+        
         $.ajax({
             url: 'http://localhost/ShoesStore/frontend/index.php?module=dashboard&view=category.view',
             method: 'POST',

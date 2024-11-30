@@ -9,6 +9,10 @@ $(document).ready(function () {
                 alert("Please enter category name");
                 return;
             }
+            if (categoryName.value.length > 100) {
+                alert("Category name max length is 100!");
+                return;
+            }
             //Check if category name is valid:
             let trimmedCategoryName = categoryName.value.trim();
             if (trimmedCategoryName.length < 3) {

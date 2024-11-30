@@ -290,7 +290,7 @@ $ordersListFromUser = OrdersBUS::getInstance()->getOrdersByUserId($userModel->ge
 
     <script src="<?php echo _WEB_HOST_TEMPLATE ?>/js/email-decode.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="<?php echo _WEB_HOST_TEMPLATE ?>/js/profile_setting.js"></script>
+    <script src="<?php echo _WEB_HOST_TEMPLATE ?>/js/profile_setting.js?v=<?php echo time(); ?>"></script>
 </body>
 
 <div id="footer">
