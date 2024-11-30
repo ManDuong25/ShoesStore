@@ -5,9 +5,7 @@ use backend\bus\TokenLoginBUS;
 use backend\bus\UserBUS;
 
 if (isLogin()) {
-    $token = session::getInstance()->getSession('tokenLogin');
-    $tokenModel = TokenLoginBUS::getInstance()->getModelByToken($token);
-    $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
+    $userModel = UserBUS::getInstance()->getModelById(1);
 }
 
 if (!defined('_CODE')) {

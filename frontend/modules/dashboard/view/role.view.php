@@ -8,27 +8,28 @@ use backend\bus\QuyenBUS;
 use backend\services\session;
 use backend\bus\TokenLoginBUS;
 
-$title = 'Roles Setup';
-if (!defined('_CODE')) {
-    die('Access denied');
-}
+// $title = 'Roles Setup';
+// if (!defined('_CODE')) {
+//     die('Access denied');
+// }
 
-if (!isAllowToDashBoard()) {
-    die('Access denied');
-}
+// if (!isAllowToDashBoard()) {
+//     die('Access denied');
+// }
 
-if (!checkPermission("Q9", "CN1")) {
-    die('Access denied');
-}
+// if (!checkPermission("Q9", "CN1")) {
+//     die('Access denied');
+// }
 
 include(__DIR__ . '/../inc/head.php');
 
 $chucNangList = ChucNangBUS::getInstance()->getAllModels();
 $quyenList = QuyenBUS::getInstance()->getAllModels();
 
-$tokenLoginTemp = session::getInstance()->getSession('tokenLogin');
-$userIdTemp = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginTemp)->getUserId();
-$userLoginRightNow = UserBUS::getInstance()->getModelById($userIdTemp);
+// $tokenLoginTemp = session::getInstance()->getSession('tokenLogin');
+// $userIdTemp = TokenLoginBUS::getInstance()->getModelByToken($tokenLoginTemp)->getUserId();
+// $userLoginRightNow = UserBUS::getInstance()->getModelById($userIdTemp);
+$userLoginRightNow = UserBUS::getInstance()->getModelById(1);
 
 
 
