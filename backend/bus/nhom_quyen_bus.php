@@ -6,6 +6,30 @@ use InvalidArgumentException;
 use backend\dao\NhomQuyenDAO;
 use Exception;
 
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    
+    // Handle GET: Retrieve data
+    if (isset($_GET['id'])) {
+        // Get specific role by ID
+        $id = $_GET['id'];
+        $model = NhomQuyenBUS::getInstance()->getModelById($id);
+        if ($model) {
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'success', 'data' => $model->toArray()]);
+        } else {
+            header('Content-Type: application/json', true, 404);
+            echo json_encode(['status' => 'error', 'message' => 'Role not found.']);
+        }
+    } else {
+        // Get all roles
+        $roles = NhomQuyenBUS::getInstance()->getAllModels();
+        header('Content-Type: application/json');
+        echo json_encode(['status' => 'success', 'data' => array_map(fn($role) => $role->toArray(), $roles)]);
+    }
+    exit;
+}
+
+
 class NhomQuyenBUS
 {
     private $nhomQuyenList = array();

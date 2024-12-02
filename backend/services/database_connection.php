@@ -13,7 +13,7 @@ class DatabaseConnection
     private static $port = "3306";
     private static $dbname = "quanlicuahanggiay";
     private static $user = "root";
-    private static $password = "mansocho";
+    private static $password = "0204";
 
     // This is the constructor of the class
     private function __construct() {}
