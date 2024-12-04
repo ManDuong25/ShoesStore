@@ -4,11 +4,9 @@
     use backend\bus\UserBUS;
     use backend\services\session;
 
-    requireLogin();
+    // requireLogin();
 
-    $token = session::getInstance()->getSession('tokenLogin');
-    $tokenModel = TokenLoginBUS::getInstance()->getModelByToken($token);
-    $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
+    $userModel = UserBUS::getInstance()->getModelById(1)
 
     ?>
     <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Welcome, <?php echo $userModel->getName(); ?></a>

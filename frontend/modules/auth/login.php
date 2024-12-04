@@ -21,7 +21,6 @@ if (isPost()) {
         $email = $filterAll['email'];
         $password = $filterAll['password'];
         $userQuery = UserBUS::getInstance()->getModelByEmail($email);
-        // die(1);
         if (!empty($userQuery)) {
             $passwordHash = $userQuery->getPassword();
             // Kiểm tra password verify

@@ -149,10 +149,14 @@ class UserDAO implements DAOInterface
 
     public function search(string $condition, $columnNames): array
     {
+
+        $query = "";
+        $rs = DatabaseConnection::executeQuery($query, ...$args);
+        $userList = [];
+        
         if (empty($condition)) {
             throw new InvalidArgumentException("Search condition cannot be empty or null");
         }
-        $query = "";
         if ($columnNames === null || count($columnNames) === 0) {
             $query = "SELECT * FROM users WHERE id LIKE ? OR username LIKE ? OR email LIKE ? OR name LIKE ? OR phone LIKE ? OR gender LIKE ? OR maNhomQuyen LIKE ? OR address LIKE ? OR status LIKE ?";
             $args = array_fill(0, 9, "%" . $condition . "%");
@@ -164,8 +168,7 @@ class UserDAO implements DAOInterface
             $query = "SELECT * FROM users WHERE " . implode(" LIKE ? OR ", $columnNames) . " LIKE ?";
             $args = array_fill(0, count($columnNames), "%" . $condition . "%");
         }
-        $rs = DatabaseConnection::executeQuery($query, ...$args);
-        $userList = [];
+       
         while ($row = $rs->fetch_assoc()) {
             $userModel = $this->createUserModel($row);
             array_push($userList, $userModel);

@@ -60,6 +60,7 @@ if (!empty($token)) {
         $msg = session::getInstance()->getFlashData('msg');
         $msg_type = session::getInstance()->getFlashData('msg_type');
         $errors = session::getInstance()->getFlashData('errors');
+?>
 
         ?>
         <!-- Bảng đặt lại mật khẩu -->
@@ -89,7 +90,7 @@ if (!empty($token)) {
                         <div class="form-group mg-form mt-2">
                             <label for="">Re-type your password:</label>
                             <input name="password_confirm" class="form-control" type="password"
-                                   placeholder="Confirm new password..">
+                                placeholder="Confirm new password..">
                             <?php echo formError('password_confirm', $errors); ?>
                         </div>
 
@@ -101,7 +102,7 @@ if (!empty($token)) {
                 </div>
             </div>
         </body>
-        <?php
+<?php
     } else {
         getMsg("Liên kết không tồn tại hoặc đã hết hạn.", "danger");
     }

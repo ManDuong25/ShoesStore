@@ -1,4 +1,5 @@
 <?php
+
 namespace backend\services;
 
 use Exception;
@@ -15,9 +16,7 @@ class DatabaseConnection
     private static $password = "";
 
     // This is the constructor of the class
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     public static function getInstance()
     {

@@ -9,17 +9,17 @@ ob_start();
 
 $title = 'Nhà Cung Cấp';
 
-if (!defined('_CODE')) {
-    die('Access denied');
-}
+// if (!defined('_CODE')) {
+//     die('Access denied');
+// }
 
-if (!isAllowToDashBoard()) {
-    die('Access denied');
-}
+// if (!isAllowToDashBoard()) {
+//     die('Access denied');
+// }
 
-if (!checkPermission("Q11", "CN1")) {
-    die('Access denied');
-}
+// if (!checkPermission("Q11", "CN1")) {
+//     die('Access denied');
+// }
 
 include(__DIR__ . '/../inc/head.php');
 include(__DIR__ . '/../inc/app/app.php');
@@ -27,9 +27,9 @@ include(__DIR__ . '/../inc/app/app.php');
 $userList = UserBUS::getInstance()->getAllModels();
 
 //Get current logged in user
-$token = session::getInstance()->getSession('tokenLogin');
-$tokenModel = TokenLoginBUS::getInstance()->getModelByToken($token);
-$userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
+// $token = 'cda4fa930890098925487ae50a1117d8cd11b01a';
+// $tokenModel = TokenLoginBUS::getInstance()->getModelById(51);
+$userModel = UserBUS::getInstance()->getModelById(1);
 ?>
 
 <body>
@@ -514,6 +514,7 @@ $userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
                         body: 'nameAdd=' + nameAdd.value + '&addressAdd=' + addressAdd.value + '&emailAdd=' + emailAdd.value + '&phoneAdd=' + phoneAdd.value + '&statusAdd=' + statusAdd.value + '&saveBtn=' + true
                     })
                         .then(function (response) {
+                            console.log(response);
                             return response.json();
                         })
                         .then(function (data) {

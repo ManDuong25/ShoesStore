@@ -11,9 +11,7 @@ function isActivePage($currentPage, $pageName)
     return ''; 
 }
 
-$token = session::getInstance()->getSession('tokenLogin');
-$tokenModel = TokenLoginBUS::getInstance()->getModelByToken($token);
-$userModel = UserBUS::getInstance()->getModelById($tokenModel->getUserId());
+$userModel = UserBUS::getInstance()->getModelById(1)
 ?>
 
 

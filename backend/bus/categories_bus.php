@@ -1,4 +1,5 @@
 <?php
+
 namespace backend\bus;
 
 use backend\interfaces\BUSInterface;
