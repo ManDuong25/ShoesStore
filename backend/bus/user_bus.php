@@ -137,74 +137,90 @@ class UserBUS implements BUSInterface
 
         if ($userModel->getName() == null || trim($userModel->getName()) == "") {
             $errors['fullname']['required'] = "Name is required";
+            return $errors;
         }
 
         // Check for required fields:
         if ($userModel->getUsername() == null || trim($userModel->getUsername()) == "") {
             $errors['username']['required'] = "Username is required";
+            return $errors;
         }
 
         if ($userModel->getEmail() == null || trim($userModel->getEmail()) == "") {
             $errors['email']['required'] = "Email is required";
+            return $errors;
         }
 
         // Validate phone number and address
         if ($userModel->getPhone() !== null && !$validation->isValidPhoneNumber($userModel->getPhone())) {
             $errors['phone']['valid'] = "Invalid phone number";
+            return $errors;
         }
 
         if ($userModel->getAddress() !== null && !$validation->isValidAddress($userModel->getAddress())) {
             $errors['address']['valid'] = "Invalid address";
+            return $errors;
         }
 
         if ($userModel->getPassword() == null || trim($userModel->getPassword()) == "") {
             $errors['password']['required'] = "Password is required";
+            return $errors;
         }
 
         if ($userModel->getGender() == null || trim($userModel->getGender()) == "") {
             $errors['gender']['required'] = "Gender is required";
+            return $errors;
         }
 
         if ($this->isEmailUsed($userModel->getEmail())) {
             $errors['email']['existed'] = "Email is existed";
+            return $errors;
         }
 
         //Validate username and password
         if (!$validation->isValidUsername($userModel->getUsername())) {
             $errors['username']['valid'] = "Invalid username";
+            return $errors;
         }
 
         if (strlen($userModel->getPassword()) < 6) {
             $errors['password']['min-length'] = "Password must be at least 6 characters";
+            return $errors;
         }
 
         $passwordValidationResult = $validation->isValidPassword($userModel->getPassword());
 
         if ($passwordValidationResult !== true) {
             $errors['password']['valid'] = $passwordValidationResult;
+            return $errors;
         }
 
         if (strlen($userModel->getPassword()) > 30) {
             $errors['password']['max-length'] = "Password must less than 30 characters";
+            return $errors;
         }
 
         // Validate email and name
         if (!$validation->isValidEmail($userModel->getEmail())) {
             $errors['email']['valid'] = "Invalid email";
+            return $errors;
         }
 
         if (!$validation->isValidName($userModel->getName())) {
             $errors['fullname']['valid'] = "Invalid name";
+            return $errors;
         }
 
         if (strlen($userModel->getName()) < 6) {
             $errors['fullname']['min-length'] = "Name must be at least 6 characters";
+            return $errors;
         }
 
         // Validate role
         $maNhomQuyen = $userModel->getMaNhomQuyen();
         if ($maNhomQuyen === null) {
             $errors[] = "Role is required";
+            return $errors;
         }
 
         return $errors;

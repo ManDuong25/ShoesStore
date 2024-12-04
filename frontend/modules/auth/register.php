@@ -38,11 +38,15 @@ if (isPost()) {
     );
     // //TODO: Fix the validate model section at backend:
     $errors = UserBUS::getInstance()->validateModel($userModel);
+
+    if (count($errors) <= 0) {
     if ($filterAll['password_confirm'] == null || trim($filterAll['password_confirm']) == "") {
         $errors['password_confirm']['required'] = 'Password confirm is required!';
+        exit;
     }
     if (!($filterAll['password_confirm'] == $filterAll['password'])) {
         $errors['password_confirm']['comfirm'] = 'Confirm password does not match!';
+    }
     }
     if (count($errors) <= 0) {
         $activeToken = sha1(uniqid() . time());
@@ -50,38 +54,38 @@ if (isPost()) {
         $userModel->setCreateAt(date("Y-m-d H:i:s"));
         $userModel->setActiveToken($activeToken);
         $insertStatus = UserBUS::getInstance()->addModel($userModel);
+       
         if ($insertStatus) {
             $_SESSION['registerUserId'] = $insertStatus;
+        
             // Tạo link kích hoạt
             $linkActive = _WEB_HOST . '?module=auth&action=active&token=' . $activeToken;
-            // Thiết lập gửi mail
             $subject = $filterAll['fullname'] . ' vui lòng kích hoạt tài khoản!!!';
             $content = 'Chào ' . $filterAll['fullname'] . '<br/>';
             $content .= 'Vui lòng click vào đường link dưới đây để kích hoạt tài khoản:' . '<br/>';
             $content .= $linkActive . '<br/>';
             $content .= 'Trân trọng cảm ơn!!';
-
-
-            // Tiến hành gửi mail
-            $sendMailStatus = sendMail($filterAll['email'], $subject, $content);
-
-            if ($sendMailStatus) {
-                header('Content-Type: application/json');
-                echo json_encode(['status' => 'success', 'message' => 'Đăng kí tài khoản thành công!']);
+        
+            // Gửi email bất đồng bộ
+            sendMail($filterAll['email'], $subject, $content, function ($status, $error) {
+                if ($status) {
+                    header('Content-Type: application/json');
+                    echo json_encode(['status' => 'success', 'message' => 'Đăng kí tài khoản thành công!']);
+                } else {
+                    header('Content-Type: application/json');
+                    echo json_encode(['status' => 'errorAlert', 'message' => 'Gửi email thất bại: ' . $error]);
+                }
                 exit;
-            } else {
-                header('Content-Type: application/json');
-                echo json_encode(['status' => 'errorAlert', 'message' => 'Hệ thống đang gặp sự cố, vui lòng thử lại sau!']);
-                exit;
-            }
+            });
         } else {
             header('Content-Type: application/json');
             echo json_encode(['status' => 'errorAlert', 'message' => 'Hệ thống đang gặp sự cố, vui lòng thử lại sau!']);
             exit;
         }
+        
     } else {
         header('Content-Type: application/json');
-        echo json_encode(['status' => 'error', 'message' => 'Vui lòng kiểm tra lại dữ liệu!', 'errors' => $errors]);
+        echo json_encode(['status' => 'error', 'message' => 'Vui lòng kiểm tra lại dữ liệu ', 'errors' => $errors]);
         exit;
     }
 }
@@ -191,6 +195,7 @@ $data = [
                     return response.json();
                 })
                 .then(function (data) {
+                    console.log(data)
                     if (data.status == 'success') {
                         // Kiểm tra và xóa phần tử có lớp .top_message nếu tồn tại
                         if (document.querySelector('.top_message')) {
@@ -215,16 +220,14 @@ $data = [
                         radios.forEach(function (radio) {
                             radio.checked = false;
                         });
-
-                        var msg = "<div class='top_message cw text-center alert alert-success'>" + data.message + "</div>";
-                        document.querySelector('.header_register').insertAdjacentHTML('afterend', msg);
-
+                        alert(data.message)
                     } else if (data.status == 'error') {
                         if (document.querySelectorAll('.error-message'))
                             document.querySelectorAll('.error-message').forEach(item => {
                                 item.remove();
                             });
                         var errorsArray = Object.entries(data.errors);
+                        let error;  
                         for (var i = 0; i < errorsArray.length; i++) {
                             document.querySelector('input[name="' + errorsArray[0][0] + '"]').focus();
                             if (Array.isArray(errorsArray[i])) {
@@ -233,12 +236,15 @@ $data = [
                                     console.log(errorsDetail);
                                     for (var k = 0; k < errorsDetail.length; k++) {
                                         showErrorMessage(errorsArray[i][0], errorsDetail[k][1]);
+                                        error=errorsDetail[k][1];
                                         break;
                                     }
                                     break;
                                 }
                             }
                         }
+                       
+                        alert(data.message + error )
                     } else if (data.status == 'errorAlert') {
                         alert(data.message);
                     }

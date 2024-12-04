@@ -27,52 +27,46 @@ function layouts($layoutName, $data = [])
 
 
 // Hàm gửi mail 
-function sendMail($to, $subject, $content)
+function sendMail($to, $subject, $content, $callback)
 {
+    // Đây là 1 tiến trình giả lập việc gửi mail không đồng bộ
     $mailCheck = new VerifyEmail();
-    $mailCheck->setStreamTimeoutWait(5); // Giảm thời gian chờ nếu cần
-    $mailCheck->Debug = TRUE;
-    $mailCheck->Debugoutput = 'html';
+    $mailCheck->setStreamTimeoutWait(5);
     $mailCheck->setEmailFrom("manshpypro@gmail.com");
 
-    // Nếu email hợp lệ về cú pháp, tiến hành kiểm tra chi tiết
-    if ($mailCheck->check($to)) {
-
-    } else {
-        return false;
+    // Kiểm tra email 
+    if (!$mailCheck->check($to)) {
+        call_user_func($callback, false, "Email không hợp lệ");
+        return;
     }
-    //Create an instance; passing `true` enables exceptions
+
     $mail = new PHPMailer(true);
 
     try {
-        //Server settings
         $mail->CharSet = "UTF-8";
-        $mail->SMTPDebug = SMTP::DEBUG_OFF;                      //Enable verbose debug output
-        $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host = 'smtp.gmail.com';                     //Set the SMTP server to send through
-        $mail->SMTPAuth = true;                                   //Enable SMTP authentication
-        $mail->Username = 'manshpypro@gmail.com';                     //SMTP username
-        $mail->Password = 'ztbwjqcpunymawdz';                               //SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-        $mail->Port = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'manshpypro@gmail.com';
+        $mail->Password = 'ztbwjqcpunymawdz';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port = 465;
 
-        //Recipients
         $mail->setFrom('manshpypro@gmail.com', 'ManDuong');
-        $mail->addAddress($to);     //Add a recipient
+        $mail->addAddress($to);
 
-        //Content
-        $mail->isHTML(true);                                  //Set email format to HTML
+        $mail->isHTML(true);
         $mail->Subject = $subject;
         $mail->Body = $content;
 
-
-        $sendMailStatus = $mail->send();
+        // Gửi email
+        $mail->send();
+        call_user_func($callback, true, null); // Thành công
     } catch (Exception $e) {
-        echo "Gửi mail thất bại. Mailer Error: {$mail->ErrorInfo}";
+        call_user_func($callback, false, $mail->ErrorInfo); // Lỗi
     }
-
-    return $sendMailStatus;
 }
+
 
 
 
