@@ -1066,7 +1066,6 @@ INSERT INTO
         name,
         phone,
         gender,
-        image,
         maNhomQuyen,
         status,
         address
@@ -1080,7 +1079,6 @@ VALUES
         'Admin',
         '0911111232',
         'M',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ1',
         'active',
         '123 Admin St'
@@ -1093,7 +1091,6 @@ VALUES
         'Manager',
         '0948733232',
         'F',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ2',
         'active',
         '456 Manager St'
@@ -1106,7 +1103,6 @@ VALUES
         'Employee 1',
         '0911238523',
         'M',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ3',
         'active',
         '789 Employee St'
@@ -1119,7 +1115,6 @@ VALUES
         'Employee 2',
         '0911239233',
         'F',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ3',
         'active',
         '012 Employee St'
@@ -1132,7 +1127,6 @@ VALUES
         'Customer 1',
         '0911286233',
         'M',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ4',
         'active',
         '345 Customer St'
@@ -1145,7 +1139,6 @@ VALUES
         'Customer 2',
         '0911543233',
         'F',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ4',
         'active',
         '678 Customer St'
@@ -1158,7 +1151,6 @@ VALUES
         'Customer 3',
         '0911233233',
         'M',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ4',
         'active',
         '901 Customer St'
@@ -1171,7 +1163,6 @@ VALUES
         'Customer 4',
         '0913223232',
         'F',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ4',
         'active',
         '234 Customer St'
@@ -1184,7 +1175,6 @@ VALUES
         'Customer 5',
         '0913883434',
         'M',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ4',
         'active',
         '567 Customer St'
@@ -1197,7 +1187,6 @@ VALUES
         'Customer 6',
         '0911432234',
         'F',
-        'http://localhost/ShoesStore/frontend/templates/images/avatar_default.webp',
         'NQ4',
         'active',
         '890 Customer St'

@@ -153,17 +153,18 @@ CREATE TABLE `size_items` (
 
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `phone` varchar(10) DEFAULT NULL,
-  `gender` tinyint(4) NOT NULL DEFAULT 0,
-  `image` longtext DEFAULT NULL,
+  `id` 			int auto_increment primary key,
+  `username` 	varchar(50) NOT NULL,
+  `password` 	varchar(255) NOT NULL,
+  `status` 		enum('active', 'inactive', 'banned') NOT NULL DEFAULT 'active',
   `maNhomQuyen` varchar(50) DEFAULT NULL,
-  `status` enum('active', 'inactive', 'banned') NOT NULL DEFAULT 'active',
-  `address` varchar(255) NOT NULL
+
+  `email` 		varchar(50) NOT NULL,
+  `name` 		varchar(50) NOT NULL,
+  `phone` 		varchar(10) DEFAULT NULL,
+  `gender` 		tinyint(4) NOT NULL DEFAULT 0,
+  `address` 	varchar(255) NOT NULL
+
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 
@@ -308,12 +309,6 @@ ADD CONSTRAINT fk_chitietquyen_quyen FOREIGN KEY (maQuyen) REFERENCES quyen(maQu
 ALTER TABLE `users`
 ADD CONSTRAINT fk_users_nhomquyen FOREIGN KEY (maNhomQuyen) REFERENCES nhomquyen(maNhomQuyen) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
-ALTER TABLE
-  `users`
-ADD
-  PRIMARY KEY (`id`),
-ADD
-  UNIQUE KEY `email` (`email`);
   
   
 ALTER TABLE
